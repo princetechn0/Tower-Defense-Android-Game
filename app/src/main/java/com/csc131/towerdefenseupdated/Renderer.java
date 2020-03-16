@@ -6,9 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-
-import java.util.ArrayList;
 
 class Renderer {
      Canvas mCanvas;
@@ -27,7 +24,7 @@ class Renderer {
 //    }
 
     void draw(Context context, GameState gs, HUD hud, SpaceStation sp,
-              Alien1 alien1, ExplosionEffectSystem explosionEffectSystem) {
+              Enemy enemy, ExplosionEffectSystem explosionEffectSystem) {
 
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
@@ -37,7 +34,7 @@ class Renderer {
             sp = new SpaceStation(context);
             sp.draw(mCanvas, mPaint);
 
-            alien1.draw(mCanvas, mPaint);
+            enemy.draw(mCanvas, mPaint);
 
 //            for (int i = 0; i <enemyArrayList.size(); i++) {
 //                enemyArrayList.get(i).draw(mCanvas, mPaint);
