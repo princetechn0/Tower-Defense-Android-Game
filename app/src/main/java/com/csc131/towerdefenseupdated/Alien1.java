@@ -7,11 +7,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.view.MotionEvent;
+import android.graphics.PointF;
 
 import java.util.ArrayList;
 
-class Alien1 implements Enemy{
+class Alien1{
 
     // The location in the grid of all the segments
     private ArrayList<TPoint> segmentLocations;
@@ -24,7 +24,7 @@ class Alien1 implements Enemy{
 
     // Where is the centre of the screen
     // horizontally in pixels?
-    private int halfWayPoint;
+//    private int halfWayPoint;
 
     // For tracking movement Heading
     private enum Heading {
@@ -40,8 +40,11 @@ class Alien1 implements Enemy{
     // A bitmap for the body
     private Bitmap mBitmapBody;
 
+    //Alien Damage Amount
+    public int alienDamageAmount;
 
-    Alien1(Context context, TPoint mr, int ss) {
+
+    Alien1(Context context, TPoint mr, int ss, String kind) {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
@@ -51,41 +54,58 @@ class Alien1 implements Enemy{
         mSegmentSize = ss;
         mMoveRange = mr;
 
-        //Initializing mBitMap Array
+        //Ugly Code out of Frustration :/
+        int rDrawable;
+        switch (kind) {
+            case "alien2":
+                rDrawable = R.drawable.alien2;
+                alienDamageAmount = -2;
+                break;
+            case "alien3":
+                rDrawable = R.drawable.alien3;
+                alienDamageAmount = -3;
+                break;
+            case "alien1":
+            default:
+                rDrawable = R.drawable.alien1;
+                alienDamageAmount = -1;
+                break;
+        }
+
         for(int i = 0; i < mBitMaps.length; i++){
             mBitMaps[i] = BitmapFactory
                     .decodeResource(context.getResources(),
-                            R.drawable.alien1);
+                            rDrawable);
         }
 
         // Modify the bitmaps to face the snake head
         // in the correct direction
         mBitMaps[0]  = Bitmap
                 .createScaledBitmap(mBitMaps[0] ,
-                        ss, ss, false);
+                        60, 60, false);
 
         // A matrix for scaling
         Matrix matrix = new Matrix();
         matrix.preScale(-1, 1);
-        createBitmap(1, ss, matrix);
+        createBitmap(1, 60, matrix);
         matrix.preRotate(-90);
-        createBitmap(2, ss, matrix);
+        createBitmap(2, 60, matrix);
         matrix.preRotate(180);
-        createBitmap(3, ss, matrix);
+        createBitmap(3, 60, matrix);
 
 
-        // Create and scale the body
-        mBitmapBody = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.alien2);
-
-        mBitmapBody = Bitmap
-                .createScaledBitmap(mBitmapBody,
-                        ss, ss, false);
+//        // Create and scale the body
+//        mBitmapBody = BitmapFactory
+//                .decodeResource(context.getResources(),
+//                        R.drawable.alien1);
+//
+//        mBitmapBody = Bitmap
+//                .createScaledBitmap(mBitmapBody,
+//                        ss, ss, false);
 
         // The halfway point across the screen in pixels
         // Used to detect which side of screen was pressed
-        halfWayPoint = mr.point.x * ss / 2;
+//        halfWayPoint = mr.point.x * ss / 2;
     }
 
     // Get the snake ready for a new game
@@ -202,21 +222,22 @@ class Alien1 implements Enemy{
 
 
     void beginMoving() {
+
         rightDirections(heading);
     }
 
 
-
-    // Handle changing direction
-    void switchHeading(MotionEvent motionEvent) {
-        // Is the tap on the right hand side?
-        if (motionEvent.getX() >= halfWayPoint) {
-            rightDirections(heading);
-        } else {
-            // Rotate left
-            leftDirections(heading);
-        }
-    }
+//
+//    // Handle changing direction
+//    void switchHeading(MotionEvent motionEvent) {
+//        // Is the tap on the right hand side?
+//        if (motionEvent.getX() >= halfWayPoint) {
+//            rightDirections(heading);
+//        } else {
+//            // Rotate left
+//            leftDirections(heading);
+//        }
+//    }
 
 
     void createBitmap(int i, int ss, Matrix matrix) {
@@ -293,3 +314,4 @@ class Alien1 implements Enemy{
 
 
 }
+

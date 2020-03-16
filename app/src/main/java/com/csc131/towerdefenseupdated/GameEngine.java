@@ -18,7 +18,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     Alien1 alien1;
 
     //Testing
-//    ArrayList<Enemy> enemyArrayList;
+//    ArrayList<Enemy> enemyArrayList = new ArrayList<>();
 
     //Audio Related
     private SoundEngine audioEngine = new SoundEngine(getContext());
@@ -50,7 +50,9 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         alien1 = new Alien1(context,
                 new TPoint(mRenderer.NUM_BLOCKS_WIDE,
                         mRenderer.mNumBlocksHigh),
-                mRenderer.blockSize);
+                mRenderer.blockSize, "alien2");
+
+//        newEnemy(context, "alien2");
 
 
         physicsEngine = new PhysicsEngine();
@@ -106,11 +108,17 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     update();
                 }
             }
-            mRenderer.draw(getContext(), gameState, mHUD, spaceStation, alien1,  explosionEffectSystem);
+            mRenderer.draw(getContext(), gameState, mHUD, spaceStation, alien1, explosionEffectSystem);
         }
     }
 
 
+
+//    public void newEnemy(Context context, String kind) {
+//        enemyArrayList.add(new Enemy(new Enemy.EnemyBuilder(context, new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+//                mRenderer.mNumBlocksHigh), mRenderer.blockSize, kind)
+//                .enemyType(context, kind)));
+//    }
 
 
 
@@ -118,7 +126,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     public boolean updateRequired() {
 
         // Run at 10 frames per second
-        final long TARGET_FPS = 10;
+        final long TARGET_FPS = 100;
         // There are 1000 milliseconds in a second
         final long MILLIS_PER_SECOND = 1000;
 
@@ -144,6 +152,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         // Move the snake
         alien1.move();
 
+//        enemyArrayList.get(0).move();
+
         // Did the Alien die?
         if (alien1.detectDeath()) {
             //Death Audio
@@ -157,7 +167,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
             explosionEffectSystem.emitParticles(new PointF(1600,500));
 
             alien1.reset();
-            gameState.mStationHealth--;
+            gameState.mStationHealth+= alien1.alienDamageAmount;
+
+//            enemyArrayList.get(enemyArrayList.size()-1).spawn();
+
+
 
         }
 
@@ -195,9 +209,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         }
 
         return true;
-
-
-
     }
 
 

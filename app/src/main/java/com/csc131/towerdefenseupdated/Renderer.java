@@ -39,6 +39,12 @@ class Renderer {
 
             alien1.draw(mCanvas, mPaint);
 
+//            for (int i = 0; i <enemyArrayList.size(); i++) {
+//                enemyArrayList.get(i).draw(mCanvas, mPaint);
+//            }
+
+
+
 
             if (gs.mPlaying) {
                 // Draw all the game objects here
