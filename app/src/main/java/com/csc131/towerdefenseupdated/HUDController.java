@@ -29,7 +29,6 @@ class HUDController implements InputObserver {
                    gameState.startRound();
                    gameEngine.nextRound();
 
-
             }
 
             if (buttons.get(HUD.RESTART).contains(x, y)) {

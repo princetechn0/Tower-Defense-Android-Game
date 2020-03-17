@@ -20,7 +20,7 @@ class Renderer {
     int blockSize;
 
     void draw(Context context, GameState gs, HUD hud, SpaceStation sp,
-              Enemy enemy, ArrayList<Enemy> enemyArrayList, ExplosionEffectSystem explosionEffectSystem) {
+              ArrayList<Enemy> enemyArrayList, ExplosionEffectSystem explosionEffectSystem) {
 
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
@@ -30,10 +30,9 @@ class Renderer {
             sp = new SpaceStation(context);
             sp.draw(mCanvas, mPaint);
 
-//            enemy.draw(mCanvas, mPaint);
 
-            for (int i = 0; i <enemyArrayList.size(); i++) {
-                enemyArrayList.get(i).draw(mCanvas, mPaint);
+            for (Enemy e: enemyArrayList) {
+                e.draw(mCanvas, mPaint);
             }
 
 
