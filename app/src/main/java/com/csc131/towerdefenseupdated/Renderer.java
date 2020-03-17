@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
+import java.util.ArrayList;
+
 class Renderer {
      Canvas mCanvas;
      SurfaceHolder mSurfaceHolder;
@@ -17,14 +19,8 @@ class Renderer {
     int mNumBlocksHigh;
     int blockSize;
 
-
-//    Renderer(SurfaceView sh) {
-//        mSurfaceHolder = sh.getHolder();
-//        mPaint = new Paint();
-//    }
-
     void draw(Context context, GameState gs, HUD hud, SpaceStation sp,
-              Enemy enemy, ExplosionEffectSystem explosionEffectSystem) {
+              Enemy enemy, ArrayList<Enemy> enemyArrayList, ExplosionEffectSystem explosionEffectSystem) {
 
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
@@ -34,13 +30,11 @@ class Renderer {
             sp = new SpaceStation(context);
             sp.draw(mCanvas, mPaint);
 
-            enemy.draw(mCanvas, mPaint);
+//            enemy.draw(mCanvas, mPaint);
 
-//            for (int i = 0; i <enemyArrayList.size(); i++) {
-//                enemyArrayList.get(i).draw(mCanvas, mPaint);
-//            }
-
-
+            for (int i = 0; i <enemyArrayList.size(); i++) {
+                enemyArrayList.get(i).draw(mCanvas, mPaint);
+            }
 
 
             if (gs.mPlaying) {
