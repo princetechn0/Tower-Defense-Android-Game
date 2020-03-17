@@ -65,13 +65,6 @@ final class GameState {
 
 
 
-    void loseLife (SoundEngine audioEngine){
-        mStationHealth--;
-        audioEngine.playEnemyDeadAudio();
-
-    }
-
-
     int getNumTowers(){
         return mNumTowers;
     }

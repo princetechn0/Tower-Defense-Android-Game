@@ -85,7 +85,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
             e.reset();
             e.beginMoving();
         }
-
     }
 
 
@@ -106,8 +105,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         while (gameState.mPlaying) {
             // This call to update will evolve with the project
-            if(physicsEngine.update(5, explosionEffectSystem)){
-            }
+            if(physicsEngine.update(5, explosionEffectSystem)){}
 
             if (!gameState.mDead && !gameState.mEndofRound) {
                 // Update 10 times a second
