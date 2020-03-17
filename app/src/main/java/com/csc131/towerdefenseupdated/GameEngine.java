@@ -21,7 +21,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     //Testing
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
     final Handler handler = new Handler();
-    final Handler handler2 = new Handler();
 
 
     //Audio Related
