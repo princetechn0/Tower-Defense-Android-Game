@@ -1,5 +1,6 @@
 package com.csc131.towerdefenseupdated;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ class HUDController implements InputObserver {
 
 
     @Override
-    public void handleInput( MotionEvent event, GameState gameState, ArrayList<Rect> buttons) {
+    public void handleInput(MotionEvent event, GameState gameState, ArrayList<Rect> buttons) {
         int i = event.getActionIndex();
         int x = (int) event.getX(i);
         int y = (int) event.getY(i);
@@ -25,11 +26,14 @@ class HUDController implements InputObserver {
 
         if(eventType == MotionEvent.ACTION_UP || eventType == MotionEvent.ACTION_POINTER_UP) {
 
-            if (buttons.get(HUD.START_Round).contains(x, y)) {
-                   gameState.startRound();
-                   gameEngine.nextRound();
-
+            //Disables Start Button when round is running
+            if(gameState.mEndofRound){
+                if (buttons.get(HUD.START_Round).contains(x, y)) {
+                    gameState.startRound();
+                    gameEngine.nextRound();
+                }
             }
+
 
             if (buttons.get(HUD.RESTART).contains(x, y)) {
                 gameState.newGame();

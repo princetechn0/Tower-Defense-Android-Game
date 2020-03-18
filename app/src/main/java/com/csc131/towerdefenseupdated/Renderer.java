@@ -31,14 +31,18 @@ class Renderer {
             sp.draw(mCanvas, mPaint);
 
 
-            for (Enemy e: enemyArrayList) {
-                e.draw(mCanvas, mPaint);
-            }
-
 
             if (gs.mPlaying) {
                 // Draw all the game objects here
+            }
 
+            //If the game is running in a round, print the enemy objects
+            if(!gs.mEndofRound) {
+                for (Enemy e: enemyArrayList) {
+                    e.draw(mCanvas, mPaint);
+                }
+                //Disables Start Button
+                hud.disableStartButton(mCanvas, mPaint);
             }
 
             if(gs.mDead) {

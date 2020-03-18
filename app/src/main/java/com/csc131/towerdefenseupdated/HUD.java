@@ -1,11 +1,9 @@
 package com.csc131.towerdefenseupdated;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
@@ -35,13 +33,10 @@ class HUD {
 
     private void prepareControls() {
         Rect tower1 = new Rect(1300, 90, 1428, 180);
-
         Rect tower2 = new Rect(1450, 90, 1578, 180);
-
         Rect tower3 = new Rect(1600, 90, 1728, 180);
 
         Rect start_round = new Rect(1550, 1000, 1800, 1090);
-
         Rect restart = new Rect(0, 1000, 200, 1090);
 
         controls = new ArrayList<>();
@@ -64,7 +59,6 @@ class HUD {
         canvas.drawText("Money: " + gs.getCurrency(), mTextFormatting,mTextFormatting * 2,paint);
         canvas.drawText("Lives: " + gs.getmStationHealth(), mTextFormatting,mTextFormatting * 3,paint);
 
-
         canvas.drawText("Towers: ", mTextFormatting + 1375 , mTextFormatting + 10, paint);
 
         drawControls(context, canvas, paint);
@@ -72,9 +66,9 @@ class HUD {
     }
 
 
-
     private void drawControls(Context context, Canvas c, Paint p) {
         p.setColor(Color.argb(100,255,255,255));
+
         for(Rect r : controls){
             c.drawRect(r.left, r.top, r.right, r.bottom, p);
         }
@@ -115,6 +109,10 @@ class HUD {
     }
 
 
+    void disableStartButton(Canvas c, Paint p) {
+        p.setColor(Color.argb(200,200,0,0));
+        c.drawRect(controls.get(3), p);
+    }
 
 }
 

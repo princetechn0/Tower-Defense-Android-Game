@@ -41,11 +41,7 @@ final class GameState {
     void newGame() {
         mPlaying = true;
         mEndofRound = true;
-        mDead = false;
-    }
-
-    void endOfRound() {
-        mEndofRound = !mEndofRound;
+        mDead = true;
     }
 
 
@@ -75,7 +71,6 @@ final class GameState {
 
     void increaseRoundNumber(){
         mRound++;
-
     }
 
     int getmStationHealth() {

@@ -9,6 +9,7 @@ import android.os.Handler;
 
 import java.util.ArrayList;
 
+
 class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     //Game State Object
@@ -19,7 +20,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
 
     //Times Enemy Spawn
-    final Handler handler = new Handler();
+     Handler handler = new Handler();
+     Boolean isActive;
 
 
     //Audio Related
@@ -38,6 +40,9 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     //Testing Level Constructor
     Level level1;
+    int a1 = 5;
+    int a2 = 2;
+    int a3 = 1;
 
 
     public GameEngine(Context context, TPoint size) {
@@ -55,18 +60,17 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         physicsEngine = new PhysicsEngine();
 
         explosionEffectSystem = new ExplosionEffectSystem();
-        explosionEffectSystem.init(100);
+        explosionEffectSystem.init(50);
 
         //Creates a new Level with Corresponding Enemy Numbers
-        level1 = new Level(mRenderer, enemyArrayList, 5, 2, 1);
+        level1 = new Level(mRenderer, enemyArrayList, a1, a2, a3);
         level1.levelCreator(context);
-
-
-
     }
 
     // Called to start a new game
     public void newGame() {
+        //Handler
+        isActive = false;
 
         // reset the enemies off screen and face them in the right direction
         resetEnemies();
@@ -78,6 +82,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         // Setup mNextFrameTime so an update can triggered
         gameState.mNextFrameTime = System.currentTimeMillis();
+
     }
 
     void resetEnemies() {
@@ -90,13 +95,14 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Called to start a new game
     public void nextRound() {
-
         // reset the enemies offscreen
         resetEnemies();
 
         // Setup mNextFrameTime so an update can triggered
         gameState.mNextFrameTime = System.currentTimeMillis();
+
     }
+
 
     // Handles the game loop
     @Override
@@ -113,8 +119,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     update();
                 }
             }
+
             mRenderer.draw(getContext(), gameState, mHUD, spaceStation, enemyArrayList, explosionEffectSystem);
         }
+
+
     }
 
 
@@ -143,18 +152,24 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
 
+
     //Prints all the enemies with a time delay
     void handleTime(final int enemyNumber, int delay) {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                    if(enemyNumber < enemyArrayList.size()){
-                        enemyArrayList.get(enemyNumber).move();
-                        handleTime(enemyNumber+1, 1000);
+        isActive = true;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(isActive){
+                        if(enemyNumber < enemyArrayList.size()){
+                            enemyArrayList.get(enemyNumber).move();
+                            handleTime(enemyNumber+1, 1000);
+                        }
                     }
-            }
-        }, delay);
+                }
+            }, delay);
+
     }
+
 
 
     // Update all the game objects
@@ -163,19 +178,22 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         //Prints all the enemies with a time delay, starting with the First and a three second delay
         handleTime(0, 3000);
 
-
         // Did the Alien die?
         for (Enemy e: enemyArrayList) {
             if (e.detectDeath()) {
                 //Death Audio
                 audioEngine.playEnemyDeadAudio();
 
-            //If last enemy dies, change state
-            if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()){
-                // Pause the game ready to start again
-                gameState.mDead = true;
-                gameState.mEndofRound = true;
-            }
+                //If last enemy dies, change state
+                if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()) {
+
+                    gameState.increaseRoundNumber();
+
+                    // Pause the game ready to start again
+                    gameState.mDead = true;
+                    gameState.mEndofRound = true;
+
+                }
 
                 // Emits a particle system effect when the alien reaches the Space Station
                 explosionEffectSystem.emitParticles(new PointF(1600,500));
@@ -187,6 +205,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
             }
         }
+
+
 
 
 
@@ -217,7 +237,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 //         Handle the player's input here
 //         But in a new way
         for (InputObserver o : inputObservers) {
-            o.handleInput(motionEvent, gameState, mHUD.getControls());
+            o.handleInput( motionEvent, gameState, mHUD.getControls());
         }
 
         return true;
