@@ -26,23 +26,20 @@ class HUDController implements InputObserver {
 
         if(eventType == MotionEvent.ACTION_UP || eventType == MotionEvent.ACTION_POINTER_UP) {
 
-            //Disables Start Button when round is running
-            if(gameState.mEndofRound){
                 if (buttons.get(HUD.START_Round).contains(x, y)) {
-                    gameState.startRound();
-                    gameEngine.nextRound();
+                    //Disables Start Button while round is running
+                    if(gameState.mEndofRound) {
+                        gameState.startRound();
+                        gameEngine.nextRound();
+                    }
                 }
-            }
-
 
             if (buttons.get(HUD.RESTART).contains(x, y)) {
+
                 gameState.newGame();
                 gameEngine.newGame();
+
             }
-
-
-
-
 
 
         }

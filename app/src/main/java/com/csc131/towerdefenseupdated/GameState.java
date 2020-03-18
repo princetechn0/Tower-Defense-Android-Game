@@ -1,6 +1,8 @@
 package com.csc131.towerdefenseupdated;
 import android.content.Context;
 
+import java.util.Random;
+
 final class GameState {
     // This object will have access to the deSpawnReSpawn method
     // in GameEngine- once it is initialized
@@ -32,6 +34,12 @@ final class GameState {
     // How much health does the Enemy have
     public int mEnemyHealth;
 
+    // How many Enemies Exist of Type
+    public int num_enemy1, num_enemy2, num_enemy3;
+
+    //Random
+    Random random = new Random();
+
     void startRound() {
         mPlaying = true;
         mEndofRound = false;
@@ -44,7 +52,6 @@ final class GameState {
         mDead = true;
     }
 
-
     void resetVariables(){
         mRound = 1;
 
@@ -55,11 +62,11 @@ final class GameState {
         mNumTowers = 0;
 
         mNumEnemies = 0;
-        mEnemyHealth = 1;
 
+        num_enemy1 = 3;
+        num_enemy2 = 0;
+        num_enemy3 = 0;
     }
-
-
 
     int getNumTowers(){
         return mNumTowers;
@@ -71,6 +78,10 @@ final class GameState {
 
     void increaseRoundNumber(){
         mRound++;
+    }
+
+    void increaseCurrency() {
+        mCurrency += random.nextInt(100 + 50);
     }
 
     int getmStationHealth() {

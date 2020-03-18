@@ -39,11 +39,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
 
     //Testing Level Constructor
-    Level level1;
-    int a1 = 5;
-    int a2 = 2;
-    int a3 = 1;
-
+    Level level;
 
     public GameEngine(Context context, TPoint size) {
         super(context);
@@ -62,9 +58,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         explosionEffectSystem = new ExplosionEffectSystem();
         explosionEffectSystem.init(50);
 
-        //Creates a new Level with Corresponding Enemy Numbers
-        level1 = new Level(mRenderer, enemyArrayList, a1, a2, a3);
-        level1.levelCreator(context);
     }
 
     // Called to start a new game
@@ -80,6 +73,22 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         //Reset Score and Everything
         gameState.resetVariables();
 
+        //Creates a new Level with Base Enemy Numbers
+        level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
+
+        // Setup mNextFrameTime so an update can triggered
+        gameState.mNextFrameTime = System.currentTimeMillis();
+
+    }
+
+
+
+    // Called to start a new game
+    public void nextRound() {
+
+        // reset the enemies offscreen
+        resetEnemies();
+
         // Setup mNextFrameTime so an update can triggered
         gameState.mNextFrameTime = System.currentTimeMillis();
 
@@ -93,17 +102,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
 
-    // Called to start a new game
-    public void nextRound() {
-        // reset the enemies offscreen
-        resetEnemies();
-
-        // Setup mNextFrameTime so an update can triggered
-        gameState.mNextFrameTime = System.currentTimeMillis();
-
-    }
-
-
     // Handles the game loop
     @Override
     public void run() {
@@ -112,6 +110,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         while (gameState.mPlaying) {
             // This call to update will evolve with the project
             if(physicsEngine.update(5, explosionEffectSystem)){}
+
 
             if (!gameState.mDead && !gameState.mEndofRound) {
                 // Update 10 times a second
@@ -153,23 +152,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
 
 
-    //Prints all the enemies with a time delay
-    void handleTime(final int enemyNumber, int delay) {
-        isActive = true;
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(isActive){
-                        if(enemyNumber < enemyArrayList.size()){
-                            enemyArrayList.get(enemyNumber).move();
-                            handleTime(enemyNumber+1, 1000);
-                        }
-                    }
-                }
-            }, delay);
-
-    }
-
 
 
     // Update all the game objects
@@ -184,32 +166,43 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 //Death Audio
                 audioEngine.playEnemyDeadAudio();
 
+                // Emits a particle system effect when the alien reaches the Space Station
+                explosionEffectSystem.emitParticles(new PointF(1600,500));
+
                 //If last enemy dies, change state
                 if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()) {
 
+                    // Increment Game Round Number and increase Currency
                     gameState.increaseRoundNumber();
+                    gameState.increaseCurrency();
 
                     // Pause the game ready to start again
                     gameState.mDead = true;
                     gameState.mEndofRound = true;
-
                 }
-
-                // Emits a particle system effect when the alien reaches the Space Station
-                explosionEffectSystem.emitParticles(new PointF(1600,500));
 
                 //Resets the enemy to the original position off screen, ready for next wave
                 e.reset();
 
                 gameState.mStationHealth+= e.alienDamageAmount;
-
             }
         }
+    }
 
-
-
-
-
+    //Prints all the enemies with a time delay
+    void handleTime(final int enemyNumber, int delay) {
+        isActive = true;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(isActive){
+                    if(enemyNumber < enemyArrayList.size()){
+                        enemyArrayList.get(enemyNumber).move();
+                        handleTime(enemyNumber+1, 1000);
+                    }
+                }
+            }
+        }, delay);
 
     }
 
@@ -223,7 +216,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         mRenderer.mSurfaceHolder = getHolder();
         mRenderer.mPaint = new Paint();
     }
-
 
 
     // For the game engine broadcaster interface

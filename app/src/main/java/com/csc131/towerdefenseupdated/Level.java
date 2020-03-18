@@ -6,14 +6,12 @@ import java.util.ArrayList;
 
 public class Level {
 
-
-
     ArrayList<Enemy> enemyArrayList;
     int one, two, three, total;
     Renderer mRenderer;
 
 
-    Level(Renderer mRenderer, ArrayList<Enemy> enemyArrayList, int numAlien1, int numAlien2, int numAlien3) {
+    Level(Context context, Renderer mRenderer, ArrayList<Enemy> enemyArrayList, int numAlien1, int numAlien2, int numAlien3) {
         this.mRenderer = mRenderer;
 
         this.enemyArrayList = enemyArrayList;
@@ -21,6 +19,8 @@ public class Level {
         two = numAlien2;
         three = numAlien3;
         total = numAlien1+numAlien2+numAlien3;
+
+        levelCreator(context);
     }
 
     void levelCreator(Context context) {
@@ -46,7 +46,6 @@ public class Level {
                 new TPoint(mRenderer.NUM_BLOCKS_WIDE,
                         mRenderer.mNumBlocksHigh),
                 mRenderer.blockSize, kind));
-
     }
 
 
