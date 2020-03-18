@@ -35,7 +35,9 @@ final class GameState {
     public int mEnemyHealth;
 
     // How many Enemies Exist of Type
-    public int num_enemy1, num_enemy2, num_enemy3;
+    public int num_enemy1 = 3;
+    public int num_enemy2 = 0;
+    public int num_enemy3 = 0;
 
     //Random
     Random random = new Random();

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     //Game State Object
-    private GameState gameState = new GameState();
+    public GameState gameState = new GameState();
 
     //Game Objects
     SpaceStation spaceStation;
@@ -58,6 +58,9 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         explosionEffectSystem = new ExplosionEffectSystem();
         explosionEffectSystem.init(50);
 
+        level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
+
+
     }
 
     // Called to start a new game
@@ -65,16 +68,13 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         //Handler
         isActive = false;
 
-        // reset the enemies off screen and face them in the right direction
+        // Reset the enemies off screen and face them in the right direction
         resetEnemies();
 
         spaceStation.spawn();
 
-        //Reset Score and Everything
+        // Reset Score and Everything
         gameState.resetVariables();
-
-        //Creates a new Level with Base Enemy Numbers
-        level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
 
         // Setup mNextFrameTime so an update can triggered
         gameState.mNextFrameTime = System.currentTimeMillis();
@@ -85,6 +85,15 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Called to start a new game
     public void nextRound() {
+
+        level.clear();
+
+
+        gameState.num_enemy1+= 2;
+        gameState.num_enemy2+= 1;
+        gameState.num_enemy3+= 1;
+
+        level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
 
         // reset the enemies offscreen
         resetEnemies();
@@ -118,6 +127,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     update();
                 }
             }
+
 
             mRenderer.draw(getContext(), gameState, mHUD, spaceStation, enemyArrayList, explosionEffectSystem);
         }
@@ -184,7 +194,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 //Resets the enemy to the original position off screen, ready for next wave
                 e.reset();
 
-                gameState.mStationHealth+= e.alienDamageAmount;
+                gameState.mStationHealth += e.alienDamageAmount;
+
             }
         }
     }

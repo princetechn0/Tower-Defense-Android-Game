@@ -48,6 +48,10 @@ public class Level {
                 mRenderer.blockSize, kind));
     }
 
+    public void clear() {
+        enemyArrayList.clear();
+    }
+
 
 
 }
