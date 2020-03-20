@@ -31,7 +31,6 @@ class HUDController implements InputObserver {
                     if(gameState.mEndofRound) {
                         gameEngine.nextRound();
                         gameState.startRound();
-
                     }
                 }
 

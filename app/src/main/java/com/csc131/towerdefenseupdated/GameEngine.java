@@ -51,7 +51,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         mHUD = new HUD(size);
 
-        spaceStation = new SpaceStation(context);
+        spaceStation = new SpaceStation(context, R.drawable.spacestation);
 
         physicsEngine = new PhysicsEngine();
 
@@ -83,15 +83,13 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
 
 
+
     // Called to start a new game
     public void nextRound() {
 
         level.clear();
 
-
-        gameState.num_enemy1+= 2;
-        gameState.num_enemy2+= 1;
-        gameState.num_enemy3+= 1;
+        level.enemyIncrementer(gameState);
 
         level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
 
@@ -201,7 +199,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
     //Prints all the enemies with a time delay
-    void handleTime(final int enemyNumber, int delay) {
+    void handleTime(final int enemyNumber,  int delay) {
         isActive = true;
         handler.postDelayed(new Runnable() {
             @Override
@@ -209,7 +207,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 if(isActive){
                     if(enemyNumber < enemyArrayList.size()){
                         enemyArrayList.get(enemyNumber).move();
-                        handleTime(enemyNumber+1, 1000);
+                        handleTime(enemyNumber+1, 1500);
                     }
                 }
             }

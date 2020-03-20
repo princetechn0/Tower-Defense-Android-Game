@@ -13,8 +13,8 @@ public class SpaceStation {
     private Bitmap mBitmapSpaceStation;
 
     /// Set up the SpaceStation in the constructor
-    public SpaceStation(Context context){
-        this.mBitmapSpaceStation = BitmapFactory.decodeResource(context.getResources(), R.drawable.spacestation);
+    public SpaceStation(Context context, int x){
+        this.mBitmapSpaceStation = BitmapFactory.decodeResource(context.getResources(), x);
     }
 
 

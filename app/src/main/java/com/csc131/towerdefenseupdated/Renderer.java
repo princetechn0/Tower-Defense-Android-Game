@@ -27,10 +27,7 @@ class Renderer {
             Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mapmap);
             mCanvas.drawBitmap(bmp, 0, 0, mPaint);
 
-            sp = new SpaceStation(context);
-            sp.draw(mCanvas, mPaint);
-
-
+            drawSpaceStation(gs, context, sp);
 
             if (gs.mPlaying) {
                 // Draw all the game objects here
@@ -49,7 +46,7 @@ class Renderer {
                 // Draw a background graphic here
             }
 
-//             Draw a particle system explosion here
+//            Draw a particle system explosion here
             if(explosionEffectSystem.mIsRunning) {
                 explosionEffectSystem.draw(mCanvas, mPaint);
             }
@@ -60,4 +57,21 @@ class Renderer {
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }
+
+
+    void drawSpaceStation(GameState gs, Context context, SpaceStation sp) {
+        if(gs.mStationHealth > 30) {
+            sp = new SpaceStation(context, R.drawable.spacestation);
+        } else if (gs.mStationHealth <= 30 && gs.mStationHealth > 20) {
+            sp = new SpaceStation(context, R.drawable.spacestation2);
+        } else if (gs.mStationHealth <= 20 && gs.mStationHealth > 10) {
+            sp = new SpaceStation(context, R.drawable.spacestation3);
+        } else if (gs.mStationHealth <= 10 && gs.mStationHealth > 0) {
+            sp = new SpaceStation(context, R.drawable.spacestation4);
+        } else {
+            sp = new SpaceStation(context, R.drawable.spacestationdead);
+        }
+        sp.draw(mCanvas, mPaint);
+    }
+
 }
