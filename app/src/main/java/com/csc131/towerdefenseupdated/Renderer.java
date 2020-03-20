@@ -19,7 +19,7 @@ class Renderer {
     int mNumBlocksHigh;
     int blockSize;
 
-    void draw(Context context, GameState gs, HUD hud, SpaceStation sp,
+    void draw(Context context, GameState gs, HUD hud, Tower1 tower1, SpaceStation sp,
               ArrayList<Enemy> enemyArrayList, ExplosionEffectSystem explosionEffectSystem) {
 
         if (mSurfaceHolder.getSurface().isValid()) {
@@ -28,6 +28,8 @@ class Renderer {
             mCanvas.drawBitmap(bmp, 0, 0, mPaint);
 
             drawSpaceStation(gs, context, sp);
+
+            tower1.draw(mCanvas, mPaint);
 
             if (gs.mPlaying) {
                 // Draw all the game objects here

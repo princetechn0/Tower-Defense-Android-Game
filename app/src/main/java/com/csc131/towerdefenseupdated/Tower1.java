@@ -7,10 +7,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-class Enemy {
+class Tower1 {
 
     // The location in the grid of all the segments
     private ArrayList<TPoint> segmentLocations;
@@ -43,7 +45,7 @@ class Enemy {
     public int alienDamageAmount;
 
 
-    Enemy(Context context, TPoint mr, int ss, String kind) {
+    Tower1(Context context, TPoint mr, int ss) {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
@@ -53,34 +55,18 @@ class Enemy {
         mSegmentSize = ss;
         mMoveRange = mr;
 
-        int rDrawable;
-        switch (kind) {
-            case "alien2":
-                rDrawable = R.drawable.alien2;
-                alienDamageAmount = -2;
-                break;
-            case "alien3":
-                rDrawable = R.drawable.alien3;
-                alienDamageAmount = -3;
-                break;
-            case "alien1":
-            default:
-                rDrawable = R.drawable.alien1;
-                alienDamageAmount = -1;
-                break;
-        }
 
         for(int i = 0; i < mBitMaps.length; i++){
             mBitMaps[i] = BitmapFactory
                     .decodeResource(context.getResources(),
-                            rDrawable);
+                            R.drawable.turret);
         }
 
-        // Modify the bitmaps to face the head
+        // Modify the bitmaps to face the snake head
         // in the correct direction
         mBitMaps[0]  = Bitmap
                 .createScaledBitmap(mBitMaps[0] ,
-                        60, 60, false);
+                        120, 120, false);
 
         // A matrix for scaling
         Matrix matrix = new Matrix();
@@ -97,31 +83,21 @@ class Enemy {
 //        halfWayPoint = mr.point.x * ss / 2;
     }
 
-    // Get the enemy ready for a new game
-    void reset() {
+    // Get the snake ready for a new game
+    void reset(int x, int y) {
         // Reset the heading
-        heading = Heading.UP;
+        heading = Heading.RIGHT;
 
         // Delete the old contents of the ArrayList
         segmentLocations.clear();
 
         // Start with a single alien on the left side of the screen, entering the path
-        segmentLocations.add(new TPoint(-2,11));
+        segmentLocations.add(new TPoint(x,y));
 
     }
 
 
     void move() {
-        // Move the body
-        // Start at the back and move it
-        // to the position of the segment in front of it
-//        for (int i = segmentLocations.size() - 1; i > 0; i--) {
-//
-//            // Make it the same value as the next segment
-//            // going forwards towards the head
-//            segmentLocations.get(i).point.x = segmentLocations.get(i - 1).point.x;
-//            segmentLocations.get(i).point.y = segmentLocations.get(i - 1).point.y;
-//        }
 
         // Move the head in the appropriate heading
         // Get the existing head position
@@ -180,31 +156,31 @@ class Enemy {
     //Causes Alien to Follow the Path
     void hitsTheCorner() {
 
-       if((segmentLocations.get(0).point.equals(8,11))) {
+        if((segmentLocations.get(0).point.equals(8,11))) {
             rightDirections(Heading.LEFT);
-       }else if(((segmentLocations.get(0).point.equals(8,4)))){
-           rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(18,4)))){
-           rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(18,14)))){
-           rightDirections(Heading.DOWN);
-       }else if(((segmentLocations.get(0).point.equals(9,14)))){
-           rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(9,19)))){
-           rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(27,19)))){
-           rightDirections(Heading.LEFT);
-       } else if(((segmentLocations.get(0).point.equals(27,15)))){
-           rightDirections(Heading.DOWN);
-       } else if(((segmentLocations.get(0).point.equals(22,15)))){
-           rightDirections(Heading.LEFT);
-       } else if(((segmentLocations.get(0).point.equals(22,6)))){
-           rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(28,6)))){
-           rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(28,11)))){
-           rightDirections(Heading.UP);
-       }
+        }else if(((segmentLocations.get(0).point.equals(8,4)))){
+            rightDirections(Heading.UP);
+        } else if(((segmentLocations.get(0).point.equals(18,4)))){
+            rightDirections(Heading.RIGHT);
+        } else if(((segmentLocations.get(0).point.equals(18,14)))){
+            rightDirections(Heading.DOWN);
+        }else if(((segmentLocations.get(0).point.equals(9,14)))){
+            rightDirections(Heading.RIGHT);
+        } else if(((segmentLocations.get(0).point.equals(9,19)))){
+            rightDirections(Heading.UP);
+        } else if(((segmentLocations.get(0).point.equals(27,19)))){
+            rightDirections(Heading.LEFT);
+        } else if(((segmentLocations.get(0).point.equals(27,15)))){
+            rightDirections(Heading.DOWN);
+        } else if(((segmentLocations.get(0).point.equals(22,15)))){
+            rightDirections(Heading.LEFT);
+        } else if(((segmentLocations.get(0).point.equals(22,6)))){
+            rightDirections(Heading.UP);
+        } else if(((segmentLocations.get(0).point.equals(28,6)))){
+            rightDirections(Heading.RIGHT);
+        } else if(((segmentLocations.get(0).point.equals(28,11)))){
+            rightDirections(Heading.UP);
+        }
 
     }
 
@@ -214,17 +190,24 @@ class Enemy {
     }
 
 
+    int x, y;
+
 //
-//    // Handle changing direction
-//    void switchHeading(MotionEvent motionEvent) {
-//        // Is the tap on the right hand side?
-//        if (motionEvent.getX() >= halfWayPoint) {
-//            rightDirections(heading);
-//        } else {
-//            // Rotate left
-//            leftDirections(heading);
-//        }
-//    }
+//    // Handle Placing Tower on Map
+    void placeOnMap(MotionEvent motionEvent, GameState gameState, int x, int y) {
+        // Is the tap on the right hand side?
+        if(gameState.mEditing == true) {
+
+            System.out.println("X: " + x);
+            System.out.println("Y: " + y);
+
+            reset(x, y);
+        }
+
+
+
+
+    }
 
 
     void createBitmap(int i, int ss, Matrix matrix) {
@@ -235,12 +218,14 @@ class Enemy {
 
     void drawBitmap(int i, Canvas canvas, Paint paint) {
         canvas.drawBitmap(mBitMaps[i] ,
-                segmentLocations.get(0).point.x
-                        * mSegmentSize,
-                segmentLocations.get(0).point.y
-                        * mSegmentSize, paint);
+                segmentLocations.get(0).point.x - 50,
+                segmentLocations.get(0).point.y - 50, paint);
     }
 
+
+    void towerLocation() {
+        System.out.println(segmentLocations.get(0).point);
+    }
 
     boolean detectDeath() {
         // Has the snake died?

@@ -12,34 +12,39 @@ import java.util.ArrayList;
 
 class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
-    //Game State Object
+    // Game State Object
     public GameState gameState = new GameState();
 
-    //Game Objects
+    // Towers
+    Tower1 tower1;
+
+    // Game Objects
     SpaceStation spaceStation;
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
 
-    //Times Enemy Spawn
+    // Enemy Spawn
      Handler handler = new Handler();
      Boolean isActive;
 
 
-    //Audio Related
+    // Audio Related
     private SoundEngine audioEngine = new SoundEngine(getContext());
 
-    //Drawing
+    // Drawing
     HUD mHUD;
     Renderer mRenderer;
     ExplosionEffectSystem explosionEffectSystem;
     PhysicsEngine physicsEngine;
 
-    //Input Observer
+    // Input Observer
     private ArrayList<InputObserver> inputObservers = new ArrayList();
     HUDController mHudController;
 
 
-    //Testing Level Constructor
+    // Creating Level
     Level level;
+
+
 
     public GameEngine(Context context, TPoint size) {
         super(context);
@@ -52,6 +57,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         mHUD = new HUD(size);
 
         spaceStation = new SpaceStation(context, R.drawable.spacestation);
+
+        tower1 = new Tower1(context,
+                new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                        mRenderer.mNumBlocksHigh),
+                mRenderer.blockSize);
 
         physicsEngine = new PhysicsEngine();
 
@@ -71,6 +81,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         // Reset the enemies off screen and face them in the right direction
         resetEnemies();
 
+        tower1.reset(10, 11);
+
         spaceStation.spawn();
 
         // Reset Score and Everything
@@ -78,7 +90,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         // Setup mNextFrameTime so an update can triggered
         gameState.mNextFrameTime = System.currentTimeMillis();
-
     }
 
 
@@ -88,9 +99,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     public void nextRound() {
 
         level.clear();
-
         level.enemyIncrementer(gameState);
-
         level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
 
         // reset the enemies offscreen
@@ -127,7 +136,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
             }
 
 
-            mRenderer.draw(getContext(), gameState, mHUD, spaceStation, enemyArrayList, explosionEffectSystem);
+            mRenderer.draw(getContext(), gameState, mHUD, tower1, spaceStation, enemyArrayList, explosionEffectSystem);
         }
 
 
@@ -238,7 +247,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 //         Handle the player's input here
 //         But in a new way
         for (InputObserver o : inputObservers) {
-            o.handleInput( motionEvent, gameState, mHUD.getControls());
+            o.handleInput(getRootView(), motionEvent, gameState, mHUD.getControls(), tower1);
         }
 
         return true;

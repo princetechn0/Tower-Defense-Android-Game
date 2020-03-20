@@ -42,20 +42,17 @@ public class Level {
        if(gameState.mRound < 7) {
            gameState.num_enemy1 += 1;
        }
-
        // Wave 2
        if (gameState.mRound > 7 && gameState.mRound < 13) {
            gameState.num_enemy1 += 1;
            gameState.num_enemy2 += 1;
        }
-
        // Wave 3
         if (gameState.mRound > 13 && gameState.mRound < 25) {
             gameState.num_enemy1 += 1;
             gameState.num_enemy2 += 1;
             gameState.num_enemy3 += 1;
         }
-
         if(gameState.mRound > 25) {
             gameState.num_enemy1 += 2;
             gameState.num_enemy2 += 1;

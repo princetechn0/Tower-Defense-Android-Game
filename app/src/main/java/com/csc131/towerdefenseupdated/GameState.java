@@ -16,6 +16,7 @@ final class GameState {
     public volatile boolean mPlaying = false;
     public volatile boolean mEndofRound = true;
     public volatile boolean mDead = true;
+    public volatile boolean mEditing = false;
 
     // The Round Number
     public int mRound;
@@ -46,12 +47,14 @@ final class GameState {
         mPlaying = true;
         mEndofRound = false;
         mDead = false;
+        mEditing = false;
     }
 
     void newGame() {
         mPlaying = true;
         mEndofRound = true;
         mDead = true;
+        mEditing = false;
     }
 
     void resetVariables(){
@@ -72,6 +75,10 @@ final class GameState {
 
     int getNumTowers(){
         return mNumTowers;
+    }
+
+    void incrementNumTowers() {
+        mNumTowers++;
     }
 
     int getNumEnemies(){

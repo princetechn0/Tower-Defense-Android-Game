@@ -4,11 +4,14 @@ import android.graphics.Point;
 
 public class TPoint {
 
-        public Point point = new Point();
+        Point point;
 
-        public TPoint() {}
+        public TPoint() {
+                point = new Point();
+        }
 
-        public TPoint(int wid, int height){
+        public TPoint(int wid, int height)
+        {
             point = new Point(wid, height);
         }
 
