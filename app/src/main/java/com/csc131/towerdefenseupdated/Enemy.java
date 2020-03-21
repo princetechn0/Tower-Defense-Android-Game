@@ -53,6 +53,7 @@ class Enemy {
         mSegmentSize = ss;
         mMoveRange = mr;
 
+
         int rDrawable;
         switch (kind) {
             case "alien2":
@@ -106,7 +107,7 @@ class Enemy {
         segmentLocations.clear();
 
         // Start with a single alien on the left side of the screen, entering the path
-        segmentLocations.add(new TPoint(-2,11));
+        segmentLocations.add(new TPoint(-100,470));
 
     }
 
@@ -132,19 +133,19 @@ class Enemy {
         // Move it appropriately
         switch (heading) {
             case UP:
-                p.point.y--;
+                p.point.y-=20;
                 break;
 
             case RIGHT:
-                p.point.x++;
+                p.point.x+=20;
                 break;
 
             case DOWN:
-                p.point.y++;
+                p.point.y+=20;
                 break;
 
             case LEFT:
-                p.point.x--;
+                p.point.x-=20;
                 break;
         }
 
@@ -180,29 +181,29 @@ class Enemy {
     //Causes Alien to Follow the Path
     void hitsTheCorner() {
 
-       if((segmentLocations.get(0).point.equals(8,11))) {
+       if((segmentLocations.get(0).point.equals(360,470))) {
             rightDirections(Heading.LEFT);
-       }else if(((segmentLocations.get(0).point.equals(8,4)))){
+       }else if(((segmentLocations.get(0).point.equals(360, 190)))){
            rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(18,4)))){
+       } else if(((segmentLocations.get(0).point.equals(780,190)))){
            rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(18,14)))){
+       } else if(((segmentLocations.get(0).point.equals(780,630)))){
            rightDirections(Heading.DOWN);
-       }else if(((segmentLocations.get(0).point.equals(9,14)))){
+       }else if(((segmentLocations.get(0).point.equals(400,630)))){
            rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(9,19)))){
+       } else if(((segmentLocations.get(0).point.equals(400,850)))){
            rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(27,19)))){
+       } else if(((segmentLocations.get(0).point.equals(1180,850)))){
            rightDirections(Heading.LEFT);
-       } else if(((segmentLocations.get(0).point.equals(27,15)))){
+       } else if(((segmentLocations.get(0).point.equals(1180,670)))){
            rightDirections(Heading.DOWN);
-       } else if(((segmentLocations.get(0).point.equals(22,15)))){
+       } else if(((segmentLocations.get(0).point.equals(960,670)))){
            rightDirections(Heading.LEFT);
-       } else if(((segmentLocations.get(0).point.equals(22,6)))){
+       } else if(((segmentLocations.get(0).point.equals(960,290)))){
            rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(28,6)))){
+       } else if(((segmentLocations.get(0).point.equals(1220,290)))){
            rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(28,11)))){
+       } else if(((segmentLocations.get(0).point.equals(1220,470)))){
            rightDirections(Heading.UP);
        }
 
@@ -235,10 +236,8 @@ class Enemy {
 
     void drawBitmap(int i, Canvas canvas, Paint paint) {
         canvas.drawBitmap(mBitMaps[i] ,
-                segmentLocations.get(0).point.x
-                        * mSegmentSize,
-                segmentLocations.get(0).point.y
-                        * mSegmentSize, paint);
+                segmentLocations.get(0).point.x,
+                segmentLocations.get(0).point.y, paint);
     }
 
 
@@ -247,7 +246,7 @@ class Enemy {
         boolean dead = false;
 
         // Reaches the Location of The Space Station
-        if (segmentLocations.get(0).point.equals(36,11)) {
+        if (segmentLocations.get(0).point.equals(1580,470)) {
             dead = true;
         }
 
