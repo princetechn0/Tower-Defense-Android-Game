@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 
             tower1.towerLocation();
-            tower1.placeOnMap(event, gameState, x, y );
+            tower1.placeOnMap( gameState, x, y );
             tower1.towerLocation();
 
 

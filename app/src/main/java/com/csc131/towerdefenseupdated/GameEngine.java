@@ -60,8 +60,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         tower1 = new Tower1(context,
                 new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                        mRenderer.mNumBlocksHigh),
-                mRenderer.blockSize);
+                        mRenderer.mNumBlocksHigh), "tower1");
 
         physicsEngine = new PhysicsEngine();
 
@@ -81,7 +80,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         // Reset the enemies off screen and face them in the right direction
         resetEnemies();
 
-        tower1.reset(10, 11);
+        tower1.reset(-500, 500);
 
         spaceStation.spawn();
 

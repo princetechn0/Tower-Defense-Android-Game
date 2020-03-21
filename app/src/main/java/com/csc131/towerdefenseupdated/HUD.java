@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 class HUD {
@@ -146,6 +147,7 @@ class HUD {
         p.setColor(Color.argb(200,200,0,0));
         c.drawRect(controls.get(3), p);
     }
+
 
 }
 

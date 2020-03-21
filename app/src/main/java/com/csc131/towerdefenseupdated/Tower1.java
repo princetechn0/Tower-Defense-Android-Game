@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
@@ -35,14 +34,11 @@ class Tower1 {
     //right-0, left-1, up-2, down-3
     private Bitmap mBitMaps[] = new Bitmap[4];
 
-    // A bitmap for the body
-    private Bitmap mBitmapBody;
-
-    //Alien Damage Amount
-    public int alienDamageAmount;
+    //Alien Cool Down before it Fires Again
+    public int coolDownRate;
 
 
-    Tower1(Context context, TPoint mr, int ss) {
+    Tower1(Context context, TPoint mr, String kind) {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
@@ -52,10 +48,27 @@ class Tower1 {
         mMoveRange = mr;
 
 
+        int rDrawable;
+        switch (kind) {
+            case "tower2":
+                rDrawable = R.drawable.machinegun;
+                coolDownRate = 2;
+                break;
+            case "tower3":
+                rDrawable = R.drawable.raygun;
+                coolDownRate = 3;
+                break;
+            case "tower1":
+            default:
+                rDrawable = R.drawable.turret;
+                coolDownRate = 1;
+                break;
+        }
+
+
         for(int i = 0; i < mBitMaps.length; i++){
             mBitMaps[i] = BitmapFactory
-                    .decodeResource(context.getResources(),
-                            R.drawable.turret);
+                    .decodeResource(context.getResources(),rDrawable);
         }
 
         // Modify the bitmaps to face the tower
@@ -72,6 +85,9 @@ class Tower1 {
         createBitmap(2, 60, matrix);
         matrix.preRotate(180);
         createBitmap(3, 60, matrix);
+
+//        // Start by placing Tower off screen before user calls it
+//        segmentLocations.add(new TPoint(-500, -500));
 
 
         // The halfway point across the screen in pixels
@@ -190,10 +206,9 @@ class Tower1 {
 
 //
 //    // Handle Placing Tower on Map
-    void placeOnMap(MotionEvent motionEvent, GameState gameState, int x, int y) {
+    void placeOnMap(GameState gameState, int x, int y) {
         // Is the tap on the right hand side?
         if(gameState.mEditing == true) {
-
             System.out.println("X: " + x);
             System.out.println("Y: " + y);
 
