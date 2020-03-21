@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -17,8 +16,6 @@ class Tower1 {
     // The location in the grid of all the segments
     private ArrayList<TPoint> segmentLocations;
 
-    // How big is each segment of the snake?
-    private int mSegmentSize;
 
     // How big is the entire grid
     private TPoint mMoveRange;
@@ -52,7 +49,6 @@ class Tower1 {
 
         // Initialize the segment size and movement
         // range from the passed in parameters
-        mSegmentSize = ss;
         mMoveRange = mr;
 
 
@@ -62,11 +58,11 @@ class Tower1 {
                             R.drawable.turret);
         }
 
-        // Modify the bitmaps to face the snake head
+        // Modify the bitmaps to face the tower
         // in the correct direction
         mBitMaps[0]  = Bitmap
                 .createScaledBitmap(mBitMaps[0] ,
-                        120, 120, false);
+                        130, 130, false);
 
         // A matrix for scaling
         Matrix matrix = new Matrix();

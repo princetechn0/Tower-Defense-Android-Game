@@ -35,8 +35,6 @@ import java.util.ArrayList;
             tower1.towerLocation();
 
 
-
-
             // UI
             if (buttons.get(HUD.START_Round).contains(x, y)) {
                     //Disables Start Button while round is running and game is in edit mode

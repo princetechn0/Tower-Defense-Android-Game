@@ -26,12 +26,6 @@ public class SpaceStation {
     }
 
 
-    // Let SnakeGame know where the apple is
-    // SnakeGame can share this with the snake
-    TPoint getLocation(){
-        return location;
-    }
-
     // Draw the station
     void draw(Canvas canvas, Paint paint){
         spawn();

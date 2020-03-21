@@ -15,9 +15,6 @@ class Enemy {
     // The location in the grid of all the segments
     private ArrayList<TPoint> segmentLocations;
 
-    // How big is each segment of the snake?
-    private int mSegmentSize;
-
     // How big is the entire grid
     private TPoint mMoveRange;
 
@@ -36,21 +33,17 @@ class Enemy {
     //right-0, left-1, up-2, down-3
     private Bitmap mBitMaps[] = new Bitmap[4];
 
-    // A bitmap for the body
-    private Bitmap mBitmapBody;
-
     //Alien Damage Amount
     public int alienDamageAmount;
 
 
-    Enemy(Context context, TPoint mr, int ss, String kind) {
+    Enemy(Context context, TPoint mr, String kind) {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
 
         // Initialize the segment size and movement
         // range from the passed in parameters
-        mSegmentSize = ss;
         mMoveRange = mr;
 
 
@@ -86,16 +79,16 @@ class Enemy {
         // A matrix for scaling
         Matrix matrix = new Matrix();
         matrix.preScale(-1, 1);
-        createBitmap(1, 60, matrix);
+        createBitmap(1, matrix);
         matrix.preRotate(-90);
-        createBitmap(2, 60, matrix);
+        createBitmap(2, matrix);
         matrix.preRotate(180);
-        createBitmap(3, 60, matrix);
+        createBitmap(3, matrix);
 
 
         // The halfway point across the screen in pixels
         // Used to detect which side of screen was pressed
-//        halfWayPoint = mr.point.x * ss / 2;
+//        halfWayPoint = mr.point.x  / 2;
     }
 
     // Get the enemy ready for a new game
@@ -228,10 +221,10 @@ class Enemy {
 //    }
 
 
-    void createBitmap(int i, int ss, Matrix matrix) {
+    void createBitmap(int i, Matrix matrix) {
         mBitMaps[i]  = Bitmap
                 .createBitmap(mBitMaps[0] ,
-                        0, 0, ss, ss, matrix, true);
+                        0, 0, 60, 60, matrix, true);
     }
 
     void drawBitmap(int i, Canvas canvas, Paint paint) {

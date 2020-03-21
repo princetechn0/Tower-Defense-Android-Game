@@ -147,7 +147,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     public boolean updateRequired() {
 
         // Run at 10 frames per second
-        final long TARGET_FPS = 10;
+        final long TARGET_FPS = 30;
         // There are 1000 milliseconds in a second
         final long MILLIS_PER_SECOND = 1000;
 
