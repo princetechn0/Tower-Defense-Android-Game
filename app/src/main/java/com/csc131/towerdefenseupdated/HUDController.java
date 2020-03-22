@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 
     @Override
-    public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState, ArrayList<Rect> buttons, Tower1 tower1, ArrayList<Tower1> tower1ArrayList) {
+    public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState, ArrayList<Rect> buttons, ArrayList<Tower1> tower1ArrayList) {
         int i = event.getActionIndex();
         int x = (int) event.getX(i);
         int y = (int) event.getY(i);
