@@ -28,11 +28,7 @@ import java.util.ArrayList;
 
         if(eventType == MotionEvent.ACTION_UP || eventType == MotionEvent.ACTION_POINTER_UP) {
 
-
-
-            tower1.towerLocation();
             tower1.placeOnMap( gameState, x, y );
-            tower1.towerLocation();
 
 
             // UI

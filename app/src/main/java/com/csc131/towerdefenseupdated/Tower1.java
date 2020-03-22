@@ -106,6 +106,7 @@ class Tower1 {
         // Start with a single alien on the left side of the screen, entering the path
         segmentLocations.add(new TPoint(x,y));
 
+
     }
 
 
@@ -115,7 +116,6 @@ class Tower1 {
         // Get the existing head position
         TPoint p = segmentLocations.get(0);
 
-        hitsTheCorner();
 
         // Move it appropriately
         switch (heading) {
@@ -165,54 +165,15 @@ class Tower1 {
     }
 
 
-    //Causes Alien to Follow the Path
-    void hitsTheCorner() {
 
-        if((segmentLocations.get(0).point.equals(8,11))) {
-            rightDirections(Heading.LEFT);
-        }else if(((segmentLocations.get(0).point.equals(8,4)))){
-            rightDirections(Heading.UP);
-        } else if(((segmentLocations.get(0).point.equals(18,4)))){
-            rightDirections(Heading.RIGHT);
-        } else if(((segmentLocations.get(0).point.equals(18,14)))){
-            rightDirections(Heading.DOWN);
-        }else if(((segmentLocations.get(0).point.equals(9,14)))){
-            rightDirections(Heading.RIGHT);
-        } else if(((segmentLocations.get(0).point.equals(9,19)))){
-            rightDirections(Heading.UP);
-        } else if(((segmentLocations.get(0).point.equals(27,19)))){
-            rightDirections(Heading.LEFT);
-        } else if(((segmentLocations.get(0).point.equals(27,15)))){
-            rightDirections(Heading.DOWN);
-        } else if(((segmentLocations.get(0).point.equals(22,15)))){
-            rightDirections(Heading.LEFT);
-        } else if(((segmentLocations.get(0).point.equals(22,6)))){
-            rightDirections(Heading.UP);
-        } else if(((segmentLocations.get(0).point.equals(28,6)))){
-            rightDirections(Heading.RIGHT);
-        } else if(((segmentLocations.get(0).point.equals(28,11)))){
-            rightDirections(Heading.UP);
-        }
-
-    }
-
-
-    void beginMoving() {
-        rightDirections(heading);
-    }
-
-
-    int x, y;
-
-//
-//    // Handle Placing Tower on Map
+    // Handles Placing Tower on Map
     void placeOnMap(GameState gameState, int x, int y) {
         // Is the tap on the right hand side?
         if(gameState.mEditing == true) {
-            System.out.println("X: " + x);
-            System.out.println("Y: " + y);
-
             reset(x, y);
+
+            //Disables Editing Mode after Tower is moved Initially
+            gameState.mEditing = false;
         }
 
 

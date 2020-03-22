@@ -52,6 +52,8 @@ class Renderer {
             if(gs.mEditing) {
                 // Warns User of Where Not to Place Tower
                 hud.drawWarningZone(mCanvas, mPaint);
+
+
             }
 
 //            Draw a particle system explosion here
