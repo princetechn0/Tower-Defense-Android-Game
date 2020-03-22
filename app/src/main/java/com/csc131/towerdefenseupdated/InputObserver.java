@@ -8,5 +8,6 @@ import android.view.View;
 import java.util.ArrayList;
 
 interface InputObserver {
-    void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gs, ArrayList<Rect> controls, ArrayList<Tower1> tower1ArrayList);
+    void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gs, ArrayList<Rect> offLimitAreas,
+                     ArrayList<Rect> controls, ArrayList<Tower1> tower1ArrayList);
 }

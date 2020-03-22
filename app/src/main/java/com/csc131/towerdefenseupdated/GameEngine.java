@@ -250,7 +250,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 //         Handle the player's input here
 //         But in a new way
         for (InputObserver o : inputObservers) {
-            o.handleInput(getContext(), mRenderer,  motionEvent, gameState, mHUD.getControls(), tower1ArrayList);
+            o.handleInput(getContext(), mRenderer,  motionEvent, gameState, mHUD.getOffLimitAreas(), mHUD.getControls(), tower1ArrayList);
         }
 
         return true;

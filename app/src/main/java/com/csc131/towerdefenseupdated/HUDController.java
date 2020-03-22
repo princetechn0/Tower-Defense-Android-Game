@@ -1,7 +1,5 @@
 package com.csc131.towerdefenseupdated;
-
 import android.content.Context;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 
 
     @Override
-    public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState,
+    public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState, ArrayList<Rect> offLimitAreas,
                             ArrayList<Rect> buttons, ArrayList<Tower1> tower1ArrayList) {
         int i = event.getActionIndex();
         int x = (int) event.getX(i);
@@ -41,7 +39,6 @@ import java.util.ArrayList;
             if (buttons.get(HUD.RESTART).contains(x, y)) {
                 gameState.newGame();
                 gameEngine.newGame();
-
             }
 
 
@@ -49,8 +46,18 @@ import java.util.ArrayList;
 
             // Places the Latest instantiation of Tower on the Map
             if(tower1ArrayList.size() != 0){
-                tower1ArrayList.get(tower1ArrayList.size()-1).placeOnMap(gameState, x, y,
-                        tower1ArrayList.get(tower1ArrayList.size()-1).cost);
+                Boolean offLimit = false;
+
+                for(Rect r: offLimitAreas){
+                    if(r.contains(x,y)) {
+                        offLimit = true;
+                    }
+                }
+
+                if(!offLimit) {
+                    tower1ArrayList.get(tower1ArrayList.size()-1).placeOnMap(gameState, x, y,
+                            tower1ArrayList.get(tower1ArrayList.size()-1).cost);
+                }
             }
 
 

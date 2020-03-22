@@ -114,6 +114,11 @@ class HUD {
         return controls;
     }
 
+    ArrayList<Rect> getOffLimitAreas(){
+        return offLimitAreas;
+    }
+
+
 
     private void drawRectImage(Context context, int icon, Canvas c, int i) {
         Drawable drawable = context.getResources().getDrawable(icon);

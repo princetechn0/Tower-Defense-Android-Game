@@ -175,15 +175,9 @@ class Tower1 {
 
     // Handles Placing Tower on Map
     void placeOnMap(GameState gameState, int x, int y, int cost) {
-        // Is the tap on the right hand side?
         if(gameState.mEditing == true) {
-//
-//            for(Rect r: hud.offLimitAreas){
-//                if(!r.contains(x, y)) {
-//                    System.out.println("spot is successful");
-                    reset(x, y);
-//                }
-//            }
+            reset(x,y);
+
             // Disables Editing Mode after Tower is moved Initially
             gameState.mEditing = false;
 
