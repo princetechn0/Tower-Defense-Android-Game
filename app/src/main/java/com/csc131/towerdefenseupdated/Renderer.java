@@ -20,6 +20,7 @@ class Renderer {
     int blockSize;
 
 
+
     void draw(Context context, GameState gs, HUD hud, SpaceStation sp,
               ArrayList<Enemy> enemyArrayList, ArrayList<Tower1> tower1ArrayList, ExplosionEffectSystem explosionEffectSystem) {
 
@@ -69,6 +70,7 @@ class Renderer {
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }
+
 
 
     void drawSpaceStation(GameState gs, Context context, SpaceStation sp) {

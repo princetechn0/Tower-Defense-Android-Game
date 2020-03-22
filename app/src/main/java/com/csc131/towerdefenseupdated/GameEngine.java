@@ -3,6 +3,7 @@ package com.csc131.towerdefenseupdated;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
@@ -44,7 +45,12 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Creating Level
     Level level;
-    
+
+
+    // Creating on Screen Messages
+//    com.csc131.towerdefenseupdated.Toast toast = new com.csc131.towerdefenseupdated.Toast(getContext());
+
+
 
     public GameEngine(Context context, TPoint size) {
         super(context);
@@ -68,8 +74,12 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     }
 
+
+
+
     // Called to start a new game
     public void newGame() {
+
         //Handler
         isActive = false;
 
@@ -92,7 +102,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Called to start a new game
     public void nextRound() {
-
         level.clear();
         level.enemyIncrementer(gameState);
         level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
@@ -163,8 +172,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         return false;
     }
 
-    
-
 
 
     // Update all the game objects
@@ -192,6 +199,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     // Pause the game ready to start again
                     gameState.mDead = true;
                     gameState.mEndofRound = true;
+
                 }
 
                 //Resets the enemy to the original position off screen, ready for next wave
@@ -205,8 +213,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         }
 
-
     }
+
 
     //Prints all the enemies with a time delay
     void handleTime(final int enemyNumber,  int delay) {
