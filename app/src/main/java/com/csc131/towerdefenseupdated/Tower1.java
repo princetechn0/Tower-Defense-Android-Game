@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,9 @@ class Tower1 {
     //Alien Cool Down before it Fires Again
     public int coolDownRate;
 
+    //Cost
+    public int cost;
+
 
     Tower1(Context context, TPoint mr, String kind) {
 
@@ -53,15 +58,18 @@ class Tower1 {
             case "tower2":
                 rDrawable = R.drawable.machinegun;
                 coolDownRate = 2;
+                cost = 400;
                 break;
             case "tower3":
                 rDrawable = R.drawable.raygun;
                 coolDownRate = 3;
+                cost = 850;
                 break;
             case "tower1":
             default:
                 rDrawable = R.drawable.turret;
                 coolDownRate = 1;
+                cost = 250;
                 break;
         }
 
@@ -87,7 +95,7 @@ class Tower1 {
         createBitmap(3, 60, matrix);
 
 //        // Start by placing Tower off screen before user calls it
-//        segmentLocations.add(new TPoint(-500, -500));
+        segmentLocations.add(new TPoint(-500, -500));
 
 
         // The halfway point across the screen in pixels
@@ -165,16 +173,26 @@ class Tower1 {
     }
 
 
-
     // Handles Placing Tower on Map
-    void placeOnMap(GameState gameState, int x, int y) {
+    void placeOnMap(GameState gameState, int x, int y, int cost) {
         // Is the tap on the right hand side?
         if(gameState.mEditing == true) {
-            reset(x, y);
-
-            //Disables Editing Mode after Tower is moved Initially
+//
+//            for(Rect r: hud.offLimitAreas){
+//                if(!r.contains(x, y)) {
+//                    System.out.println("spot is successful");
+                    reset(x, y);
+//                }
+//            }
+            // Disables Editing Mode after Tower is moved Initially
             gameState.mEditing = false;
+
+            // Subtracts Cost
+            gameState.mCurrency -= cost;
         }
+
+
+
 
 
 
@@ -195,8 +213,20 @@ class Tower1 {
     }
 
 
-    void towerLocation() {
-        System.out.println(segmentLocations.get(0).point);
+    Point towerLocation() {
+        return segmentLocations.get(0).point;
+    }
+
+    boolean locationChanged() {
+        // Has the snake died?
+        boolean changed = false;
+
+        // Reaches the Location of The Space Station
+        if (!segmentLocations.get(0).point.equals(-500,500)) {
+            changed = true;
+        }
+
+        return changed;
     }
 
     boolean detectDeath() {

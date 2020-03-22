@@ -1,6 +1,7 @@
 package com.csc131.towerdefenseupdated;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -18,7 +19,8 @@ import java.util.ArrayList;
 
 
     @Override
-    public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState, ArrayList<Rect> buttons, ArrayList<Tower1> tower1ArrayList) {
+    public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState,
+                            ArrayList<Rect> buttons, ArrayList<Tower1> tower1ArrayList) {
         int i = event.getActionIndex();
         int x = (int) event.getX(i);
         int y = (int) event.getY(i);
@@ -26,14 +28,6 @@ import java.util.ArrayList;
         int eventType = event.getAction() & MotionEvent.ACTION_MASK;
 
         if(eventType == MotionEvent.ACTION_UP || eventType == MotionEvent.ACTION_POINTER_UP) {
-
-
-            // Places the Latest instantiation of Tower on the Map
-            if(tower1ArrayList.size()!=0){
-                System.out.println("size" + tower1ArrayList.size());
-                tower1ArrayList.get(tower1ArrayList.size()-1).placeOnMap(gameState, x, y);
-            }
-
 
             // UI
             if (buttons.get(HUD.START_Round).contains(x, y)) {
@@ -52,27 +46,42 @@ import java.util.ArrayList;
 
 
             // Towers
+
+            // Places the Latest instantiation of Tower on the Map
+            if(tower1ArrayList.size() != 0){
+                tower1ArrayList.get(tower1ArrayList.size()-1).placeOnMap(gameState, x, y,
+                        tower1ArrayList.get(tower1ArrayList.size()-1).cost);
+            }
+
+
             if (buttons.get(HUD.TOWER1).contains(x, y)) {
-                tower1ArrayList.add(new Tower1(context,
-                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                mRenderer.mNumBlocksHigh), "tower1"));
-                gameState.mEditing = true;
+                // Check if user can afford the tower
+                if(gameState.mCurrency >= 250){
+                    tower1ArrayList.add(new Tower1(context,
+                            new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                    mRenderer.mNumBlocksHigh), "tower1"));
+                    gameState.mEditing = true;
+                }
             }
 
             if (buttons.get(HUD.TOWER2).contains(x, y)) {
-                tower1ArrayList.add(new Tower1(context,
-                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                mRenderer.mNumBlocksHigh), "tower2"));
-                gameState.mEditing = true;
-
+                if(gameState.mCurrency >= 400){
+                    tower1ArrayList.add(new Tower1(context,
+                            new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                    mRenderer.mNumBlocksHigh), "tower2"));
+                    gameState.mEditing = true;
+                }
             }
+
             if (buttons.get(HUD.TOWER3).contains(x, y)) {
-                tower1ArrayList.add(new Tower1(context,
-                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                mRenderer.mNumBlocksHigh), "tower3"));
-                gameState.mEditing = true;
-
+                if(gameState.mCurrency >= 850){
+                    tower1ArrayList.add(new Tower1(context,
+                            new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                    mRenderer.mNumBlocksHigh), "tower3"));
+                    gameState.mEditing = true;
+                }
             }
+
 
 
         }

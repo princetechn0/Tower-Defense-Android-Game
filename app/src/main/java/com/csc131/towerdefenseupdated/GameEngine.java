@@ -115,6 +115,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
 
+
     // Handles the game loop
     @Override
     public void run() {
@@ -164,7 +165,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         return false;
     }
 
-
+    
 
 
 
@@ -199,9 +200,14 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 e.reset();
 
                 gameState.mStationHealth += e.alienDamageAmount;
-
             }
         }
+
+        for(Tower1 t: tower1ArrayList) {
+
+        }
+
+
     }
 
     //Prints all the enemies with a time delay

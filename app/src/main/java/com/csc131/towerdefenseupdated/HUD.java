@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 class HUD {
@@ -22,7 +21,7 @@ class HUD {
     static int START_Round = 3;
     static int RESTART = 4;
 
-    private ArrayList<Rect> offLimitAreas;
+    public ArrayList<Rect> offLimitAreas;
 
     HUD(TPoint size) {
         mScreenHeight = size.point.y;
