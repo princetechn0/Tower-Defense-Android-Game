@@ -21,7 +21,7 @@ class Renderer {
 
 
     void draw(Context context, GameState gs, HUD hud, Tower1 tower1, SpaceStation sp,
-              ArrayList<Enemy> enemyArrayList, ExplosionEffectSystem explosionEffectSystem) {
+              ArrayList<Enemy> enemyArrayList, ArrayList<Tower1> tower1ArrayList, ExplosionEffectSystem explosionEffectSystem) {
 
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
@@ -30,7 +30,11 @@ class Renderer {
 
             drawSpaceStation(gs, context, sp);
 
-            tower1.draw(mCanvas, mPaint);
+//            tower1.draw(mCanvas, mPaint);
+
+            for(Tower1 t: tower1ArrayList) {
+                t.draw(mCanvas, mPaint);
+            }
 
             if (gs.mPlaying) {
                 // Draw all the game objects here

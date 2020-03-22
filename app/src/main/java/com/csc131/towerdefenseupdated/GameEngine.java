@@ -18,7 +18,10 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Towers
     Tower1 tower1;
-    
+    ArrayList<Tower1> tower1ArrayList = new ArrayList<>();
+
+
+
     // Game Objects
     SpaceStation spaceStation;
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
@@ -81,7 +84,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         // Reset the enemies off screen and face them in the right direction
         resetEnemies();
 
-        tower1.reset(-500, 500);
+//        tower1.reset(-500, 500);
+        tower1ArrayList.clear();
 
         spaceStation.spawn();
 
@@ -136,7 +140,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
             }
 
 
-            mRenderer.draw(getContext(), gameState, mHUD, tower1, spaceStation, enemyArrayList, explosionEffectSystem);
+            mRenderer.draw(getContext(), gameState, mHUD, tower1, spaceStation, enemyArrayList, tower1ArrayList, explosionEffectSystem);
         }
 
 
@@ -247,7 +251,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 //         Handle the player's input here
 //         But in a new way
         for (InputObserver o : inputObservers) {
-            o.handleInput(getRootView(), motionEvent, gameState, mHUD.getControls(), tower1);
+            o.handleInput(getContext(), mRenderer,  motionEvent, gameState, mHUD.getControls(), tower1, tower1ArrayList);
         }
 
         return true;

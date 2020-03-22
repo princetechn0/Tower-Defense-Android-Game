@@ -3,7 +3,6 @@ package com.csc131.towerdefenseupdated;
 import android.content.Context;
 import android.graphics.Rect;
 import android.view.MotionEvent;
-import android.view.View;
 
 import java.util.ArrayList;
 
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 
 
     @Override
-    public void handleInput(View v, MotionEvent event, GameState gameState, ArrayList<Rect> buttons, Tower1 tower1) {
+    public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState, ArrayList<Rect> buttons, Tower1 tower1, ArrayList<Tower1> tower1ArrayList) {
         int i = event.getActionIndex();
         int x = (int) event.getX(i);
         int y = (int) event.getY(i);
@@ -28,7 +27,12 @@ import java.util.ArrayList;
 
         if(eventType == MotionEvent.ACTION_UP || eventType == MotionEvent.ACTION_POINTER_UP) {
 
-            tower1.placeOnMap( gameState, x, y );
+
+            // Places the Latest instantiation of Tower on the Map
+            if(tower1ArrayList.size()!=0){
+                System.out.println("size" + tower1ArrayList.size());
+                tower1ArrayList.get(tower1ArrayList.size()-1).placeOnMap(gameState, x, y);
+            }
 
 
             // UI
@@ -49,14 +53,23 @@ import java.util.ArrayList;
 
             // Towers
             if (buttons.get(HUD.TOWER1).contains(x, y)) {
+                tower1ArrayList.add(new Tower1(context,
+                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                mRenderer.mNumBlocksHigh), "tower1"));
                 gameState.mEditing = true;
             }
 
             if (buttons.get(HUD.TOWER2).contains(x, y)) {
+                tower1ArrayList.add(new Tower1(context,
+                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                mRenderer.mNumBlocksHigh), "tower2"));
                 gameState.mEditing = true;
 
             }
             if (buttons.get(HUD.TOWER3).contains(x, y)) {
+                tower1ArrayList.add(new Tower1(context,
+                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                mRenderer.mNumBlocksHigh), "tower3"));
                 gameState.mEditing = true;
 
             }
