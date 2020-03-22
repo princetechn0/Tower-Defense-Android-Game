@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 
 import java.util.ArrayList;
 
@@ -176,6 +175,7 @@ class Tower1 {
     // Handles Placing Tower on Map
     void placeOnMap(GameState gameState, int x, int y, int cost) {
         if(gameState.mEditing == true) {
+
             reset(x,y);
 
             // Disables Editing Mode after Tower is moved Initially

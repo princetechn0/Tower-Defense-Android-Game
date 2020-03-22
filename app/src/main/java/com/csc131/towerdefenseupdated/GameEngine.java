@@ -6,8 +6,8 @@ import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
+import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -18,7 +18,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Towers
     ArrayList<Tower1> tower1ArrayList = new ArrayList<>();
-
 
     // Game Objects
     SpaceStation spaceStation;
@@ -45,8 +44,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Creating Level
     Level level;
-
-
+    
 
     public GameEngine(Context context, TPoint size) {
         super(context);
