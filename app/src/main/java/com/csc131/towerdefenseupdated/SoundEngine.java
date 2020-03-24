@@ -37,7 +37,7 @@ class SoundEngine {
 
             // Prepare the sounds in memory
 
-            descriptor = assetManager.openFd("snake_death.ogg");
+            descriptor = assetManager.openFd("deathsound.mp3");
             mEnemyDeath_ID = mSP.load(descriptor, 0);
 
         } catch (IOException e) {
