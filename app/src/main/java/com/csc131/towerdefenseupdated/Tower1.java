@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 import java.util.ArrayList;
 
@@ -32,14 +33,20 @@ class Tower1 {
     // Start by heading to the right
     private Heading heading = Heading.RIGHT;
 
-    //right-0, left-1, up-2, down-3
+    // right-0, left-1, up-2, down-3
     private Bitmap mBitMaps[] = new Bitmap[4];
 
-    //Alien Cool Down before it Fires Again
+    // Alien Cool Down before it Fires Again
     public int coolDownRate;
 
-    //Cost
+    // Cost
     public int cost;
+
+    // Bounding Region when Tower Clicked
+    Rect boundingRect;
+    int radius;
+
+    Tower1 activeTower;
 
 
     Tower1(Context context, TPoint mr, String kind) {
@@ -58,17 +65,20 @@ class Tower1 {
                 rDrawable = R.drawable.machinegun;
                 coolDownRate = 2;
                 cost = 400;
+                radius = 400;
                 break;
             case "tower3":
                 rDrawable = R.drawable.raygun;
                 coolDownRate = 3;
                 cost = 850;
+                radius = 500;
                 break;
             case "tower1":
             default:
                 rDrawable = R.drawable.turret;
                 coolDownRate = 1;
                 cost = 250;
+                radius = 200;
                 break;
         }
 
@@ -96,6 +106,8 @@ class Tower1 {
 //        // Start by placing Tower off screen before user calls it
         segmentLocations.add(new TPoint(-500, -500));
 
+        boundingRect = new Rect();
+
 
         // The halfway point across the screen in pixels
         // Used to detect which side of screen was pressed
@@ -113,7 +125,7 @@ class Tower1 {
         // Start with a single alien on the left side of the screen, entering the path
         segmentLocations.add(new TPoint(x,y));
 
-
+        boundingRect = new Rect(x-40,y-40,x+80, y+80);
     }
 
 
@@ -147,8 +159,15 @@ class Tower1 {
 
 
 
-    void draw(Canvas canvas, Paint paint) {
+    void drawEditingArea(Canvas canvas, Paint paint) {
+//        if(gameState.mTowerClicked) {
+            canvas.drawCircle(segmentLocations.get(0).point.x + 15,
+                    segmentLocations.get(0).point.y + 15, radius, paint);
+//        }
+    }
 
+
+    void draw(Canvas canvas, Paint paint) {
         // Don't run this code if ArrayList has nothing in it
         if (!segmentLocations.isEmpty()) {
             // All the code from this method goes here
@@ -185,13 +204,8 @@ class Tower1 {
             gameState.mCurrency -= cost;
         }
 
-
-
-
-
-
-
     }
+
 
 
     void createBitmap(int i, int ss, Matrix matrix) {

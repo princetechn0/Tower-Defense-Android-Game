@@ -17,6 +17,7 @@ final class GameState {
     public volatile boolean mEndofRound = true;
     public volatile boolean mDead = true;
     public volatile boolean mEditing = false;
+    public volatile boolean mTowerClicked = false;
 
     // The Round Number
     public int mRound;
@@ -30,6 +31,9 @@ final class GameState {
     // How many Towers exist
     private int mNumTowers;
 
+    // Which Tower is Active
+    public int activeTower;
+
     // How many Enemies exist
     private int mNumEnemies;
     // How much health does the Enemy have
@@ -40,6 +44,7 @@ final class GameState {
     public int num_enemy2 = 0;
     public int num_enemy3 = 0;
 
+
     //Random
     Random random = new Random();
 
@@ -48,6 +53,7 @@ final class GameState {
         mEndofRound = false;
         mDead = false;
         mEditing = false;
+        mTowerClicked = false;
     }
 
     void newGame() {
@@ -55,6 +61,7 @@ final class GameState {
         mEndofRound = true;
         mDead = true;
         mEditing = false;
+        mTowerClicked = false;
     }
 
     void resetVariables(){

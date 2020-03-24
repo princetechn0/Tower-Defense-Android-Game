@@ -139,8 +139,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     update();
                 }
             }
-
-
             mRenderer.draw(getContext(), gameState, mHUD, spaceStation, enemyArrayList, tower1ArrayList, explosionEffectSystem);
         }
 

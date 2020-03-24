@@ -46,19 +46,29 @@ import java.util.ArrayList;
             // Towers
 
             // Places the Latest instantiation of Tower on the Map
-            if(tower1ArrayList.size() != 0){
+            if(tower1ArrayList.size() != 0) {
                 Boolean offLimit = false;
 
-                for(Rect r: offLimitAreas){
-                    if(r.contains(x,y)) {
+                for (Rect r : offLimitAreas) {
+                    if (r.contains(x, y)) {
                         offLimit = true;
                     }
                 }
-
-                if(!offLimit) {
-                    tower1ArrayList.get(tower1ArrayList.size()-1).placeOnMap(gameState, x, y,
-                            tower1ArrayList.get(tower1ArrayList.size()-1).cost);
+                if (!offLimit) {
+                    tower1ArrayList.get(tower1ArrayList.size() - 1).placeOnMap(gameState, x, y,
+                            tower1ArrayList.get(tower1ArrayList.size() - 1).cost);
                 }
+
+
+                // Touching a Rect for Further Editing / Deleting
+                gameState.mTowerClicked = false;
+                for (Tower1 t : tower1ArrayList) {
+                    if (t.boundingRect.contains(x, y)) {
+                        gameState.mTowerClicked = true;
+                        gameState.activeTower = tower1ArrayList.indexOf(t);
+                    }
+                }
+
             }
 
 
@@ -89,7 +99,6 @@ import java.util.ArrayList;
                     gameState.mEditing = true;
                 }
             }
-
 
 
         }

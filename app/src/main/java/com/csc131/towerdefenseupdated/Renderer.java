@@ -25,11 +25,18 @@ class Renderer {
               ArrayList<Enemy> enemyArrayList, ArrayList<Tower1> tower1ArrayList, ExplosionEffectSystem explosionEffectSystem) {
 
         if (mSurfaceHolder.getSurface().isValid()) {
+
             mCanvas = mSurfaceHolder.lockCanvas();
             Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mapmap);
             mCanvas.drawBitmap(bmp, 0, 0, mPaint);
 
             drawSpaceStation(gs, context, sp);
+
+
+            // Handles the tower that is currently selected
+            if(gs.mTowerClicked) {
+                tower1ArrayList.get(gs.activeTower).drawEditingArea(mCanvas, mPaint);
+            }
 
             for(Tower1 t: tower1ArrayList) {
                 t.draw(mCanvas, mPaint);
@@ -55,9 +62,9 @@ class Renderer {
             if(gs.mEditing) {
                 // Warns User of Where Not to Place Tower
                 hud.drawWarningZone(mCanvas, mPaint);
-
-
             }
+
+
 
 //            Draw a particle system explosion here
             if(explosionEffectSystem.mIsRunning) {
