@@ -62,11 +62,8 @@ class Renderer {
             // Handles the tower that is currently selected
             if(gs.mTowerClicked) {
                 tower1ArrayList.get(gs.activeTower).drawEditingArea(mCanvas, mPaint);
+                hud.drawExtensiveControls(mCanvas, mPaint, gs, tower1ArrayList);
             }
-
-            
-
-
 
 //            Draw a particle system explosion here
             if(explosionEffectSystem.mIsRunning) {

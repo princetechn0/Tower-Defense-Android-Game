@@ -47,7 +47,10 @@ class Tower1 {
     Rect boundingRect;
     int radius;
 
-    Tower1 activeTower;
+    // Desciption
+    public String name;
+    public String speedDesc;
+
 
 
     Tower1(Context context, TPoint mr, String kind) {
@@ -67,12 +70,16 @@ class Tower1 {
                 coolDownRate = 2;
                 cost = 400;
                 radius = 400;
+                name = "Machine Gun";
+                speedDesc = "Medium";
                 break;
             case "tower3":
                 rDrawable = R.drawable.raygun;
                 coolDownRate = 3;
                 cost = 850;
                 radius = 500;
+                name = "Ray Gun";
+                speedDesc = "Slow";
                 break;
             case "tower1":
             default:
@@ -80,6 +87,8 @@ class Tower1 {
                 coolDownRate = 1;
                 cost = 250;
                 radius = 200;
+                name = "Turret";
+                speedDesc = "Fast";
                 break;
         }
 

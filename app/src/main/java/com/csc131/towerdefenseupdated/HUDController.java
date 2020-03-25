@@ -1,10 +1,7 @@
 package com.csc131.towerdefenseupdated;
 import android.content.Context;
 import android.graphics.Rect;
-import android.view.Gravity;
 import android.view.MotionEvent;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
   class HUDController implements InputObserver {
@@ -19,7 +16,7 @@ import java.util.ArrayList;
 
     @Override
     public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState, ArrayList<Rect> offLimitAreas,
-                            ArrayList<Rect> buttons, ArrayList<Tower1> tower1ArrayList) {
+                            ArrayList<Rect> buttons, ArrayList<Rect> extensiveControls, ArrayList<Tower1> tower1ArrayList) {
         int i = event.getActionIndex();
         int x = (int) event.getX(i);
         int y = (int) event.getY(i);
@@ -69,7 +66,15 @@ import java.util.ArrayList;
                     }
                 }
 
+                for(Rect r: extensiveControls) {
+                    if(r.contains(x, y)){
+                        tower1ArrayList.remove(gameState.activeTower);
+                    }
+                }
+
             }
+
+
 
 
             if (buttons.get(HUD.TOWER1).contains(x, y)) {
@@ -99,6 +104,7 @@ import java.util.ArrayList;
                     gameState.mEditing = true;
                 }
             }
+
 
 
         }
