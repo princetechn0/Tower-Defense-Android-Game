@@ -80,7 +80,7 @@ class HUD {
 
         // For Actions while Tower is Clicked
         Rect towerInfo = new Rect( 500, 0, 1250, 150);
-        Rect sell = new Rect(800, 1000, 1000, 1090);
+        Rect sell = new Rect(700, 1000, 1100, 1090);
 
         extensiveControls = new ArrayList<>();
         extensiveControls.add(towerInfo); extensiveControls.add(sell);
@@ -160,7 +160,7 @@ class HUD {
             canvas.drawRect(r.left, r.top, r.right, r.bottom, paint);
         }
 
-        drawRectText("Sell", canvas, extensiveControls.get(1));
+        drawRectText("Sell for: " + tower1ArrayList.get(gs.activeTower).sellPrice, canvas, extensiveControls.get(1));
 
         paint.setColor(Color.argb(255,255,255,255));
         paint.setTextSize(mTextFormatting/2 + 15);

@@ -40,10 +40,9 @@ import java.util.ArrayList;
             }
 
 
-            // Towers
-
-            // Places the Latest instantiation of Tower on the Map
+            // Tower Handler
             if(tower1ArrayList.size() != 0) {
+                // Places the Latest instantiation of Tower on the Map
                 Boolean offLimit = false;
 
                 for (Rect r : offLimitAreas) {
@@ -66,12 +65,11 @@ import java.util.ArrayList;
                     }
                 }
 
-                for(Rect r: extensiveControls) {
-                    if(r.contains(x, y)){
-                        tower1ArrayList.remove(gameState.activeTower);
-                    }
+                // Sell Button for Selling the Tower
+                if(extensiveControls.get(1).contains(x, y)){
+                    gameState.mCurrency += tower1ArrayList.get(gameState.activeTower).sellPrice;
+                    tower1ArrayList.remove(gameState.activeTower);
                 }
-
             }
 
 

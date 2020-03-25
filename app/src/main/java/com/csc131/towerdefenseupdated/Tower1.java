@@ -18,7 +18,6 @@ class Tower1 {
     // The location in the grid of all the segments
     private ArrayList<TPoint> segmentLocations;
 
-
     // How big is the entire grid
     private TPoint mMoveRange;
 
@@ -37,19 +36,19 @@ class Tower1 {
     // right-0, left-1, up-2, down-3
     private Bitmap mBitMaps[] = new Bitmap[4];
 
-    // Alien Cool Down before it Fires Again
-    public int coolDownRate;
-
-    // Cost
-    public int cost;
 
     // Bounding Region when Tower Clicked
     Rect boundingRect;
     int radius;
 
-    // Desciption
+    // Tower Info
     public String name;
+    public int cost;
+
     public String speedDesc;
+    public int coolDownRate;
+
+    public int sellPrice;
 
 
 
@@ -72,6 +71,7 @@ class Tower1 {
                 radius = 400;
                 name = "Machine Gun";
                 speedDesc = "Medium";
+                sellPrice = 320;
                 break;
             case "tower3":
                 rDrawable = R.drawable.raygun;
@@ -80,6 +80,7 @@ class Tower1 {
                 radius = 500;
                 name = "Ray Gun";
                 speedDesc = "Slow";
+                sellPrice = 700;
                 break;
             case "tower1":
             default:
@@ -89,6 +90,7 @@ class Tower1 {
                 radius = 200;
                 name = "Turret";
                 speedDesc = "Fast";
+                sellPrice = 200;
                 break;
         }
 
