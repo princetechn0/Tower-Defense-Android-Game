@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -160,10 +161,9 @@ class Tower1 {
 
 
     void drawEditingArea(Canvas canvas, Paint paint) {
-//        if(gameState.mTowerClicked) {
+        paint.setColor(Color.argb(50,255,255,255));
             canvas.drawCircle(segmentLocations.get(0).point.x + 15,
                     segmentLocations.get(0).point.y + 15, radius, paint);
-//        }
     }
 
 
@@ -186,7 +186,6 @@ class Tower1 {
                     drawBitmap(3 ,canvas, paint);
                     break;
             }
-
         }
     }
 

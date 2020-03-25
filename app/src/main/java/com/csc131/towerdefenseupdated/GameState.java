@@ -30,7 +30,6 @@ final class GameState {
 
     // How many Towers exist
     private int mNumTowers;
-
     // Which Tower is Active
     public int activeTower;
 

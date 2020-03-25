@@ -32,15 +32,10 @@ class Renderer {
 
             drawSpaceStation(gs, context, sp);
 
-
-            // Handles the tower that is currently selected
-            if(gs.mTowerClicked) {
-                tower1ArrayList.get(gs.activeTower).drawEditingArea(mCanvas, mPaint);
-            }
-
             for(Tower1 t: tower1ArrayList) {
                 t.draw(mCanvas, mPaint);
             }
+
 
             if (gs.mPlaying) {
                 // Draw all the game objects here
@@ -63,6 +58,13 @@ class Renderer {
                 // Warns User of Where Not to Place Tower
                 hud.drawWarningZone(mCanvas, mPaint);
             }
+
+            // Handles the tower that is currently selected
+            if(gs.mTowerClicked) {
+                tower1ArrayList.get(gs.activeTower).drawEditingArea(mCanvas, mPaint);
+            }
+
+            
 
 
 

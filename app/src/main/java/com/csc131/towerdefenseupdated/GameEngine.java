@@ -3,11 +3,9 @@ package com.csc131.towerdefenseupdated;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
