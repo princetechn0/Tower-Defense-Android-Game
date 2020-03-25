@@ -36,11 +36,6 @@ class Tower1 {
     // right-0, left-1, up-2, down-3
     private Bitmap mBitMaps[] = new Bitmap[4];
 
-
-    // Bounding Region when Tower Clicked
-    Rect boundingRect;
-    int radius;
-
     // Tower Info
     public String name;
     public int cost;
@@ -49,6 +44,11 @@ class Tower1 {
     public int coolDownRate;
 
     public int sellPrice;
+
+    // Bounding Region when Tower Clicked
+    Rect boundingRect;
+    int radius;
+
 
 
 
@@ -87,7 +87,7 @@ class Tower1 {
                 rDrawable = R.drawable.turret;
                 coolDownRate = 1;
                 cost = 250;
-                radius = 200;
+                radius = 250;
                 name = "Turret";
                 speedDesc = "Fast";
                 sellPrice = 200;

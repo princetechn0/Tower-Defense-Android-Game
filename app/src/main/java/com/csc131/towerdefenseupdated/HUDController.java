@@ -74,7 +74,6 @@ import java.util.ArrayList;
 
 
 
-
             if (buttons.get(HUD.TOWER1).contains(x, y)) {
                 // Check if user can afford the tower
                 if(gameState.mCurrency >= 250){
@@ -102,6 +101,7 @@ import java.util.ArrayList;
                     gameState.mEditing = true;
                 }
             }
+
 
 
 
