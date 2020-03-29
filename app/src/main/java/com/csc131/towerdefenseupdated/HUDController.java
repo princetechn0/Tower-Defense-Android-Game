@@ -65,6 +65,7 @@ import java.util.ArrayList;
                     }
                 }
 
+
                 // Sell Button for Selling the Tower
                 if(extensiveControls.get(1).contains(x, y)){
                     gameState.mCurrency += tower1ArrayList.get(gameState.activeTower).sellPrice;
@@ -73,32 +74,62 @@ import java.util.ArrayList;
             }
 
 
+            // Resets mBuying Variable
+            gameState.mBuying = false;
 
             if (buttons.get(HUD.TOWER1).contains(x, y)) {
-                // Check if user can afford the tower
-                if(gameState.mCurrency >= 250){
-                    tower1ArrayList.add(new Tower1(context,
-                            new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                    mRenderer.mNumBlocksHigh), "tower1"));
-                    gameState.mEditing = true;
-                }
+                gameState.mBuying = true;
+                gameState.activeBuyer = HUD.TOWER1;
             }
 
             if (buttons.get(HUD.TOWER2).contains(x, y)) {
-                if(gameState.mCurrency >= 400){
-                    tower1ArrayList.add(new Tower1(context,
-                            new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                    mRenderer.mNumBlocksHigh), "tower2"));
-                    gameState.mEditing = true;
-                }
+                gameState.mBuying = true;
+                gameState.activeBuyer = HUD.TOWER2;
             }
 
             if (buttons.get(HUD.TOWER3).contains(x, y)) {
-                if(gameState.mCurrency >= 850){
-                    tower1ArrayList.add(new Tower1(context,
-                            new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                    mRenderer.mNumBlocksHigh), "tower3"));
-                    gameState.mEditing = true;
+                gameState.mBuying = true;
+                gameState.activeBuyer = HUD.TOWER3;
+            }
+
+
+            // If Buy Button is Clicked
+            if(extensiveControls.get(2).contains(x, y)){
+                gameState.mBuying = false;
+
+//              Checks if user can afford the tower
+                switch (gameState.activeBuyer) {
+                    case 0:
+                        if(gameState.mCurrency >= 250){
+                            tower1ArrayList.add(new Tower1(context,
+                                    new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                            mRenderer.mNumBlocksHigh), "tower1"));
+                            gameState.mEditing = true;
+                        }
+                        break;
+
+                    case 1:
+                        if(gameState.mCurrency >= 400){
+                            tower1ArrayList.add(new Tower1(context,
+                                    new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                            mRenderer.mNumBlocksHigh), "tower2"));
+                            gameState.mEditing = true;
+                        }
+                        break;
+
+
+                    case 2:
+                        if (buttons.get(HUD.TOWER3).contains(x, y)) {
+                            if(gameState.mCurrency >= 850){
+                                tower1ArrayList.add(new Tower1(context,
+                                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                                                mRenderer.mNumBlocksHigh), "tower3"));
+                                gameState.mEditing = true;
+                            }
+                        }
+                        break;
+
+
                 }
             }
 

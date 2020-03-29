@@ -80,10 +80,12 @@ class HUD {
 
         // For Actions while Tower is Clicked
         Rect towerInfo = new Rect( 500, 0, 1250, 150);
+        Rect buy = new Rect( 1000, 80, 1250, 150);
         Rect sell = new Rect(700, 1000, 1100, 1090);
 
         extensiveControls = new ArrayList<>();
         extensiveControls.add(towerInfo); extensiveControls.add(sell);
+        extensiveControls.add(buy);
 
     }
 
@@ -150,14 +152,62 @@ class HUD {
         }
     }
 
+    void drawBuyingControls(Canvas canvas, Paint paint, GameState gs) {
+        int towerCost;
+        String towerType;
+
+        paint.setColor(Color.argb(255,57,97,173));
+        for(Rect r: extensiveControls){
+            if(extensiveControls.indexOf(r) != 1){
+                if(extensiveControls.indexOf(r) == 2){
+                    // Custom Buy Button Color
+                    paint.setColor(Color.argb(255, 255, 255, 255));
+                }
+                canvas.drawRect(r.left, r.top, r.right, r.bottom, paint);
+
+            }
+        }
+
+        switch (gs.activeBuyer) {
+            case 2:
+                towerCost = 850;
+                towerType = "Ray Gun";
+                break;
+            case 1:
+                towerCost = 400;
+                towerType = "Machine Gun";
+                break;
+            case 0:
+            default:
+                towerCost = 250;
+                towerType = "Turret";
+                break;
+        }
+
+
+        drawRectText("Buy: " + towerCost, canvas, extensiveControls.get(2));
+
+        paint.setColor(Color.argb(255,255,255,255));
+        paint.setTextSize(mTextFormatting/2 + 15);
+        canvas.drawText("Tower Info", mTextFormatting + 725 , mTextFormatting, paint);
+
+        paint.setTextSize(mTextFormatting/2 + 10);
+        canvas.drawText("Type: " + towerType, mTextFormatting + 500 , mTextFormatting + 50, paint);
+
+    }
+
+
     void drawExtensiveControls(Canvas canvas, Paint paint, GameState gs, ArrayList<Tower1> tower1ArrayList) {
         paint.setColor(Color.argb(255,57,97,173));
 
         for(Rect r: extensiveControls){
-            if(extensiveControls.indexOf(r) == 1){
-                paint.setColor(Color.argb(255,198,105,107));
+            if(extensiveControls.indexOf(r) != 2){
+                if(extensiveControls.indexOf(r) == 1) {
+                    paint.setColor(Color.argb(255,198,105,107));
+                }
+                canvas.drawRect(r.left, r.top, r.right, r.bottom, paint);
+
             }
-            canvas.drawRect(r.left, r.top, r.right, r.bottom, paint);
         }
 
         drawRectText("Sell for: " + tower1ArrayList.get(gs.activeTower).sellPrice, canvas, extensiveControls.get(1));

@@ -59,6 +59,11 @@ class Renderer {
                 hud.drawWarningZone(mCanvas, mPaint);
             }
 
+            // Handles when a user goes to buy a tower
+            if(gs.mBuying) {
+                hud.drawBuyingControls(mCanvas, mPaint, gs);
+            }
+
             // Handles the tower that is currently selected
             if(gs.mTowerClicked) {
                 tower1ArrayList.get(gs.activeTower).drawEditingArea(mCanvas, mPaint);

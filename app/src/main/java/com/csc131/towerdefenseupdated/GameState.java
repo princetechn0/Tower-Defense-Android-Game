@@ -18,6 +18,10 @@ final class GameState {
     public volatile boolean mDead = true;
     public volatile boolean mEditing = false;
     public volatile boolean mTowerClicked = false;
+    public volatile boolean mBuying = false;
+
+
+
 
     // The Round Number
     public int mRound;
@@ -30,6 +34,10 @@ final class GameState {
 
     // How many Towers exist
     private int mNumTowers;
+
+    // Which Tower user preparing to buy
+    public int activeBuyer;
+
     // Which Tower is Active
     public int activeTower;
 
@@ -53,6 +61,7 @@ final class GameState {
         mDead = false;
         mEditing = false;
         mTowerClicked = false;
+        mBuying = false;
     }
 
     void newGame() {
@@ -61,6 +70,8 @@ final class GameState {
         mDead = true;
         mEditing = false;
         mTowerClicked = false;
+        mBuying = false;
+
     }
 
     void resetVariables(){
