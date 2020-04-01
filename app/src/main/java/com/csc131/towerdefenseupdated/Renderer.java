@@ -26,29 +26,34 @@ class Renderer {
 
         if (mSurfaceHolder.getSurface().isValid()) {
 
-            mCanvas = mSurfaceHolder.lockCanvas();
-            Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mapmap);
-            mCanvas.drawBitmap(bmp, 0, 0, mPaint);
-
-            drawSpaceStation(gs, context, sp);
-
-            for(Tower1 t: tower1ArrayList) {
-                t.draw(mCanvas, mPaint);
-            }
-
-
+            // As long as Game is running
             if (gs.mPlaying) {
                 // Draw all the game objects here
+                mCanvas = mSurfaceHolder.lockCanvas();
+                Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mapmap);
+                mCanvas.drawBitmap(bmp, 0, 0, mPaint);
+
+                drawSpaceStation(gs, context, sp);
+
+                for(Tower1 t: tower1ArrayList) {
+                    t.draw(mCanvas, mPaint);
+                }
             }
 
-            //If the game is running in a round, print the enemy objects
+
+            //If the game is running in a round, draw the enemies, as well as towers
             if(!gs.mEndofRound) {
                 for (Enemy e: enemyArrayList) {
                     e.draw(mCanvas, mPaint);
                 }
+
+                for(Tower1 t: tower1ArrayList) {
+                    t.draw(mCanvas, mPaint);
+                }
                 //Disables Start Button
                 hud.disableStartButton(mCanvas, mPaint);
             }
+
 
             if(gs.mDead) {
                 // Draw a background graphic here
@@ -70,10 +75,11 @@ class Renderer {
                 hud.drawExtensiveControls(mCanvas, mPaint, gs, tower1ArrayList);
             }
 
-//            Draw a particle system explosion here
+            // Draw a particle system explosion here
             if(explosionEffectSystem.mIsRunning) {
                 explosionEffectSystem.draw(mCanvas, mPaint);
             }
+
 
             // Now we draw the HUD on top of everything else
             hud.draw(context, mCanvas, mPaint, gs);

@@ -146,27 +146,6 @@ class Tower1 {
         // Move the head in the appropriate heading
         // Get the existing head position
         TPoint p = segmentLocations.get(0);
-
-
-        // Move it appropriately
-        switch (heading) {
-            case UP:
-                p.point.y--;
-                break;
-
-            case RIGHT:
-                p.point.x++;
-                break;
-
-            case DOWN:
-                p.point.y++;
-                break;
-
-            case LEFT:
-                p.point.x--;
-                break;
-        }
-
     }
 
 

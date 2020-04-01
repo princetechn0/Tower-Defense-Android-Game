@@ -206,6 +206,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         }
 
         for(Tower1 t: tower1ArrayList) {
+           for(Enemy e: enemyArrayList) {
+               if(e.enemyLocation().x > t.towerLocation().x) {
+
+               }
+           }
 
         }
 

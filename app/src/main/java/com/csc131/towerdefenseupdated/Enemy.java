@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 import java.util.ArrayList;
 
@@ -231,6 +232,10 @@ class Enemy {
         canvas.drawBitmap(mBitMaps[i] ,
                 segmentLocations.get(0).point.x,
                 segmentLocations.get(0).point.y, paint);
+    }
+
+    Point enemyLocation() {
+        return segmentLocations.get(0).point;
     }
 
 
