@@ -26,12 +26,12 @@ class Tower1 {
 //    private int halfWayPoint;
 
     // For tracking movement Heading
-    private enum Heading {
+    public enum Heading {
         UP, RIGHT, DOWN, LEFT
     }
 
     // Start by heading to the right
-    private Heading heading = Heading.RIGHT;
+    public Heading heading = Heading.RIGHT;
 
     // right-0, left-1, up-2, down-3
     private Bitmap mBitMaps[] = new Bitmap[4];
@@ -126,7 +126,7 @@ class Tower1 {
 //        halfWayPoint = mr.point.x * ss / 2;
     }
 
-    // Get the snake ready for a new game
+    // Get the Tower ready for a new game
     void reset(int x, int y) {
         // Reset the heading
         heading = Heading.RIGHT;
@@ -141,7 +141,7 @@ class Tower1 {
     }
 
 
-    void move() {
+    void rotate() {
 
         // Move the head in the appropriate heading
         // Get the existing head position

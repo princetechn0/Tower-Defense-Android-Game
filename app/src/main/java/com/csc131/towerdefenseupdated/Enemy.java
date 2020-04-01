@@ -107,16 +107,6 @@ class Enemy {
 
 
     void move() {
-        // Move the body
-        // Start at the back and move it
-        // to the position of the segment in front of it
-//        for (int i = segmentLocations.size() - 1; i > 0; i--) {
-//
-//            // Make it the same value as the next segment
-//            // going forwards towards the head
-//            segmentLocations.get(i).point.x = segmentLocations.get(i - 1).point.x;
-//            segmentLocations.get(i).point.y = segmentLocations.get(i - 1).point.y;
-//        }
 
         // Move the head in the appropriate heading
         // Get the existing head position
