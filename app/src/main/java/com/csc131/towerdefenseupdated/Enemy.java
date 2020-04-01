@@ -199,18 +199,6 @@ class Enemy {
     }
 
 
-//
-//    // Handle changing direction
-//    void switchHeading(MotionEvent motionEvent) {
-//        // Is the tap on the right hand side?
-//        if (motionEvent.getX() >= halfWayPoint) {
-//            rightDirections(heading);
-//        } else {
-//            // Rotate left
-//            leftDirections(heading);
-//        }
-//    }
-
 
     void createBitmap(int i, Matrix matrix) {
         mBitMaps[i]  = Bitmap

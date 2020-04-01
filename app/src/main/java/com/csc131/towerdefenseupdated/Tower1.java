@@ -109,11 +109,11 @@ class Tower1 {
         // A matrix for scaling
         Matrix matrix = new Matrix();
         matrix.preScale(-1, 1);
-        createBitmap(1, 60, matrix);
+        createBitmap(1, matrix);
         matrix.preRotate(-90);
-        createBitmap(2, 60, matrix);
+        createBitmap(2, matrix);
         matrix.preRotate(180);
-        createBitmap(3, 60, matrix);
+        createBitmap(3, matrix);
 
 //        // Start by placing Tower off screen before user calls it
         segmentLocations.add(new TPoint(-500, -500));
@@ -141,11 +141,14 @@ class Tower1 {
     }
 
 
-    void rotate() {
+    void rotate(Heading input) {
 
         // Move the head in the appropriate heading
         // Get the existing head position
         TPoint p = segmentLocations.get(0);
+
+        rightDirections(input);
+
     }
 
 
@@ -197,10 +200,10 @@ class Tower1 {
 
 
 
-    void createBitmap(int i, int ss, Matrix matrix) {
+    void createBitmap(int i, Matrix matrix) {
         mBitMaps[i]  = Bitmap
                 .createBitmap(mBitMaps[0] ,
-                        0, 0, ss, ss, matrix, true);
+                        0, 0, 130, 130, matrix, true);
     }
 
     void drawBitmap(int i, Canvas canvas, Paint paint) {
