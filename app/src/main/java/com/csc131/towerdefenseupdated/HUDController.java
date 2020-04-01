@@ -97,7 +97,7 @@ import java.util.ArrayList;
             if(extensiveControls.get(2).contains(x, y)){
                 gameState.mBuying = false;
 
-//              Checks if user can afford the tower
+                // Checks if user can afford the tower
                 switch (gameState.activeBuyer) {
                     case 0:
                         if(gameState.mCurrency >= 250){
@@ -134,12 +134,12 @@ import java.util.ArrayList;
             }
 
 
-
-
         }
 
 
     }
+
+
 
 
 }
