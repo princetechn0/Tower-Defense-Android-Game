@@ -46,8 +46,13 @@ class Tower1 {
     public int sellPrice;
 
     // Bounding Region when Tower Clicked
-    Rect boundingRect;
+    Rect touchRect;
+    // Radius for Drawing Circle
     int radius;
+
+
+    // Region for detecting Enemy Position Relative to Tower
+    Rect boundingRect;
 
 
 
@@ -118,6 +123,7 @@ class Tower1 {
 //        // Start by placing Tower off screen before user calls it
         segmentLocations.add(new TPoint(-500, -500));
 
+        touchRect = new Rect();
         boundingRect = new Rect();
 
 
@@ -137,26 +143,18 @@ class Tower1 {
         // Start with a single alien on the left side of the screen, entering the path
         segmentLocations.add(new TPoint(x,y));
 
-        boundingRect = new Rect(x-40,y-40,x+80, y+80);
+        touchRect = new Rect(x-40,y-40,x+80, y+80);
+        boundingRect = new Rect(x - radius/2, y - radius/2, x + radius/2, y +radius/2);
     }
-
-
-    void rotate(Heading input) {
-
-        // Move the head in the appropriate heading
-        // Get the existing head position
-        TPoint p = segmentLocations.get(0);
-
-        rightDirections(input);
-
-    }
-
 
 
     void drawEditingArea(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
             canvas.drawCircle(segmentLocations.get(0).point.x + 15,
                     segmentLocations.get(0).point.y + 15, radius, paint);
+
+            //Testing
+//        canvas.drawRect(boundingRect, paint);
     }
 
 
@@ -196,6 +194,33 @@ class Tower1 {
             gameState.mCurrency -= cost;
         }
 
+    }
+
+
+    void rotateTower(Point enemyPosition) {
+
+//        heading = heading.RIGHT;
+
+
+//        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
+//                System.out.println("tower location: " + towerLocation());
+//                System.out.println("enemy location: " + enemyPosition);
+//
+//                rightDirections(Heading.DOWN);
+//            }
+//
+//            if(enemyPosition.y < towerLocation().y) {
+//                System.out.println("tower location: " + towerLocation());
+//                System.out.println("enemy location: " + enemyPosition);
+//                rightDirections(Heading.RIGHT);
+//            }
+    }
+
+    // Gets position of enemy relative to Tower
+    boolean pointInCircle(Point enemyLocation, Point towerLocation, int radius) {
+        int distancesquared = (enemyLocation.x - towerLocation.x) * (enemyLocation.x - towerLocation.x) +
+                (enemyLocation.y - towerLocation.y) * (enemyLocation.y - towerLocation.y);
+        return distancesquared <= radius * radius;
     }
 
 
@@ -244,7 +269,6 @@ class Tower1 {
 
     //Heading Methods
     void rightDirections(Heading input) {
-
         switch (input) {
             // Rotate right
             case UP:

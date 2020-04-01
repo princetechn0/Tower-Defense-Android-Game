@@ -2,6 +2,7 @@ package com.csc131.towerdefenseupdated;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -206,12 +207,16 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         }
 
         for(Tower1 t: tower1ArrayList) {
+            // Handles Rotating Tower when Enemy moves
            for(Enemy e: enemyArrayList) {
+               if(t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
+                   t.rotateTower(e.enemyLocation());
+               }
+
            }
         }
 
     }
-
 
     //Prints all the enemies with a time delay
     void handleTime(final int enemyNumber,  int delay) {
