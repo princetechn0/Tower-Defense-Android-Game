@@ -27,14 +27,14 @@ class Tower1 {
 
     // For tracking movement Heading
     public enum Heading {
-        UP, RIGHT, DOWN, LEFT
+        UP, RIGHT, DOWN, LEFT, TOPRIGHT, BOTTOMRIGHT, BOTTOMLEFT, TOPLEFT
     }
 
     // Start by heading to the right
     public Heading heading = Heading.RIGHT;
 
     // right-0, left-1, up-2, down-3
-    private Bitmap mBitMaps[] = new Bitmap[4];
+    private Bitmap mBitMaps[] = new Bitmap[8];
 
     // Tower Info
     public String name;
@@ -119,8 +119,18 @@ class Tower1 {
         createBitmap(2, matrix);
         matrix.preRotate(180);
         createBitmap(3, matrix);
+        matrix.preRotate(-45);
+        // Diagonal Scaling
+        createBitmap(4, matrix);
+        matrix.preRotate(-90);
+        createBitmap(5, matrix);
+        matrix.preScale(-1, 1);
+        matrix.preRotate(-90);
+        createBitmap(6, matrix);
+        matrix.preRotate(90);
+        createBitmap(7, matrix);
 
-//        // Start by placing Tower off screen before user calls it
+        // Start by placing Tower off screen before user calls it
         segmentLocations.add(new TPoint(-500, -500));
 
         touchRect = new Rect();
@@ -153,8 +163,6 @@ class Tower1 {
             canvas.drawCircle(segmentLocations.get(0).point.x + 15,
                     segmentLocations.get(0).point.y + 15, radius, paint);
 
-            //Testing
-//        canvas.drawRect(boundingRect, paint);
     }
 
 
@@ -176,6 +184,18 @@ class Tower1 {
                 case DOWN:
                     drawBitmap(3 ,canvas, paint);
                     break;
+                case TOPRIGHT:
+                    drawBitmap(4 ,canvas, paint);
+                    break;
+                case BOTTOMRIGHT:
+                    drawBitmap(5 ,canvas, paint);
+                    break;
+                case BOTTOMLEFT:
+                    drawBitmap(6 ,canvas, paint);
+                    break;
+                case TOPLEFT:
+                    drawBitmap(7 ,canvas, paint);
+                    break;
             }
         }
     }
@@ -196,24 +216,26 @@ class Tower1 {
 
     }
 
+    void resetDirection() {
+        heading = Heading.RIGHT;
+    }
+
 
     void rotateTower(Point enemyPosition) {
+        heading = heading.RIGHT;
 
-//        heading = heading.RIGHT;
-
-
-//        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
-//                System.out.println("tower location: " + towerLocation());
-//                System.out.println("enemy location: " + enemyPosition);
-//
-//                rightDirections(Heading.DOWN);
-//            }
-//
-//            if(enemyPosition.y < towerLocation().y) {
-//                System.out.println("tower location: " + towerLocation());
-//                System.out.println("enemy location: " + enemyPosition);
-//                rightDirections(Heading.RIGHT);
-//            }
+        if(enemyPosition.x > towerLocation().x && enemyPosition.y < towerLocation().y) {
+            rightDirections(Heading.TOPRIGHT);
+        }
+        if(enemyPosition.x < towerLocation().x && enemyPosition.y < towerLocation().y) {
+            rightDirections(Heading.TOPLEFT);
+        }
+        if(enemyPosition.x < towerLocation().x && enemyPosition.y > towerLocation().y) {
+            rightDirections(Heading.BOTTOMLEFT);
+        }
+        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
+            rightDirections(Heading.BOTTOMRIGHT);
+        }
     }
 
     // Gets position of enemy relative to Tower
@@ -282,6 +304,19 @@ class Tower1 {
                 break;
             case LEFT:
                 heading = Heading.UP;
+                break;
+
+            case TOPRIGHT:
+                heading = heading.TOPRIGHT;
+                break;
+            case BOTTOMRIGHT:
+                heading = heading.BOTTOMRIGHT;
+                break;
+            case BOTTOMLEFT:
+                heading = heading.BOTTOMLEFT;
+                break;
+            case TOPLEFT:
+                heading = heading.TOPLEFT;
                 break;
 
         }

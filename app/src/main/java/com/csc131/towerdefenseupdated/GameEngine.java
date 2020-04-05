@@ -2,7 +2,6 @@ package com.csc131.towerdefenseupdated;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -204,17 +203,21 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                 gameState.mStationHealth += e.alienDamageAmount;
             }
+
         }
 
-        for(Tower1 t: tower1ArrayList) {
-            // Handles Rotating Tower when Enemy moves
-           for(Enemy e: enemyArrayList) {
-               if(t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
+//
+//        // Handling how the tower acts
+//        for(Tower1 t: tower1ArrayList) {
+//           for(Enemy e: enemyArrayList) {
+//               // Handles Rotating Tower when Enemy is within Radius of Tower
+//               if(t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius) && enemyArrayList.indexOf(e) == 1) {
 //                   t.rotateTower(e.enemyLocation());
-               }
-
-           }
-        }
+//               } else {
+//                   t.resetDirection();
+//               }
+//           }
+//        }
 
     }
 
