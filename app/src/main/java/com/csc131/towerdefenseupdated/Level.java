@@ -40,7 +40,7 @@ public class Level {
     void enemyIncrementer(GameState gameState) {
         // Wave 1
        if(gameState.mRound < 7) {
-           gameState.num_enemy1 += 1;
+           gameState.num_enemy1 += 2;
        }
        // Wave 2
        if (gameState.mRound > 7 && gameState.mRound < 13) {

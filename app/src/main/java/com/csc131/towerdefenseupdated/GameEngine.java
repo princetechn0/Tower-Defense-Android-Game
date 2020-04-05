@@ -7,7 +7,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
@@ -21,6 +23,9 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     // Game Objects
     SpaceStation spaceStation;
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
+
+    //Testing
+    ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
 
     // Enemy Spawn
      Handler handler = new Handler();
@@ -81,6 +86,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         //Handler
         isActive = false;
 
+
         // Reset the enemies off screen and face them in the right direction
         resetEnemies();
 
@@ -104,8 +110,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         level.enemyIncrementer(gameState);
         level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
 
-        // reset the enemies offscreen
+        // Reset the enemies offscreen
         resetEnemies();
+
+        // Reset towers
+        resetTowers();
 
         // Setup mNextFrameTime so an update can triggered
         gameState.mNextFrameTime = System.currentTimeMillis();
@@ -116,6 +125,12 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         for (Enemy e: enemyArrayList) {
             e.reset();
             e.beginMoving();
+        }
+    }
+
+    void resetTowers() {
+        for (Tower1 t: tower1ArrayList) {
+            t.resetDirection();
         }
     }
 
@@ -203,21 +218,39 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                 gameState.mStationHealth += e.alienDamageAmount;
             }
-
         }
 
+
+//        ArrayList<Integer> closestEnemy = new ArrayList<>();
+
+        for(Tower1 t: tower1ArrayList) {
+            for (Enemy e : enemyArrayList) {
+
+//                closestEnemy.add(t.distFromTower(e.enemyLocation(), t.towerLocation()));
+
+                // Handles Rotating Tower when Enemy is within Radius of Tower
+                if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
+                    enemiesInACircle.add(e);
+
+                    for(Enemy x: enemiesInACircle) {
+                        if (enemiesInACircle.size() != 0) {
+                            t.rotateTower(x.enemyLocation());
+                        }
+                    }
+
+
+                } else {
+                    enemiesInACircle.clear();
+                }
+
+//                if (enemiesInACircle.size() != 0) {
+//                    t.rotateTower(enemiesInACircle.get(0).enemyLocation());
 //
-//        // Handling how the tower acts
-//        for(Tower1 t: tower1ArrayList) {
-//           for(Enemy e: enemyArrayList) {
-//               // Handles Rotating Tower when Enemy is within Radius of Tower
-//               if(t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius) && enemyArrayList.indexOf(e) == 1) {
-//                   t.rotateTower(e.enemyLocation());
-//               } else {
-//                   t.resetDirection();
-//               }
-//           }
-//        }
+//                }
+
+
+            }
+        }
 
     }
 
@@ -230,7 +263,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 if(isActive){
                     if(enemyNumber < enemyArrayList.size()){
                         enemyArrayList.get(enemyNumber).move();
-                        handleTime(enemyNumber+1, 1500);
+                        handleTime(enemyNumber+1, 7000);
                     }
                 }
             }

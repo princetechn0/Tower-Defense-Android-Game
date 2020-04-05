@@ -119,14 +119,12 @@ import java.util.ArrayList;
 
 
                     case 2:
-                        if (buttons.get(HUD.TOWER3).contains(x, y)) {
-                            if(gameState.mCurrency >= 850){
+                        if(gameState.mCurrency >= 850){
                                 tower1ArrayList.add(new Tower1(context,
                                         new TPoint(mRenderer.NUM_BLOCKS_WIDE,
                                                 mRenderer.mNumBlocksHigh), "tower3"));
                                 gameState.mEditing = true;
                             }
-                        }
                         break;
 
 

@@ -217,7 +217,7 @@ class Tower1 {
     }
 
     void resetDirection() {
-        heading = Heading.RIGHT;
+        heading = heading.RIGHT;
     }
 
 
@@ -240,9 +240,13 @@ class Tower1 {
 
     // Gets position of enemy relative to Tower
     boolean pointInCircle(Point enemyLocation, Point towerLocation, int radius) {
-        int distancesquared = (enemyLocation.x - towerLocation.x) * (enemyLocation.x - towerLocation.x) +
-                (enemyLocation.y - towerLocation.y) * (enemyLocation.y - towerLocation.y);
+        int distancesquared = distFromTower(enemyLocation, towerLocation);
         return distancesquared <= radius * radius;
+    }
+
+    int distFromTower(Point enemyLocation, Point towerLocation) {
+        return (enemyLocation.x - towerLocation.x) * (enemyLocation.x - towerLocation.x) +
+                (enemyLocation.y - towerLocation.y) * (enemyLocation.y - towerLocation.y);
     }
 
 

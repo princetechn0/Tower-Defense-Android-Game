@@ -77,7 +77,7 @@ final class GameState {
     void resetVariables(){
         mRound = 1;
 
-        mCurrency = 650;
+        mCurrency = 1000;
 
         mStationHealth = 40;
 
