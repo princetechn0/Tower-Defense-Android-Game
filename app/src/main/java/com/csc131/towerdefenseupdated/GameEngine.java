@@ -210,7 +210,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
             // Handles Rotating Tower when Enemy moves
            for(Enemy e: enemyArrayList) {
                if(t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
-                   t.rotateTower(e.enemyLocation());
+//                   t.rotateTower(e.enemyLocation());
                }
 
            }
