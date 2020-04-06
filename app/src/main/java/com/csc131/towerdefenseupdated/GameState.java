@@ -77,7 +77,7 @@ final class GameState {
     void resetVariables(){
         mRound = 1;
 
-        mCurrency = 650;
+        mCurrency = 1000;
 
         mStationHealth = 40;
 
@@ -106,8 +106,7 @@ final class GameState {
         mRound++;
     }
 
-    void increaseCurrency() {
-        mCurrency += random.nextInt(100 + 50);
+    void increaseCurrency() { mCurrency += random.nextInt(200 + 50);
     }
 
     int getmStationHealth() {

@@ -221,35 +221,51 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         }
 
 
-//        ArrayList<Integer> closestEnemy = new ArrayList<>();
-
+        ArrayList<Integer> distFromTower = new ArrayList<>();
+        int activeTower = 0;
         for(Tower1 t: tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
-
-//                closestEnemy.add(t.distFromTower(e.enemyLocation(), t.towerLocation()));
-
                 // Handles Rotating Tower when Enemy is within Radius of Tower
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
+                    e.distFromTower = t.distFromTower(e.enemyLocation(), t.towerLocation());
                     enemiesInACircle.add(e);
 
+//                    for(Enemy x: enemiesInACircle) {
+//                        if (enemiesInACircle.size() != 0 ) {
+//                            t.rotateTower(x.enemyLocation());
+//                        }
+//                    }
+
                     for(Enemy x: enemiesInACircle) {
-                        if (enemiesInACircle.size() != 0) {
-                            t.rotateTower(x.enemyLocation());
+                        distFromTower.add(x.distFromTower);
+                    }
+
+                    for(Enemy z: enemiesInACircle) {
+                        if(Collections.min(distFromTower) == z.distFromTower) {
+                            activeTower = enemiesInACircle.indexOf(z);
                         }
                     }
 
+                    if (enemiesInACircle.size() != 0 ) {
+                        t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
+                    }
 
                 } else {
                     enemiesInACircle.clear();
+                    distFromTower.clear();
+                    activeTower = 0;
                 }
-
-//                if (enemiesInACircle.size() != 0) {
-//                    t.rotateTower(enemiesInACircle.get(0).enemyLocation());
-//
-//                }
-
-
             }
+
+//            for(Enemy z: enemiesInACircle) {
+//                if(Collections.min(distFromTower) == z.distFromTower) {
+//                    activeTower = enemiesInACircle.indexOf(z);
+//                }
+//            }
+//
+//            if (enemiesInACircle.size() != 0 ) {
+//                            t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
+//                        }
         }
 
     }
@@ -263,7 +279,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 if(isActive){
                     if(enemyNumber < enemyArrayList.size()){
                         enemyArrayList.get(enemyNumber).move();
-                        handleTime(enemyNumber+1, 7000);
+                        handleTime(enemyNumber+1, 10000);
                     }
                 }
             }

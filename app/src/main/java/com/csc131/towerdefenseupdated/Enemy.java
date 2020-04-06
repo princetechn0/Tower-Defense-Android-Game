@@ -37,6 +37,9 @@ class Enemy {
     //Alien Damage Amount
     public int alienDamageAmount;
 
+    //Testing
+    public int distFromTower;
+
 
     Enemy(Context context, TPoint mr, String kind) {
 

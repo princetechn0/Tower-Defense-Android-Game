@@ -59,7 +59,7 @@ import java.util.ArrayList;
                 // Touching a Rect for Further Editing / Deleting
                 gameState.mTowerClicked = false;
                 for (Tower1 t : tower1ArrayList) {
-                    if (t.boundingRect.contains(x, y)) {
+                    if (t.touchRect.contains(x, y)) {
                         gameState.mTowerClicked = true;
                         gameState.activeTower = tower1ArrayList.indexOf(t);
                     }

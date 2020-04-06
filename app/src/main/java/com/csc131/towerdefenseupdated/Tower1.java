@@ -51,12 +51,6 @@ class Tower1 {
     int radius;
 
 
-    // Region for detecting Enemy Position Relative to Tower
-    Rect boundingRect;
-
-
-
-
     Tower1(Context context, TPoint mr, String kind) {
 
         // Initialize our ArrayList
@@ -109,7 +103,7 @@ class Tower1 {
         // in the correct direction
         mBitMaps[0]  = Bitmap
                 .createScaledBitmap(mBitMaps[0] ,
-                        130, 130, false);
+                        150, 150, false);
 
         // A matrix for scaling
         Matrix matrix = new Matrix();
@@ -134,7 +128,6 @@ class Tower1 {
         segmentLocations.add(new TPoint(-500, -500));
 
         touchRect = new Rect();
-        boundingRect = new Rect();
 
 
         // The halfway point across the screen in pixels
@@ -154,7 +147,6 @@ class Tower1 {
         segmentLocations.add(new TPoint(x,y));
 
         touchRect = new Rect(x-40,y-40,x+80, y+80);
-        boundingRect = new Rect(x - radius/2, y - radius/2, x + radius/2, y +radius/2);
     }
 
 
@@ -162,6 +154,7 @@ class Tower1 {
         paint.setColor(Color.argb(50,255,255,255));
             canvas.drawCircle(segmentLocations.get(0).point.x + 15,
                     segmentLocations.get(0).point.y + 15, radius, paint);
+
 
     }
 
@@ -220,13 +213,13 @@ class Tower1 {
         heading = heading.RIGHT;
     }
 
-
     void rotateTower(Point enemyPosition) {
         heading = heading.RIGHT;
 
         if(enemyPosition.x > towerLocation().x && enemyPosition.y < towerLocation().y) {
             rightDirections(Heading.TOPRIGHT);
         }
+
         if(enemyPosition.x < towerLocation().x && enemyPosition.y < towerLocation().y) {
             rightDirections(Heading.TOPLEFT);
         }
