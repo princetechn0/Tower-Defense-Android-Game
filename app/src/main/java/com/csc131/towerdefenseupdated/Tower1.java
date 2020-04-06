@@ -8,9 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-
+import android.graphics.RectF;
+import android.graphics.Region;
 import java.util.ArrayList;
 
 class Tower1 {
@@ -49,6 +51,9 @@ class Tower1 {
     Rect touchRect;
     // Radius for Drawing Circle
     int radius;
+
+
+    //Testing
 
 
     Tower1(Context context, TPoint mr, String kind) {
@@ -147,17 +152,71 @@ class Tower1 {
         segmentLocations.add(new TPoint(x,y));
 
         touchRect = new Rect(x-40,y-40,x+80, y+80);
+
+
     }
 
+    Point[] points;
+    Polygon polygon;
 
     void drawEditingArea(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
-            canvas.drawCircle(segmentLocations.get(0).point.x + 15,
-                    segmentLocations.get(0).point.y + 15, radius, paint);
+//            canvas.drawCircle(segmentLocations.get(0).point.x + 15,
+//                    segmentLocations.get(0).point.y + 15, radius, paint);
+
+        RectF oval = new RectF(segmentLocations.get(0).point.x - radius, segmentLocations.get(0).point.y - radius,
+                segmentLocations.get(0).point.x + radius, segmentLocations.get(0).point.y + radius);
+
+        canvas.drawOval(oval, paint);
+
+        getPoints((int)oval.centerX(), (int)oval.centerY(), radius, 8);
+
+
+        paint.setColor(Color.BLACK);
+
+        for(Point p: points) {
+            canvas.drawCircle(p.x, p.y, 10, paint);
+        }
+
+        int[] ptsX = new int[3];
+        ptsX[0] = points[0].x;
+        ptsX[1] = points[1].x;
+        ptsX[2] = towerLocation().x;
+
+        int[] ptsY = new int[3];
+        ptsY[0] = points[0].y;
+        ptsY[1] = points[1].y;
+        ptsY[2] = towerLocation().y;
+
+
+        polygon = new Polygon(ptsX, ptsY, 3);
+
+
+
+
+
+
+
 
 
     }
 
+
+    private void getPoints(int x0,int y0,int r,int noOfDividingPoints)
+    {
+
+        double angle = 0;
+
+        points = new Point[noOfDividingPoints];
+
+        for(int i = 0 ; i < noOfDividingPoints  ;i++)
+        {
+            angle = i * (360/noOfDividingPoints);
+
+            points[i] = new Point((int) (x0 + r * Math.cos(Math.toRadians(angle))), (int) (y0 + r * Math.sin(Math.toRadians(angle))));
+
+        }
+    }
 
     void draw(Canvas canvas, Paint paint) {
         // Don't run this code if ArrayList has nothing in it
@@ -216,26 +275,34 @@ class Tower1 {
     void rotateTower(Point enemyPosition) {
         heading = heading.RIGHT;
 
-        if(enemyPosition.x > towerLocation().x && enemyPosition.y < towerLocation().y) {
-            rightDirections(Heading.TOPRIGHT);
-        }
-
-        if(enemyPosition.x < towerLocation().x && enemyPosition.y < towerLocation().y) {
-            rightDirections(Heading.TOPLEFT);
-        }
-        if(enemyPosition.x < towerLocation().x && enemyPosition.y > towerLocation().y) {
-            rightDirections(Heading.BOTTOMLEFT);
-        }
-        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
+        if(polygon.contains(enemyPosition.x, enemyPosition.y)) {
             rightDirections(Heading.BOTTOMRIGHT);
         }
+
+
+//        if(enemyPosition.x > towerLocation().x && enemyPosition.y < towerLocation().y) {
+//            rightDirections(Heading.TOPRIGHT);
+//        }
+//
+//        if(enemyPosition.x < towerLocation().x && enemyPosition.y < towerLocation().y) {
+//            rightDirections(Heading.TOPLEFT);
+//        }
+//        if(enemyPosition.x < towerLocation().x && enemyPosition.y > towerLocation().y) {
+//            rightDirections(Heading.BOTTOMLEFT);
+//        }
+//        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
+//            rightDirections(Heading.BOTTOMRIGHT);
+//        }
     }
+
+
 
     // Gets position of enemy relative to Tower
     boolean pointInCircle(Point enemyLocation, Point towerLocation, int radius) {
         int distancesquared = distFromTower(enemyLocation, towerLocation);
         return distancesquared <= radius * radius;
     }
+
 
     int distFromTower(Point enemyLocation, Point towerLocation) {
         return (enemyLocation.x - towerLocation.x) * (enemyLocation.x - towerLocation.x) +
@@ -341,5 +408,33 @@ class Tower1 {
     }
 
 
+}
+
+
+ class Polygon
+{
+    private int[] polyY, polyX;
+
+    // Number of sides in the polygon.
+    private int polySides;
+
+    public Polygon( int[] px, int[] py, int ps )
+    {
+        polyX = px;
+        polyY = py;
+        polySides = ps;
+    }
+
+    public boolean contains( int x, int y )
+    {
+        boolean c = false;
+        int i, j = 0;
+        for (i = 0, j = polySides - 1; i < polySides; j = i++) {
+            if (((polyY[i] > y) != (polyY[j] > y))
+                    && (x < (polyX[j] - polyX[i]) * (y - polyY[i]) / (polyY[j] - polyY[i]) + polyX[i]))
+                c = !c;
+        }
+        return c;
+    }
 }
 
