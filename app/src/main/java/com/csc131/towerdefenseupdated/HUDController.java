@@ -29,8 +29,8 @@ import java.util.ArrayList;
             if (buttons.get(HUD.START_Round).contains(x, y)) {
                     //Disables Start Button while round is running and game is in edit mode
                     if(gameState.mEndofRound && !gameState.mEditing) {
-                        gameEngine.nextRound();
                         gameState.startRound();
+                        gameEngine.nextRound();
                     }
             }
 

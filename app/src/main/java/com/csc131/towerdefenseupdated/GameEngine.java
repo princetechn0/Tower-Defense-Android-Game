@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -83,9 +82,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     // Called to start a new game
     public void newGame() {
 
-        //Handler
-        isActive = false;
-
+        // Handler
+        handlerReset();
 
         // Reset the enemies off screen and face them in the right direction
         resetEnemies();
@@ -106,8 +104,12 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Called to start a new game
     public void nextRound() {
+        handlerReset();
+
         level.clear();
+
         level.enemyIncrementer(gameState);
+
         level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
 
         // Reset the enemies offscreen
@@ -156,6 +158,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         }
 
 
+    }
+
+    void handlerReset() {
+        isActive = false;
+        handler.removeCallbacksAndMessages(null);
     }
 
 
@@ -264,7 +271,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 if(isActive){
                     if(enemyNumber < enemyArrayList.size()){
                         enemyArrayList.get(enemyNumber).move();
-                        handleTime(enemyNumber+1, 10000);
+                        handleTime(enemyNumber+1, 3000);
                     }
                 }
             }
