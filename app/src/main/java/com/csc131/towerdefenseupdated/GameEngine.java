@@ -227,29 +227,19 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
             for (Enemy e : enemyArrayList) {
                 // Handles Rotating Tower when Enemy is within Radius of Tower
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
+                    //  Distance of enemy from Tower when within Tower Radius
                     e.distFromTower = t.distFromTower(e.enemyLocation(), t.towerLocation());
                     enemiesInACircle.add(e);
 
-//                    for(Enemy x: enemiesInACircle) {
-//                        if (enemiesInACircle.size() != 0 ) {
-//                            t.rotateTower(x.enemyLocation());
-//                        }
-//                    }
-
+                    // Finds Enemy with Shortest Distance to tower and sets it to active
                     for(Enemy x: enemiesInACircle) {
                         distFromTower.add(x.distFromTower);
-
                         if(Collections.min(distFromTower) == x.distFromTower) {
                             activeTower = enemiesInACircle.indexOf(x);
                         }
                     }
 
-//                    for(Enemy z: enemiesInACircle) {
-//                        if(Collections.min(distFromTower) == z.distFromTower) {
-//                            activeTower = enemiesInACircle.indexOf(z);
-//                        }
-//                    }
-
+                    // Rotates Tower to Follow the Active Enemy
                     if (enemiesInACircle.size() != 0 ) {
                         t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
                     }
@@ -261,16 +251,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 }
             }
 
-
-//            for(Enemy z: enemiesInACircle) {
-//                if(Collections.min(distFromTower) == z.distFromTower) {
-//                    activeTower = enemiesInACircle.indexOf(z);
-//                }
-//            }
-//
-//            if (enemiesInACircle.size() != 0 ) {
-//                            t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
-//                        }
         }
 
     }
