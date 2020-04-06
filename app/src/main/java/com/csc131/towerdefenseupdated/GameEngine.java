@@ -238,13 +238,17 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                     for(Enemy x: enemiesInACircle) {
                         distFromTower.add(x.distFromTower);
-                    }
 
-                    for(Enemy z: enemiesInACircle) {
-                        if(Collections.min(distFromTower) == z.distFromTower) {
-                            activeTower = enemiesInACircle.indexOf(z);
+                        if(Collections.min(distFromTower) == x.distFromTower) {
+                            activeTower = enemiesInACircle.indexOf(x);
                         }
                     }
+
+//                    for(Enemy z: enemiesInACircle) {
+//                        if(Collections.min(distFromTower) == z.distFromTower) {
+//                            activeTower = enemiesInACircle.indexOf(z);
+//                        }
+//                    }
 
                     if (enemiesInACircle.size() != 0 ) {
                         t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
@@ -256,6 +260,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     activeTower = 0;
                 }
             }
+
 
 //            for(Enemy z: enemiesInACircle) {
 //                if(Collections.min(distFromTower) == z.distFromTower) {
