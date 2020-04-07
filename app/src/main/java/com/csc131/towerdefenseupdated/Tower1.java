@@ -158,6 +158,8 @@ class Tower1 {
 
     Point[] points;
     Polygon polygon;
+    Polygon[] polygons = new Polygon[8];
+
 
     void drawEditingArea(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
@@ -178,21 +180,31 @@ class Tower1 {
             canvas.drawCircle(p.x, p.y, 10, paint);
         }
 
-        int[] ptsX = new int[3];
-        ptsX[0] = points[0].x;
-        ptsX[1] = points[1].x;
-        ptsX[2] = towerLocation().x;
 
-        int[] ptsY = new int[3];
-        ptsY[0] = points[0].y;
-        ptsY[1] = points[1].y;
-        ptsY[2] = towerLocation().y;
+        //WIP
+//        int[] ptsX = new int[3];
+//        ptsX[0] = points[0].x;
+//        ptsX[1] = points[1].x;
+//        ptsX[2] = towerLocation().x;
+//
+//        int[] ptsY = new int[3];
+//        ptsY[0] = points[0].y;
+//        ptsY[1] = points[1].y;
+//        ptsY[2] = towerLocation().y;
+
+//        for(int i = 0; i < 7; i++) {
+//            ptsX[0] = points[i].x;
+//            ptsY[0] = points[i].y;
+//            ptsX[1] = points[i+1].x;
+//            ptsY[1] = points[i+1].y;
+//
+//            polygons[i] = new Polygon(ptsX, ptsY, 3);
+//
+//        }
 
 
-        polygon = new Polygon(ptsX, ptsY, 3);
-
-
-
+//        polygon = new Polygon(ptsX, ptsY, 3);
+//        polygons[0] = new Polygon(ptsX, ptsY, 3);
 
 
 
@@ -205,7 +217,7 @@ class Tower1 {
     private void getPoints(int x0,int y0,int r,int noOfDividingPoints)
     {
 
-        double angle = 0;
+        double angle;
 
         points = new Point[noOfDividingPoints];
 
@@ -275,24 +287,33 @@ class Tower1 {
     void rotateTower(Point enemyPosition) {
         heading = heading.RIGHT;
 
-        if(polygon.contains(enemyPosition.x, enemyPosition.y)) {
-            rightDirections(Heading.BOTTOMRIGHT);
-        }
-
-
-//        if(enemyPosition.x > towerLocation().x && enemyPosition.y < towerLocation().y) {
+//        if(polygons[0].contains(enemyPosition.x, enemyPosition.y)) {
 //            rightDirections(Heading.TOPRIGHT);
 //        }
-//
-//        if(enemyPosition.x < towerLocation().x && enemyPosition.y < towerLocation().y) {
-//            rightDirections(Heading.TOPLEFT);
-//        }
-//        if(enemyPosition.x < towerLocation().x && enemyPosition.y > towerLocation().y) {
-//            rightDirections(Heading.BOTTOMLEFT);
-//        }
-//        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
+//        if(polygons[1].contains(enemyPosition.x, enemyPosition.y)) {
 //            rightDirections(Heading.BOTTOMRIGHT);
 //        }
+//        if(polygons[4].contains(enemyPosition.x, enemyPosition.y)) {
+//            rightDirections(Heading.TOPLEFT);
+//        }
+//        if(polygons[7].contains(enemyPosition.x, enemyPosition.y)) {
+//            rightDirections(Heading.TOPRIGHT);
+//        }
+
+
+        if(enemyPosition.x > towerLocation().x && enemyPosition.y < towerLocation().y) {
+            rightDirections(Heading.TOPRIGHT);
+        }
+
+        if(enemyPosition.x < towerLocation().x && enemyPosition.y < towerLocation().y) {
+            rightDirections(Heading.TOPLEFT);
+        }
+        if(enemyPosition.x < towerLocation().x && enemyPosition.y > towerLocation().y) {
+            rightDirections(Heading.BOTTOMLEFT);
+        }
+        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
+            rightDirections(Heading.BOTTOMRIGHT);
+        }
     }
 
 
