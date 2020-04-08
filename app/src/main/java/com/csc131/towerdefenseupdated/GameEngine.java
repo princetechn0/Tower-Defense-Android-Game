@@ -271,7 +271,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 if(isActive){
                     if(enemyNumber < enemyArrayList.size()){
                         enemyArrayList.get(enemyNumber).move();
-                        handleTime(enemyNumber+1, 3000);
+                        handleTime(enemyNumber+1, 10000);
                     }
                 }
             }

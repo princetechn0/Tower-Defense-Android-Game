@@ -53,8 +53,6 @@ class Tower1 {
     int radius;
 
 
-    //Testing
-
 
     Tower1(Context context, TPoint mr, String kind) {
 
@@ -170,23 +168,17 @@ class Tower1 {
 
     }
 
+
+
     Point[] points;
-    Polygon polygon;
-    Polygon[] polygons = new Polygon[8];
-
-
     void drawEditingArea(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
-//            canvas.drawCircle(segmentLocations.get(0).point.x + 15,
-//                    segmentLocations.get(0).point.y + 15, radius, paint);
 
         RectF oval = new RectF(segmentLocations.get(0).point.x - radius, segmentLocations.get(0).point.y - radius,
                 segmentLocations.get(0).point.x + radius + 60, segmentLocations.get(0).point.y + radius + 60);
 
         canvas.drawOval(oval, paint);
-
-        getPoints((int)oval.centerX(), (int)oval.centerY(), radius, 8);
-
+        getPoints((int)oval.centerX(), (int)oval.centerY(), radius + 25, 8);
 
         paint.setColor(Color.BLACK);
 
@@ -194,38 +186,145 @@ class Tower1 {
             canvas.drawCircle(p.x, p.y, 10, paint);
         }
 
-
-        //WIP
-//        int[] ptsX = new int[3];
-//        ptsX[0] = points[0].x;
-//        ptsX[1] = points[1].x;
-//        ptsX[2] = towerLocation().x;
-//
-//        int[] ptsY = new int[3];
-//        ptsY[0] = points[0].y;
-//        ptsY[1] = points[1].y;
-//        ptsY[2] = towerLocation().y;
-
-//        for(int i = 0; i < 7; i++) {
-//            ptsX[0] = points[i].x;
-//            ptsY[0] = points[i].y;
-//            ptsX[1] = points[i+1].x;
-//            ptsY[1] = points[i+1].y;
-//
-//            polygons[i] = new Polygon(ptsX, ptsY, 3);
-//
-//        }
-
-
-//        polygon = new Polygon(ptsX, ptsY, 3);
-//        polygons[0] = new Polygon(ptsX, ptsY, 3);
-
-
-
-
+        initDirections();
 
 
     }
+
+
+
+    Polygon[] polygons = new Polygon[7];
+    int[] ptsX = new int[3];
+    int[] ptsY = new int[3];
+
+    void initDirections() {
+        Heading head = Heading.RIGHT;
+        ptsX[0] = towerLocation().x;
+        ptsY[0] = towerLocation().y;
+
+
+        for(int i = 0; i < polygons.length; i++) {
+            ptsX[1] = points[i].x;
+            ptsX[2] = points[i+1].x;
+
+            ptsY[1] = points[i].y;
+            ptsY[2] = points[i+1].y;
+
+            switch (i) {
+                case 0:
+                    head = Heading.BOTTOMRIGHT;
+                    break;
+                case 1:
+                    head = Heading.BOTTOMBOTTOMRIGHT;
+                    break;
+//                case 2:
+//                    head = Heading.BOTTOMBOTTOMLEFT;
+//                    break;
+//                case 3:
+//                    head = Heading.BOTTOMLEFT;
+//                    break;
+//                case 4:
+//                    head = Heading.TOPLEFT;
+//                    break;
+//                case 5:
+//                    heading = Heading.TOPTOPLEFT;
+//                    break;
+//                case 6:
+//                    heading = Heading.TOPTOPRIGHT;
+//                    break;
+            }
+
+            polygons[i] = new Polygon(ptsX, ptsY, 3, head);
+
+
+        }
+
+
+//
+//        ptsX[1] = points[0].x;
+//        ptsX[2] = points[1].x;
+//        ptsY[1] = points[0].y;
+//        ptsY[2] = points[1].y;
+//        polygons[0] = new Polygon(ptsX, ptsY, 3, Heading.BOTTOMRIGHT);
+//
+//        int[] ptsX2 = new int[3];
+//        int[] ptsY2 = new int[3];
+//
+//
+//        ptsX2[1] = points[1].x;
+//        ptsX2[2] = points[2].x;
+//        ptsY2[1] = points[1].y;
+//        ptsY2[2] = points[2].y;
+//
+//        polygons[1] = new Polygon(ptsX2, ptsY2, 3, Heading.BOTTOMBOTTOMRIGHT);
+//
+//        int[] ptsX3 = new int[3];
+//        int[] ptsY3 = new int[3];
+//
+//
+//        ptsX3[1] = points[2].x;
+//        ptsX3[2] = points[3].x;
+//        ptsY3[1] = points[2].y;
+//        ptsY3[2] = points[3].y;
+//        polygons[2] = new Polygon(ptsX3, ptsY3, 3, Heading.BOTTOMBOTTOMLEFT);
+//
+//        int[] ptsX4 = new int[3];
+//        int[] ptsY4 = new int[3];
+//
+//
+//        ptsX4[1] = points[3].x;
+//        ptsX4[2] = points[4].x;
+//        ptsY4[1] = points[3].y;
+//        ptsY4[2] = points[4].y;
+//
+//        polygons[3] = new Polygon(ptsX4, ptsY4, 3, Heading.BOTTOMLEFT);
+//
+//        int[] ptsX5 = new int[3];
+//        int[] ptsY5 = new int[3];
+//
+//
+//        ptsX5[1] = points[4].x;
+//        ptsX5[2] = points[5].x;
+//        ptsY5[1] = points[4].y;
+//        ptsY5[2] = points[5].y;
+//
+//        polygons[4] = new Polygon(ptsX5, ptsY5, 3, Heading.TOPLEFT);
+//
+//        int[] ptsX6 = new int[3];
+//        int[] ptsY6 = new int[3];
+//
+//
+//        ptsX6[1] = points[5].x;
+//        ptsX6[2] = points[6].x;
+//        ptsY6[1] = points[5].y;
+//        ptsY6[2] = points[6].y;
+//
+//        polygons[5] = new Polygon(ptsX6, ptsY6, 3, Heading.TOPTOPLEFT);
+//
+//        int[] ptsX7 = new int[3];
+//        int[] ptsY7 = new int[3];
+//
+//
+//        ptsX7[1] = points[6].x;
+//        ptsX7[2] = points[7].x;
+//        ptsY7[1] = points[6].y;
+//        ptsY7[2] = points[7].y;
+//
+//        polygons[6] = new Polygon(ptsX7, ptsY7, 3, Heading.TOPTOPRIGHT);
+//
+//        int[] ptsX8 = new int[3];
+//        int[] ptsY8 = new int[3];
+//
+//
+//        ptsX8[1] = points[7].x;
+//        ptsX8[2] = points[0].x;
+//        ptsY8[1] = points[7].y;
+//        ptsY8[2] = points[0].y;
+//
+//        polygons[7] = new Polygon(ptsX8, ptsY8, 3, Heading.TOPRIGHT);
+
+    }
+
 
 
     private void getPoints(int x0,int y0,int r,int noOfDividingPoints)
@@ -303,6 +402,7 @@ class Tower1 {
 
             // Subtracts Cost
             gameState.mCurrency -= cost;
+
         }
 
     }
@@ -312,38 +412,12 @@ class Tower1 {
     }
 
     void rotateTower(Point enemyPosition) {
-        heading = heading.RIGHT;
-
-//        if(polygons[0].contains(enemyPosition.x, enemyPosition.y)) {
-//            rightDirections(Heading.TOPRIGHT);
-//        }
-//        if(polygons[1].contains(enemyPosition.x, enemyPosition.y)) {
-//            rightDirections(Heading.BOTTOMRIGHT);
-//        }
-//        if(polygons[4].contains(enemyPosition.x, enemyPosition.y)) {
-//            rightDirections(Heading.TOPLEFT);
-//        }
-//        if(polygons[7].contains(enemyPosition.x, enemyPosition.y)) {
-//            rightDirections(Heading.TOPRIGHT);
-//        }
-
-
-        if(enemyPosition.x > towerLocation().x && enemyPosition.y < towerLocation().y) {
-            rightDirections(Heading.TOPRIGHT);
-        }
-
-        if(enemyPosition.x < towerLocation().x && enemyPosition.y < towerLocation().y) {
-            rightDirections(Heading.TOPLEFT);
-        }
-        if(enemyPosition.x < towerLocation().x && enemyPosition.y > towerLocation().y) {
-            rightDirections(Heading.BOTTOMLEFT);
-        }
-        if(enemyPosition.x > towerLocation().x && enemyPosition.y > towerLocation().y) {
-            rightDirections(Heading.BOTTOMRIGHT);
+        for(Polygon p: polygons) {
+            if(p.contains(enemyPosition.x, enemyPosition.y)) {
+                rightDirections(p.heading);
+            }
         }
     }
-
-
 
     // Gets position of enemy relative to Tower
     boolean pointInCircle(Point enemyLocation, Point towerLocation, int radius) {
@@ -431,30 +505,22 @@ class Tower1 {
                 heading = heading.TOPLEFT;
                 break;
 
+            case TOPTOPRIGHT:
+                heading = heading.TOPTOPRIGHT;
+                break;
+            case BOTTOMBOTTOMRIGHT:
+                heading = heading.BOTTOMBOTTOMRIGHT;
+                break;
+            case BOTTOMBOTTOMLEFT:
+                heading = heading.BOTTOMBOTTOMLEFT;
+                break;
+            case TOPTOPLEFT:
+                heading = heading.TOPTOPLEFT;
+                break;
+
         }
 
     }
-
-    void leftDirections(Heading input) {
-
-        // Rotate left
-        switch (input) {
-            case UP:
-                heading = Heading.LEFT;
-                break;
-            case LEFT:
-                heading = Heading.DOWN;
-                break;
-            case DOWN:
-                heading = Heading.RIGHT;
-                break;
-            case RIGHT:
-                heading = Heading.UP;
-                break;
-        }
-
-    }
-
 
 }
 
@@ -466,17 +532,21 @@ class Tower1 {
     // Number of sides in the polygon.
     private int polySides;
 
-    public Polygon( int[] px, int[] py, int ps )
+    // Heading Associated with polygon
+    public Tower1.Heading heading;
+
+    public Polygon(int[] px, int[] py, int ps, Tower1.Heading direc)
     {
+        heading = direc;
         polyX = px;
         polyY = py;
         polySides = ps;
     }
 
-    public boolean contains( int x, int y )
+    public boolean contains(int x, int y)
     {
         boolean c = false;
-        int i, j = 0;
+        int i, j;
         for (i = 0, j = polySides - 1; i < polySides; j = i++) {
             if (((polyY[i] > y) != (polyY[j] > y))
                     && (x < (polyX[j] - polyX[i]) * (y - polyY[i]) / (polyY[j] - polyY[i]) + polyX[i]))
