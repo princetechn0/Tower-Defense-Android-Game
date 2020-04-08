@@ -250,7 +250,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     if (enemiesInACircle.size() != 0 ) {
                         t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
                     }
-
                 } else {
                     enemiesInACircle.clear();
                     distFromTower.clear();

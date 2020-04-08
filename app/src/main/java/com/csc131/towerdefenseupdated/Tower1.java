@@ -20,19 +20,17 @@ class Tower1 {
     // How big is the entire grid
     private TPoint mMoveRange;
 
-    // Where is the centre of the screen
-    // horizontally in pixels?
-//    private int halfWayPoint;
-
     // For tracking movement Heading
     public enum Heading {
-        UP, RIGHT, DOWN, LEFT, TOPRIGHT, BOTTOMRIGHT, BOTTOMLEFT, TOPLEFT, TOPTOPRIGHT, BOTTOMBOTTOMRIGHT, BOTTOMBOTTOMLEFT, TOPTOPLEFT
+        UP, RIGHT, DOWN, LEFT,
+        TOPRIGHT, BOTTOMRIGHT, BOTTOMLEFT, TOPLEFT,
+        TOPTOPRIGHT, BOTTOMBOTTOMRIGHT, BOTTOMBOTTOMLEFT, TOPTOPLEFT
     }
 
     // Start by heading to the right
     public Heading heading = Heading.RIGHT;
 
-    // right-0, left-1, up-2, down-3
+    // right-0, left-1, up-2, down-3, etc
     private Bitmap mBitMaps[] = new Bitmap[12];
 
     // Tower Info
@@ -111,37 +109,7 @@ class Tower1 {
                         150, 150, false);
 
         // A matrix for scaling
-        Matrix matrix = new Matrix();
-        matrix.preScale(-1, 1);
-        createBitmap(1, matrix);
-        matrix.preRotate(-90);
-        createBitmap(2, matrix);
-        matrix.preRotate(180);
-        createBitmap(3, matrix);
-        matrix.preRotate(-45);
-
-        // Diagonal Scaling
-        createBitmap(4, matrix);
-        matrix.preRotate(-90);
-        createBitmap(5, matrix);
-        matrix.preScale(-1, 1);
-        matrix.preRotate(-90);
-        createBitmap(6, matrix);
-        matrix.preRotate(90);
-        createBitmap(7, matrix);
-
-
-        // Further Diagonal Scaling
-        matrix.preRotate(15);
-        createBitmap(11, matrix);
-        matrix.preRotate(-115);
-        createBitmap(10, matrix);
-        matrix.preScale(-1, 1);
-        matrix.preRotate(5);
-        createBitmap(8, matrix);
-        matrix.preRotate(-115);
-        createBitmap(9, matrix);
-
+        matrixScaling();
 
         // Start by placing Tower off screen before user calls it
         segmentLocations.add(new TPoint(-500, -500));
@@ -161,9 +129,8 @@ class Tower1 {
         segmentLocations.add(new TPoint(x,y));
 
         touchRect = new Rect(x-40,y-40,x+80, y+80);
-
-
     }
+
 
 
     void drawEditingArea(Canvas canvas, Paint paint) {
@@ -262,7 +229,7 @@ class Tower1 {
 
 
     void rotateTower(Point enemyPosition) {
-        for( int i = 0; i < 8; i++ ){
+        for(int i = 0; i < 8; i++ ){
             if(polygons[i].contains(enemyPosition.x, enemyPosition.y, i)) {
                 rightDirections(polygons[i].heading);
             }
@@ -390,9 +357,41 @@ class Tower1 {
             case TOPTOPLEFT:
                 heading = heading.TOPTOPLEFT;
                 break;
-
         }
 
+    }
+
+    void matrixScaling() {
+        // A matrix for scaling
+        Matrix matrix = new Matrix();
+        matrix.preScale(-1, 1);
+        createBitmap(1, matrix);
+        matrix.preRotate(-90);
+        createBitmap(2, matrix);
+        matrix.preRotate(180);
+        createBitmap(3, matrix);
+        matrix.preRotate(-45);
+
+        // Diagonal Scaling
+        createBitmap(4, matrix);
+        matrix.preRotate(-90);
+        createBitmap(5, matrix);
+        matrix.preScale(-1, 1);
+        matrix.preRotate(-90);
+        createBitmap(6, matrix);
+        matrix.preRotate(90);
+        createBitmap(7, matrix);
+
+        // Further Diagonal Scaling
+        matrix.preRotate(15);
+        createBitmap(11, matrix);
+        matrix.preRotate(-115);
+        createBitmap(10, matrix);
+        matrix.preScale(-1, 1);
+        matrix.preRotate(5);
+        createBitmap(8, matrix);
+        matrix.preRotate(-115);
+        createBitmap(9, matrix);
     }
 
 }
