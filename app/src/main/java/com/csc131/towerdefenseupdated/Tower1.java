@@ -29,14 +29,14 @@ class Tower1 {
 
     // For tracking movement Heading
     public enum Heading {
-        UP, RIGHT, DOWN, LEFT, TOPRIGHT, BOTTOMRIGHT, BOTTOMLEFT, TOPLEFT
+        UP, RIGHT, DOWN, LEFT, TOPRIGHT, BOTTOMRIGHT, BOTTOMLEFT, TOPLEFT, TOPTOPRIGHT, BOTTOMBOTTOMRIGHT, BOTTOMBOTTOMLEFT, TOPTOPLEFT
     }
 
     // Start by heading to the right
     public Heading heading = Heading.RIGHT;
 
     // right-0, left-1, up-2, down-3
-    private Bitmap mBitMaps[] = new Bitmap[8];
+    private Bitmap mBitMaps[] = new Bitmap[12];
 
     // Tower Info
     public String name;
@@ -119,6 +119,7 @@ class Tower1 {
         matrix.preRotate(180);
         createBitmap(3, matrix);
         matrix.preRotate(-45);
+
         // Diagonal Scaling
         createBitmap(4, matrix);
         matrix.preRotate(-90);
@@ -128,6 +129,19 @@ class Tower1 {
         createBitmap(6, matrix);
         matrix.preRotate(90);
         createBitmap(7, matrix);
+
+
+        // Further Diagonal Scaling
+        matrix.preRotate(15);
+        createBitmap(11, matrix);
+        matrix.preRotate(-115);
+        createBitmap(10, matrix);
+        matrix.preScale(-1, 1);
+        matrix.preRotate(5);
+        createBitmap(8, matrix);
+        matrix.preRotate(-115);
+        createBitmap(9, matrix);
+
 
         // Start by placing Tower off screen before user calls it
         segmentLocations.add(new TPoint(-500, -500));
@@ -167,7 +181,7 @@ class Tower1 {
 //                    segmentLocations.get(0).point.y + 15, radius, paint);
 
         RectF oval = new RectF(segmentLocations.get(0).point.x - radius, segmentLocations.get(0).point.y - radius,
-                segmentLocations.get(0).point.x + radius, segmentLocations.get(0).point.y + radius);
+                segmentLocations.get(0).point.x + radius + 60, segmentLocations.get(0).point.y + radius + 60);
 
         canvas.drawOval(oval, paint);
 
@@ -260,7 +274,20 @@ class Tower1 {
                 case TOPLEFT:
                     drawBitmap(7 ,canvas, paint);
                     break;
+                case TOPTOPRIGHT:
+                    drawBitmap(8 ,canvas, paint);
+                    break;
+                case BOTTOMBOTTOMRIGHT:
+                    drawBitmap(9 ,canvas, paint);
+                    break;
+                case BOTTOMBOTTOMLEFT:
+                    drawBitmap(10 ,canvas, paint);
+                    break;
+                case TOPTOPLEFT:
+                    drawBitmap(11 ,canvas, paint);
+                    break;
             }
+
         }
     }
 
