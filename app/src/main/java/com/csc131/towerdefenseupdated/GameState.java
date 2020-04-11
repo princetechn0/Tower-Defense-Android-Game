@@ -28,6 +28,8 @@ final class GameState {
 
     // How much currency does the player have
     public int mCurrency;
+    public int currencyDifference;
+
 
     // How much health does the SpaceStation have left
     public int mStationHealth;
@@ -106,7 +108,13 @@ final class GameState {
         mRound++;
     }
 
-    void increaseCurrency() { mCurrency += random.nextInt(200 + 50);
+    void increaseCurrency() {
+        currencyDifference = mCurrency;
+
+        mCurrency += random.nextInt(200 + 50);
+
+        // For End of Round Stats
+        currencyDifference = mCurrency - currencyDifference;
     }
 
     int getmStationHealth() {

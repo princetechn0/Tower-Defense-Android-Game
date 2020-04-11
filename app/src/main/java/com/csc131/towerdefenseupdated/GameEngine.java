@@ -211,8 +211,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                 //If last enemy dies, change state
                 if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()) {
-                    toast.onScreenMessages("Round " + gameState.mRound + " Complete!");
-
                     // Increment Game Round Number and increase Currency
                     gameState.increaseRoundNumber();
                     gameState.increaseCurrency();
@@ -221,6 +219,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     gameState.mDead = true;
                     gameState.mEndofRound = true;
 
+
+                    toast.onScreenMessages("Round " + gameState.mRound + " Complete!" + "\n Money Made: $" + gameState.currencyDifference);
 
                 }
 
