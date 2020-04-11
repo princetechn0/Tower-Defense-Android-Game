@@ -17,8 +17,6 @@ class Tower1 {
     // The location in the grid of all the segments
     private ArrayList<TPoint> segmentLocations;
 
-    // How big is the entire grid
-    private TPoint mMoveRange;
 
     // For tracking movement Heading
     public enum Heading {
@@ -33,21 +31,20 @@ class Tower1 {
     // right-0, left-1, up-2, down-3, etc
     private Bitmap mBitMaps[] = new Bitmap[12];
 
-    // Tower Info
+    // Tower Attributes
     public String name;
-    public int cost;
-
     public String speedDesc;
-    public int coolDownRate;
-
+    public int cost;
     public int sellPrice;
+
+    public int coolDownRate;
 
     // Bounding Region when Tower Clicked
     Rect touchRect;
     // Radius for Drawing Circle
     int radius;
 
-    // For Directions of tower
+    // For Changing Direction of Tower Relative to Enemy Position
     Polygon[] polygons = new Polygon[8];
     Point[] points;
 
@@ -58,10 +55,6 @@ class Tower1 {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
-
-        // Initialize the segment size and movement
-        // range from the passed in parameters
-        mMoveRange = mr;
 
 
         int rDrawable;
@@ -114,6 +107,7 @@ class Tower1 {
         // Start by placing Tower off screen before user calls it
         segmentLocations.add(new TPoint(-500, -500));
 
+        // Initialize Boundary for detecting touch on specific tower
         touchRect = new Rect();
     }
 
@@ -133,16 +127,13 @@ class Tower1 {
 
 
 
-    void drawEditingArea(Canvas canvas, Paint paint) {
+    void drawRadius(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
 
         RectF oval = new RectF(segmentLocations.get(0).point.x - radius, segmentLocations.get(0).point.y - radius,
                 segmentLocations.get(0).point.x + radius + 60, segmentLocations.get(0).point.y + radius + 60);
-
         canvas.drawOval(oval, paint);
         getPoints((int)oval.centerX(), (int)oval.centerY(), radius + 25, 8);
-
-        paint.setColor(Color.BLACK);
 
         initDirections();
     }
@@ -283,7 +274,6 @@ class Tower1 {
         ptsY[7][1] = points[7].y; ptsY[7][2] = points[0].y;
         polygons[7] = new Polygon(ptsX, ptsY,3, Heading.TOPRIGHT);
     }
-
 
 
     private void getPoints(int x0,int y0,int r,int noOfDividingPoints) {

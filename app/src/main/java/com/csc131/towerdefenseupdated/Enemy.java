@@ -16,13 +16,6 @@ class Enemy {
     // The location in the grid of all the segments
     private ArrayList<TPoint> segmentLocations;
 
-    // How big is the entire grid
-    private TPoint mMoveRange;
-
-    // Where is the centre of the screen
-    // horizontally in pixels?
-//    private int halfWayPoint;
-
     // For tracking movement Heading
     private enum Heading {
         UP, RIGHT, DOWN, LEFT
@@ -45,11 +38,6 @@ class Enemy {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
-
-        // Initialize the segment size and movement
-        // range from the passed in parameters
-        mMoveRange = mr;
-
 
         int rDrawable;
         switch (kind) {
@@ -89,10 +77,6 @@ class Enemy {
         matrix.preRotate(180);
         createBitmap(3, matrix);
 
-
-        // The halfway point across the screen in pixels
-        // Used to detect which side of screen was pressed
-//        halfWayPoint = mr.point.x  / 2;
     }
 
     // Get the enemy ready for a new game
@@ -254,27 +238,6 @@ class Enemy {
         }
 
     }
-
-    void leftDirections(Heading input) {
-
-        // Rotate left
-        switch (input) {
-            case UP:
-                heading = Heading.LEFT;
-                break;
-            case LEFT:
-                heading = Heading.DOWN;
-                break;
-            case DOWN:
-                heading = Heading.RIGHT;
-                break;
-            case RIGHT:
-                heading = Heading.UP;
-                break;
-        }
-
-    }
-
 
 }
 

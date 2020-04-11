@@ -33,7 +33,7 @@ class Renderer {
                 Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mapmap);
                 mCanvas.drawBitmap(bmp, 0, 0, mPaint);
 
-                drawSpaceStation(gs, context, sp);
+                drawSpaceStation(gs, context);
 
                 for(Tower1 t: tower1ArrayList) {
                     t.draw(mCanvas, mPaint);
@@ -71,7 +71,7 @@ class Renderer {
 
             // Handles the tower that is currently selected
             if(gs.mTowerClicked) {
-                tower1ArrayList.get(gs.activeTower).drawEditingArea(mCanvas, mPaint);
+                tower1ArrayList.get(gs.activeTower).drawRadius(mCanvas, mPaint);
                 hud.drawExtensiveControls(mCanvas, mPaint, gs, tower1ArrayList);
             }
 
@@ -90,7 +90,8 @@ class Renderer {
 
 
 
-    void drawSpaceStation(GameState gs, Context context, SpaceStation sp) {
+    void drawSpaceStation(GameState gs, Context context) {
+        SpaceStation sp;
         if(gs.mStationHealth > 30) {
             sp = new SpaceStation(context, R.drawable.spacestation);
         } else if (gs.mStationHealth <= 30 && gs.mStationHealth > 20) {
