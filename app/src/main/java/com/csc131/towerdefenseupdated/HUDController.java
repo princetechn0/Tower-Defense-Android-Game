@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
     @Override
     public void handleInput(Context context, Renderer mRenderer, MotionEvent event, GameState gameState, ArrayList<Rect> offLimitAreas,
-                            ArrayList<Rect> buttons, ArrayList<Rect> extensiveControls, ArrayList<Tower1> tower1ArrayList) {
+                            ArrayList<Rect> buttons, ArrayList<Rect> extensiveControls, ArrayList<Tower1> tower1ArrayList, Toast toast) {
         int i = event.getActionIndex();
         int x = (int) event.getX(i);
         int y = (int) event.getY(i);
@@ -99,13 +99,13 @@ import java.util.ArrayList;
                 // Checks if user can afford the tower
                 switch (gameState.activeBuyer) {
                     case 0:
-                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 250, "tower1");
+                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 250, "tower1", toast);
                         break;
                     case 1:
-                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 400, "tower2");
+                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 400, "tower2", toast);
                         break;
                     case 2:
-                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 850, "tower3");
+                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 850, "tower3", toast);
                         break;
                 }
             }
@@ -114,12 +114,16 @@ import java.util.ArrayList;
 
 
       void towerCreator(GameState gameState, ArrayList<Tower1> tower1ArrayList, Context context, Renderer mRenderer,
-                        int currency, String towerType) {
+                        int currency, String towerType, Toast toast) {
           if(gameState.mCurrency >= currency){
               tower1ArrayList.add(new Tower1(context,
                       new TPoint(mRenderer.NUM_BLOCKS_WIDE,
                               mRenderer.mNumBlocksHigh), towerType));
               gameState.mEditing = true;
+              toast.onScreenMessages("Good Choice! Now Place it on the Map!");
+          } else {
+              toast.onScreenMessages("Not Enough Money :(");
+
           }
       }
 

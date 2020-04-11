@@ -3,7 +3,6 @@ package com.csc131.towerdefenseupdated;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Gravity;
 
 public class Toast {
 

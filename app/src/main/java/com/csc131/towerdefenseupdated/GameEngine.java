@@ -50,7 +50,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
 
     // Creating on Screen Messages
-//    com.csc131.towerdefenseupdated.Toast toast = new com.csc131.towerdefenseupdated.Toast(getContext());
+    com.csc131.towerdefenseupdated.Toast toast = new com.csc131.towerdefenseupdated.Toast(getContext());
 
 
 
@@ -73,7 +73,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         level = new Level(getContext(), mRenderer, enemyArrayList, gameState.num_enemy1, gameState.num_enemy2, gameState.num_enemy3);
 
-
     }
 
 
@@ -81,6 +80,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Called to start a new game
     public void newGame() {
+        toast.onScreenMessages("Welcome to Space Tower Defense!");
 
         // Handler
         handlerReset();
@@ -104,6 +104,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Called to start a new game
     public void nextRound() {
+        toast.onScreenMessages("Next Round Beginning!");
+
         handlerReset();
 
         level.clear();
@@ -209,6 +211,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                 //If last enemy dies, change state
                 if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()) {
+                    toast.onScreenMessages("Round " + gameState.mRound + " Complete!");
 
                     // Increment Game Round Number and increase Currency
                     gameState.increaseRoundNumber();
@@ -217,6 +220,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     // Pause the game ready to start again
                     gameState.mDead = true;
                     gameState.mEndofRound = true;
+
 
                 }
 
@@ -302,7 +306,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 //         But in a new way
         for (InputObserver o : inputObservers) {
             o.handleInput(getContext(), mRenderer,  motionEvent, gameState, mHUD.getOffLimitAreas(), mHUD.getControls(),
-                    mHUD.getExtensiveControls(), tower1ArrayList);
+                    mHUD.getExtensiveControls(), tower1ArrayList, toast);
         }
 
         return true;

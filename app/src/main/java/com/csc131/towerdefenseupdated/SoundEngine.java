@@ -36,7 +36,6 @@ class SoundEngine {
             AssetFileDescriptor descriptor;
 
             // Prepare the sounds in memory
-
             descriptor = assetManager.openFd("deathsound.mp3");
             mEnemyDeath_ID = mSP.load(descriptor, 0);
 
