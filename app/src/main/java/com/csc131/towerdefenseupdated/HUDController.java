@@ -96,46 +96,32 @@ import java.util.ArrayList;
             // If Buy Button is Clicked
             if(extensiveControls.get(2).contains(x, y)){
                 gameState.mBuying = false;
-
                 // Checks if user can afford the tower
                 switch (gameState.activeBuyer) {
                     case 0:
-                        if(gameState.mCurrency >= 250){
-                            tower1ArrayList.add(new Tower1(context,
-                                    new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                            mRenderer.mNumBlocksHigh), "tower1"));
-                            gameState.mEditing = true;
-                        }
+                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 250, "tower1");
                         break;
-
                     case 1:
-                        if(gameState.mCurrency >= 400){
-                            tower1ArrayList.add(new Tower1(context,
-                                    new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                            mRenderer.mNumBlocksHigh), "tower2"));
-                            gameState.mEditing = true;
-                        }
+                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 400, "tower2");
                         break;
-
-
                     case 2:
-                        if(gameState.mCurrency >= 850){
-                                tower1ArrayList.add(new Tower1(context,
-                                        new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                                                mRenderer.mNumBlocksHigh), "tower3"));
-                                gameState.mEditing = true;
-                            }
+                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 850, "tower3");
                         break;
-
-
                 }
             }
-
-
         }
-
-
     }
+
+
+      void towerCreator(GameState gameState, ArrayList<Tower1> tower1ArrayList, Context context, Renderer mRenderer,
+                        int currency, String towerType) {
+          if(gameState.mCurrency >= currency){
+              tower1ArrayList.add(new Tower1(context,
+                      new TPoint(mRenderer.NUM_BLOCKS_WIDE,
+                              mRenderer.mNumBlocksHigh), towerType));
+              gameState.mEditing = true;
+          }
+      }
 
 
 
