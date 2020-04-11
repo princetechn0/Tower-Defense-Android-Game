@@ -65,9 +65,7 @@ public class Level {
     }
 
     public void newEnemy(Context context, String kind) {
-        enemyArrayList.add(new Enemy(context,
-                new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                        mRenderer.mNumBlocksHigh), kind));
+        enemyArrayList.add(new Enemy(context, kind));
     }
 
     public void clear() {

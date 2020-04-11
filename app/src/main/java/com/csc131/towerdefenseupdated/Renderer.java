@@ -50,6 +50,7 @@ class Renderer {
                 for(Tower1 t: tower1ArrayList) {
                     t.draw(mCanvas, mPaint);
                 }
+
                 //Disables Start Button
                 hud.disableStartButton(mCanvas, mPaint);
             }
@@ -79,7 +80,6 @@ class Renderer {
             if(explosionEffectSystem.mIsRunning) {
                 explosionEffectSystem.draw(mCanvas, mPaint);
             }
-
 
             // Now we draw the HUD on top of everything else
             hud.draw(context, mCanvas, mPaint, gs);

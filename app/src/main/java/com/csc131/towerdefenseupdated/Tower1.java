@@ -49,9 +49,12 @@ class Tower1 {
     Point[] points;
 
 
+    //Testing Lasers
+    TowerLaserTest towerLaserTest;
 
 
-    Tower1(Context context, TPoint mr, String kind) {
+
+    Tower1(Context context, String kind) {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
@@ -109,6 +112,9 @@ class Tower1 {
 
         // Initialize Boundary for detecting touch on specific tower
         touchRect = new Rect();
+
+        towerLaserTest = new TowerLaserTest(kind);
+
     }
 
     // Get the Tower ready for a new game
@@ -119,10 +125,12 @@ class Tower1 {
         // Delete the old contents of the ArrayList
         segmentLocations.clear();
 
-        // Start with a single alien on the left side of the screen, entering the path
+        // Start with a single tower
         segmentLocations.add(new TPoint(x,y));
 
         touchRect = new Rect(x-40,y-40,x+80, y+80);
+
+        towerLaserTest.set(x, y);
     }
 
 
@@ -136,6 +144,9 @@ class Tower1 {
         getPoints((int)oval.centerX(), (int)oval.centerY(), radius + 25, 8);
 
         initDirections();
+
+        paint.setColor(Color.BLACK);
+        towerLaserTest.drawLaser(canvas, paint);
     }
 
     void draw(Canvas canvas, Paint paint) {
@@ -385,5 +396,60 @@ class Tower1 {
     }
 
 }
+
+
+
+class TowerLaserTest {
+    // The location in the grid of all the segments
+    private ArrayList<TPoint> segmentLocations;
+
+    // Radius for Drawing Circle, aka Laser Beam
+    int radius = 10;
+    int color;
+
+    // Collision Detection and Drawing
+    RectF oval;
+
+    TowerLaserTest(String kind) {
+
+        // Initialize our ArrayList
+        segmentLocations = new ArrayList<>();
+
+        switch (kind) {
+            case "tower3":
+                color = Color.BLUE;
+                break;
+            case "tower2":
+                color = Color.RED;
+                break;
+            default:
+                color = Color.BLACK;
+                break;
+        }
+        segmentLocations.add(new TPoint(-500, 500));
+
+    }
+
+    void drawLaser(Canvas canvas, Paint paint) {
+//        canvas.drawOval(oval, paint);
+        canvas.drawCircle(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y, 10, paint);
+    }
+
+    // Get the Tower ready for a new game
+    void set(int x, int y) {
+
+        // Delete the old contents of the ArrayList
+        segmentLocations.clear();
+
+        // Start with a single tower
+        segmentLocations.add(new TPoint(x,y));
+
+//        oval = new RectF(, 600, 500, 600);
+
+
+
+    }
+}
+
 
 

@@ -116,9 +116,7 @@ import java.util.ArrayList;
       void towerCreator(GameState gameState, ArrayList<Tower1> tower1ArrayList, Context context, Renderer mRenderer,
                         int currency, String towerType, Toast toast) {
           if(gameState.mCurrency >= currency){
-              tower1ArrayList.add(new Tower1(context,
-                      new TPoint(mRenderer.NUM_BLOCKS_WIDE,
-                              mRenderer.mNumBlocksHigh), towerType));
+              tower1ArrayList.add(new Tower1(context, towerType));
               gameState.mEditing = true;
               toast.onScreenMessages("Good Choice! Now Place it on the Map!");
           } else {

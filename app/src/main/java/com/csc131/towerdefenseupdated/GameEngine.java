@@ -67,7 +67,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         spaceStation = new SpaceStation(context, R.drawable.spacestation);
 
         physicsEngine = new PhysicsEngine();
-
         explosionEffectSystem = new ExplosionEffectSystem();
         explosionEffectSystem.init(50);
 

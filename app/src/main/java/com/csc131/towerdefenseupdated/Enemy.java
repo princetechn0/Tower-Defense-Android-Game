@@ -34,7 +34,7 @@ class Enemy {
     public int distFromTower;
 
 
-    Enemy(Context context, TPoint mr, String kind) {
+    Enemy(Context context, String kind) {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
