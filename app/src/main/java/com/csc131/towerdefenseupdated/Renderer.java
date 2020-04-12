@@ -21,8 +21,9 @@ class Renderer {
 
 
 
-    void draw(Context context, GameState gs, HUD hud, SpaceStation sp,
-              ArrayList<Enemy> enemyArrayList, ArrayList<Tower1> tower1ArrayList, ExplosionEffectSystem explosionEffectSystem) {
+    void draw(Context context, GameState gs, HUD hud,
+              ArrayList<Enemy> enemyArrayList, ArrayList<Tower1> tower1ArrayList,
+              ExplosionEffectSystem explosionEffectSystem) {
 
         if (mSurfaceHolder.getSurface().isValid()) {
 
@@ -49,6 +50,17 @@ class Renderer {
 
                 for(Tower1 t: tower1ArrayList) {
                     t.draw(mCanvas, mPaint);
+
+
+                    if(gs.mFire) {
+//                        t.towerLaserTestArrayList.towez.draw(mCanvas, mPaint);
+                        t.towerLaser.draw(mCanvas, mPaint);
+//
+//                        //Draw laser
+//                        t.shootLaser();
+                    }
+
+
                 }
 
                 //Disables Start Button

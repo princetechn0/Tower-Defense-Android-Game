@@ -2,11 +2,13 @@ package com.csc131.towerdefenseupdated;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -51,8 +53,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
     // Creating on Screen Messages
     com.csc131.towerdefenseupdated.Toast toast = new com.csc131.towerdefenseupdated.Toast(getContext());
-
-
 
     public GameEngine(Context context, TPoint size) {
         super(context);
@@ -155,7 +155,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     update();
                 }
             }
-            mRenderer.draw(getContext(), gameState, mHUD, spaceStation, enemyArrayList, tower1ArrayList, explosionEffectSystem);
+            mRenderer.draw(getContext(), gameState, mHUD, enemyArrayList, tower1ArrayList, explosionEffectSystem);
         }
 
 
@@ -219,7 +219,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     gameState.mEndofRound = true;
 
 
-                    toast.onScreenMessages("Round " + gameState.mRound + " Complete!" + "\n Money Made: $" + gameState.currencyDifference);
+                    toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
+                            "\n Money Made: $" + gameState.currencyDifference);
 
                 }
 
@@ -235,8 +236,10 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         int activeTower = 0;
         for(Tower1 t: tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
+
                 // Handles Rotating Tower when Enemy is within Radius of Tower
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
+
                     //  Distance of enemy from Tower when within Tower Radius
                     e.distFromTower = t.distFromTower(e.enemyLocation(), t.towerLocation());
                     enemiesInACircle.add(e);
@@ -249,14 +252,25 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                         }
                     }
 
+
+                    gameState.mFire = true;
+
                     // Rotates Tower to Follow the Active Enemy
                     if (enemiesInACircle.size() != 0 ) {
                         t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
+
+                        t.shootLaser();
+
                     }
+
+                    //     gameState.mFire = false;
+
+
                 } else {
                     enemiesInACircle.clear();
                     distFromTower.clear();
                     activeTower = 0;
+
                 }
             }
 

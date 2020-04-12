@@ -99,13 +99,13 @@ import java.util.ArrayList;
                 // Checks if user can afford the tower
                 switch (gameState.activeBuyer) {
                     case 0:
-                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 250, "tower1", toast);
+                        towerCreator(gameState, tower1ArrayList, context, 250, "tower1", toast);
                         break;
                     case 1:
-                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 400, "tower2", toast);
+                        towerCreator(gameState, tower1ArrayList, context, 400, "tower2", toast);
                         break;
                     case 2:
-                        towerCreator(gameState, tower1ArrayList, context, mRenderer, 850, "tower3", toast);
+                        towerCreator(gameState, tower1ArrayList, context, 850, "tower3", toast);
                         break;
                 }
             }
@@ -113,7 +113,7 @@ import java.util.ArrayList;
     }
 
 
-      void towerCreator(GameState gameState, ArrayList<Tower1> tower1ArrayList, Context context, Renderer mRenderer,
+      void towerCreator(GameState gameState, ArrayList<Tower1> tower1ArrayList, Context context,
                         int currency, String towerType, Toast toast) {
           if(gameState.mCurrency >= currency){
               tower1ArrayList.add(new Tower1(context, towerType));

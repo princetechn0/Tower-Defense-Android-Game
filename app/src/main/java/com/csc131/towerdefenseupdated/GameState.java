@@ -1,5 +1,4 @@
 package com.csc131.towerdefenseupdated;
-import android.content.Context;
 
 import java.util.Random;
 
@@ -19,8 +18,7 @@ final class GameState {
     public volatile boolean mEditing = false;
     public volatile boolean mTowerClicked = false;
     public volatile boolean mBuying = false;
-
-
+    public volatile boolean mFire = false;
 
 
     // The Round Number
@@ -64,6 +62,8 @@ final class GameState {
         mEditing = false;
         mTowerClicked = false;
         mBuying = false;
+        mFire = false;
+
     }
 
     void newGame() {
@@ -73,7 +73,7 @@ final class GameState {
         mEditing = false;
         mTowerClicked = false;
         mBuying = false;
-
+        mFire = false;
     }
 
     void resetVariables(){

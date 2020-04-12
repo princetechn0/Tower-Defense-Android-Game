@@ -50,7 +50,8 @@ class Tower1 {
 
 
     //Testing Lasers
-    TowerLaserTest towerLaserTest;
+    TowerLaser towerLaser;
+//    ArrayList<TowerLaser> towerLaserTestArrayList = new ArrayList<>();
 
 
 
@@ -113,7 +114,12 @@ class Tower1 {
         // Initialize Boundary for detecting touch on specific tower
         touchRect = new Rect();
 
-        towerLaserTest = new TowerLaserTest(kind);
+        towerLaser = new TowerLaser(context, kind);
+
+//        for(int i = 0; i < 5; i++) {
+//            towerLaserTestArrayList.add(new TowerLaser(context, kind));
+//        }
+
 
     }
 
@@ -130,10 +136,20 @@ class Tower1 {
 
         touchRect = new Rect(x-40,y-40,x+80, y+80);
 
-        towerLaserTest.set(x, y);
+        // Testing lasers
+        resetLasers();
     }
 
+    // Testing
+    void resetLasers() { towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y); }
 
+    void shootLaser() {
+        if(pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
+            towerLaser.move();
+        } else {
+            resetLasers();
+        }
+    }
 
     void drawRadius(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
@@ -144,9 +160,6 @@ class Tower1 {
         getPoints((int)oval.centerX(), (int)oval.centerY(), radius + 25, 8);
 
         initDirections();
-
-        paint.setColor(Color.BLACK);
-        towerLaserTest.drawLaser(canvas, paint);
     }
 
     void draw(Canvas canvas, Paint paint) {
@@ -222,8 +235,6 @@ class Tower1 {
         int distancesquared = distFromTower(enemyLocation, towerLocation);
         return distancesquared <= radius * radius;
     }
-
-
     int distFromTower(Point enemyLocation, Point towerLocation) {
         return (enemyLocation.x - towerLocation.x) * (enemyLocation.x - towerLocation.x) +
                 (enemyLocation.y - towerLocation.y) * (enemyLocation.y - towerLocation.y);
@@ -286,7 +297,6 @@ class Tower1 {
         polygons[7] = new Polygon(ptsX, ptsY,3, Heading.TOPRIGHT);
     }
 
-
     private void getPoints(int x0,int y0,int r,int noOfDividingPoints) {
         double angle;
         points = new Point[noOfDividingPoints];
@@ -296,8 +306,6 @@ class Tower1 {
             points[i] = new Point((int) (x0 + r * Math.cos(Math.toRadians(angle))), (int) (y0 + r * Math.sin(Math.toRadians(angle))));
         }
     }
-
-
 
     void createBitmap(int i, Matrix matrix) {
         mBitMaps[i]  = Bitmap
@@ -396,60 +404,5 @@ class Tower1 {
     }
 
 }
-
-
-
-class TowerLaserTest {
-    // The location in the grid of all the segments
-    private ArrayList<TPoint> segmentLocations;
-
-    // Radius for Drawing Circle, aka Laser Beam
-    int radius = 10;
-    int color;
-
-    // Collision Detection and Drawing
-    RectF oval;
-
-    TowerLaserTest(String kind) {
-
-        // Initialize our ArrayList
-        segmentLocations = new ArrayList<>();
-
-        switch (kind) {
-            case "tower3":
-                color = Color.BLUE;
-                break;
-            case "tower2":
-                color = Color.RED;
-                break;
-            default:
-                color = Color.BLACK;
-                break;
-        }
-        segmentLocations.add(new TPoint(-500, 500));
-
-    }
-
-    void drawLaser(Canvas canvas, Paint paint) {
-//        canvas.drawOval(oval, paint);
-        canvas.drawCircle(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y, 10, paint);
-    }
-
-    // Get the Tower ready for a new game
-    void set(int x, int y) {
-
-        // Delete the old contents of the ArrayList
-        segmentLocations.clear();
-
-        // Start with a single tower
-        segmentLocations.add(new TPoint(x,y));
-
-//        oval = new RectF(, 600, 500, 600);
-
-
-
-    }
-}
-
 
 
