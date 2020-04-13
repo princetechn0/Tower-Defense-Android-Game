@@ -153,15 +153,8 @@ class Tower1 {
          valY = (delta * 2) * Math.sin(theta);
     }
 
-    // Reset laser to tower location ready for next shot
-    void resetLaserToTowerPos() {
-        towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y);
-    }
-
-
     Boolean hasFired = false;
     void updateLaser(Point enemyLocation) {
-
         // if hasnt been shot yet
         if(!hasFired) {
             resetLaserToTowerPos();
@@ -179,30 +172,10 @@ class Tower1 {
             hideLasers();
 
         }
+    }
 
-
-
-//        // if laser in circle
-//        if(pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
-//
-//            // if hasnt been shot yet
-//            if(!hasFired) {
-//                // get enemy location
-//                update(enemyLocation, 30);
-//
-//                //fire
-//                hasFired = true;
-//            }
-//
-//            //fire
-//            shootLaser();
-//
-//        } else {
-//
-//            resetLaserToTowerPos();
-//            hasFired = false;
-//        }
-
+    void resetLaserToTowerPos() {
+        towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y);
     }
 
     void hideLasers() {

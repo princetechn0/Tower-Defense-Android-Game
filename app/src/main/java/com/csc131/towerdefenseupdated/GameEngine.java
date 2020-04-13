@@ -216,6 +216,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                         // Pause the game ready to start again
                         gameState.mDead = true;
                         gameState.mEndofRound = true;
+                        gameState.mFire = false;
 
 
                         toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
@@ -240,23 +241,17 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                         t.enemiesInACircle.add(e);
                         System.out.println("enemy added" + t.enemiesInACircle.indexOf(e));
                     }
-//                    else {
-//                        System.out.println(t.enemiesInACircle.indexOf(e));
-//                        System.out.println("redundant enemy" + t.enemiesInACircle.indexOf(e));
-//                    }
 
                 } else {
 
                     if (t.enemiesInACircle.size() != 0) {
                         System.out.println("enemy removed" + t.enemiesInACircle.indexOf(e));
                         t.enemiesInACircle.remove(e);
-
-                    }  else {
-
-//                        gameState.mFire = false;
+                    }
+                    else {
                         t.resetDirection();
-//                        t.enemyToFollow = 0;
-//                        t.hideLasers();
+                        t.hideLasers();
+                        t.enemyToFollow = 0;
                     }
 
                 }
@@ -278,6 +273,8 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 t.updateLaser(t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
 
             }
+
+
 
         }
 

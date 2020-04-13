@@ -60,12 +60,9 @@ public class TowerLaser {
         void reset(int x, int y) {
             // Delete the old contents of the ArrayList
             segmentLocations.clear();
-//
 
 //            segmentLocations.add(new TPoint(x-xOff, y-yOff));
             segmentLocations.add(new TPoint(x-50, y-10));
-
-
 
 
             // For detecting collision
@@ -98,7 +95,11 @@ public class TowerLaser {
     }
 
         void resetLaserOffscreen() {
+            segmentLocations.clear();
+
             segmentLocations.add(new TPoint(-500, -500));
+            updateBoundingRect(new TPoint(-500, -500));
+
         }
 
 
