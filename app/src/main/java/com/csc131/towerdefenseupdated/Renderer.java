@@ -44,6 +44,7 @@ class Renderer {
 
             //If the game is running in a round, draw the enemies, as well as towers
             if(!gs.mEndofRound) {
+
                 for (Enemy e: enemyArrayList) {
                     e.draw(mCanvas, mPaint);
                 }
@@ -51,15 +52,9 @@ class Renderer {
                 for(Tower1 t: tower1ArrayList) {
                     t.draw(mCanvas, mPaint);
 
-
                     if(gs.mFire) {
-//                        t.towerLaserTestArrayList.towez.draw(mCanvas, mPaint);
                         t.towerLaser.draw(mCanvas, mPaint);
-//
-//                        //Draw laser
-//                        t.shootLaser();
                     }
-
 
                 }
 

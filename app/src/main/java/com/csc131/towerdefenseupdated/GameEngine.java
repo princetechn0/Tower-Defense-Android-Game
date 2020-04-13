@@ -2,13 +2,11 @@ package com.csc131.towerdefenseupdated;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -26,7 +24,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
 
     //Testing
-    ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
+//    ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
 
     // Enemy Spawn
      Handler handler = new Handler();
@@ -199,74 +197,88 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         //Prints all the enemies with a time delay, starting with the First and a three second delay
         handleTime(0, 3000);
 
-        // Did the Alien die?
-        for (Enemy e: enemyArrayList) {
-            if (e.detectDeath()) {
-                //Death Audio
-                audioEngine.playEnemyDeadAudio();
-
-                // Emits a particle system effect when the alien reaches the Space Station
-                explosionEffectSystem.emitParticles(new PointF(1600,500));
-
-                //If last enemy dies, change state
-                if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()) {
-                    // Increment Game Round Number and increase Currency
-                    gameState.increaseRoundNumber();
-                    gameState.increaseCurrency();
-
-                    // Pause the game ready to start again
-                    gameState.mDead = true;
-                    gameState.mEndofRound = true;
-
-
-                    toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
-                            "\n Money Made: $" + gameState.currencyDifference);
-
-                }
-
-                //Resets the enemy to the original position off screen, ready for next wave
-                e.reset();
-
-                gameState.mStationHealth += e.alienDamageAmount;
-            }
-        }
-
 
         ArrayList<Integer> distFromTower = new ArrayList<>();
+        ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
         int activeTower = 0;
         for(Tower1 t: tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
+                // Handling Enemy Death
+                if (e.detectDeath()) {
+                    //Death Audio
+                    audioEngine.playEnemyDeadAudio();
 
-                // Handles Rotating Tower when Enemy is within Radius of Tower
+                    // Emits a particle system effect when the alien reaches the Space Station
+                    explosionEffectSystem.emitParticles(new PointF(1600,500));
+
+                    //If last enemy dies, change state
+                    if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()) {
+                        // Increment Game Round Number and increase Currency
+                        gameState.increaseRoundNumber();
+                        gameState.increaseCurrency();
+
+                        // Pause the game ready to start again
+                        gameState.mDead = true;
+                        gameState.mEndofRound = true;
+
+
+                        toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
+                                "\n Money Made: $" + gameState.currencyDifference);
+
+                    }
+
+                    //Resets the enemy to the original position off screen, ready for next wave
+                    e.reset();
+
+                    gameState.mStationHealth += e.alienDamageAmount;
+                }
+
+
+                // Handles Rotating Tower to face Enemy
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
+                    System.out.println("in circle");
 
                     //  Distance of enemy from Tower when within Tower Radius
                     e.distFromTower = t.distFromTower(e.enemyLocation(), t.towerLocation());
                     enemiesInACircle.add(e);
 
+
                     // Finds Enemy with Shortest Distance to tower and sets it to active
-                    for(Enemy x: enemiesInACircle) {
+                    for (Enemy x : enemiesInACircle) {
                         distFromTower.add(x.distFromTower);
-                        if(Collections.min(distFromTower) == x.distFromTower) {
+                        if (Collections.min(distFromTower) == x.distFromTower) {
                             activeTower = enemiesInACircle.indexOf(x);
                         }
                     }
 
-
-                    gameState.mFire = true;
-
                     // Rotates Tower to Follow the Active Enemy
-                    if (enemiesInACircle.size() != 0 ) {
-                        t.rotateTower(enemiesInACircle.get(activeTower).enemyLocation());
+                    if (enemiesInACircle.size() != 0) {
+                        // Sets enemy to follow/attack
+                        Enemy targetEnemy = enemiesInACircle.get(activeTower);
 
-                        t.shootLaser();
+                        t.rotateTower(targetEnemy.enemyLocation());
 
+                        gameState.mFire = true;
+
+                        t.updateLaser(targetEnemy.enemyLocation(), gameState);
+
+                        System.out.println("working");
+
+                    } else {
+
+                        System.out.println("working 22");
+
+                        gameState.mFire = false;
+                        t.resetLaser();
                     }
 
-                    //     gameState.mFire = false;
 
 
                 } else {
+
+                    System.out.println("not in circle");
+
+
                     enemiesInACircle.clear();
                     distFromTower.clear();
                     activeTower = 0;
@@ -294,6 +306,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         }, delay);
 
     }
+
 
     void screenResolutionInit(TPoint size) {
         // Work out how many pixels each block is

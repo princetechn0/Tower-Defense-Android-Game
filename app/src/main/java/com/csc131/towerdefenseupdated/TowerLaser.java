@@ -60,8 +60,13 @@ public class TowerLaser {
         void reset(int x, int y) {
             // Delete the old contents of the ArrayList
             segmentLocations.clear();
+//
 
+//            segmentLocations.add(new TPoint(x-xOff, y-yOff));
             segmentLocations.add(new TPoint(x-50, y-10));
+
+
+
 
             // For detecting collision
             boundingRect = new Rect(segmentLocations.get(0).point.x - 20 ,segmentLocations.get(0).point.y - 20,
@@ -89,11 +94,6 @@ public class TowerLaser {
         // Has the laser hit an enemy or exited the radius?
         boolean dead = false;
 
-        // Reaches the Location of The Space Station
-        if (segmentLocations.get(0).point.equals(1580,470)) {
-            dead = true;
-        }
-
         return dead;
     }
 
@@ -103,18 +103,18 @@ public class TowerLaser {
 
 
         Point laserLocation() {
-        return segmentLocations.get(0).point;
+            return segmentLocations.get(0).point;
         }
 
 
-    void move() {
+    void move(double deltaX, double deltaY) {
             // Move the head in the appropriate heading
             // Get the existing head position
             TPoint p = segmentLocations.get(0);
 
             //testing values
-            p.point.y += 30;
-            p.point.x -= 30;
+            p.point.y += deltaY;
+            p.point.x += deltaX;
 
             updateBoundingRect(p);
 

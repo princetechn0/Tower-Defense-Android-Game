@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Handler;
+
 import java.util.ArrayList;
 
 
@@ -116,10 +118,6 @@ class Tower1 {
 
         towerLaser = new TowerLaser(context, kind);
 
-//        for(int i = 0; i < 5; i++) {
-//            towerLaserTestArrayList.add(new TowerLaser(context, kind));
-//        }
-
 
     }
 
@@ -137,19 +135,63 @@ class Tower1 {
         touchRect = new Rect(x-40,y-40,x+80, y+80);
 
         // Testing lasers
-        resetLasers();
+        resetLaser();
     }
 
-    // Testing
-    void resetLasers() { towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y); }
+    // Reset laser to tower location ready for next shot
+    void resetLaser() {
+        towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y);
+    }
+
+
+    //Testing diff function
+    double valX;
+    double valY;
+
+    void update(Point enemyLocation, float delta) {
+        double theta = Math.atan2(enemyLocation.y - towerLocation().y, enemyLocation.x - towerLocation().x);
+
+         valX = (delta * 2) * Math.cos(theta);
+         valY = (delta * 2) * Math.sin(theta);
+
+//        towerLaser.move(valX, valY);
+    }
+
+
+    Boolean hasFired = false;
+    void updateLaser(Point enemyLocation, GameState gs) {
+
+        // if laser in circle
+        if(pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
+
+            // if hasnt been shot yet
+            if(!hasFired) {
+
+                // get enemy location
+                update(enemyLocation, 25);
+
+                //fire
+                hasFired = true;
+            }
+            //fire
+            shootLaser();
+
+        } else {
+
+            resetLaser();
+            hasFired = false;
+            gs.mFire = false;
+
+
+        }
+
+    }
 
     void shootLaser() {
-        if(pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
-            towerLaser.move();
-        } else {
-            resetLasers();
-        }
+//            isFiring = true;
+        towerLaser.move(valX, valY);
     }
+
 
     void drawRadius(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
@@ -230,7 +272,7 @@ class Tower1 {
         heading = heading.RIGHT;
     }
 
-    // Gets position of enemy relative to Tower
+    // Gets position of enemy or laser relative to Tower
     boolean pointInCircle(Point enemyLocation, Point towerLocation, int radius) {
         int distancesquared = distFromTower(enemyLocation, towerLocation);
         return distancesquared <= radius * radius;
