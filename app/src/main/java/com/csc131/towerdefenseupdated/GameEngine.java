@@ -190,18 +190,14 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
 
-
     // Update all the game objects
     public void update() {
 
         //Prints all the enemies with a time delay, starting with the First and a three second delay
         handleTime(0, 3000);
 
+        for (Tower1 t : tower1ArrayList) {
 
-        ArrayList<Integer> distFromTower = new ArrayList<>();
-        ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
-        int activeTower = 0;
-        for(Tower1 t: tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
                 // Handling Enemy Death
                 if (e.detectDeath()) {
@@ -209,10 +205,10 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     audioEngine.playEnemyDeadAudio();
 
                     // Emits a particle system effect when the alien reaches the Space Station
-                    explosionEffectSystem.emitParticles(new PointF(1600,500));
+                    explosionEffectSystem.emitParticles(new PointF(1600, 500));
 
                     //If last enemy dies, change state
-                    if(enemyArrayList.get(enemyArrayList.size()-1).detectDeath()) {
+                    if (enemyArrayList.get(enemyArrayList.size() - 1).detectDeath()) {
                         // Increment Game Round Number and increase Currency
                         gameState.increaseRoundNumber();
                         gameState.increaseCurrency();
@@ -233,62 +229,61 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     gameState.mStationHealth += e.alienDamageAmount;
                 }
 
+                System.out.println("new enemy");
 
-                // Handles Rotating Tower to face Enemy
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
-                    System.out.println("in circle");
+                    t.enemyInCircle = true;
 
-                    //  Distance of enemy from Tower when within Tower Radius
-                    e.distFromTower = t.distFromTower(e.enemyLocation(), t.towerLocation());
-                    enemiesInACircle.add(e);
-
-
-                    // Finds Enemy with Shortest Distance to tower and sets it to active
-                    for (Enemy x : enemiesInACircle) {
-                        distFromTower.add(x.distFromTower);
-                        if (Collections.min(distFromTower) == x.distFromTower) {
-                            activeTower = enemiesInACircle.indexOf(x);
-                        }
+                    // If the enemy has not been added to the arraylist yet, add it and save its location
+                    if (!t.enemiesInACircle.contains(e)) {
+                        e.distFromTower = (int) Math.hypot(e.enemyLocation().x - t.towerLocation().x, e.enemyLocation().y - t.towerLocation().y);
+                        t.enemiesInACircle.add(e);
+                        System.out.println("enemy added" + t.enemiesInACircle.indexOf(e));
                     }
-
-                    // Rotates Tower to Follow the Active Enemy
-                    if (enemiesInACircle.size() != 0) {
-                        // Sets enemy to follow/attack
-                        Enemy targetEnemy = enemiesInACircle.get(activeTower);
-
-                        t.rotateTower(targetEnemy.enemyLocation());
-
-                        gameState.mFire = true;
-
-                        t.updateLaser(targetEnemy.enemyLocation(), gameState);
-
-                        System.out.println("working");
-
-                    } else {
-
-                        System.out.println("working 22");
-
-                        gameState.mFire = false;
-                        t.resetLaser();
-                    }
-
-
+//                    else {
+//                        System.out.println(t.enemiesInACircle.indexOf(e));
+//                        System.out.println("redundant enemy" + t.enemiesInACircle.indexOf(e));
+//                    }
 
                 } else {
 
-                    System.out.println("not in circle");
+                    if (t.enemiesInACircle.size() != 0) {
+                        System.out.println("enemy removed" + t.enemiesInACircle.indexOf(e));
+                        t.enemiesInACircle.remove(e);
 
+                    }  else {
 
-                    enemiesInACircle.clear();
-                    distFromTower.clear();
-                    activeTower = 0;
+//                        gameState.mFire = false;
+                        t.resetDirection();
+//                        t.enemyToFollow = 0;
+//                        t.hideLasers();
+                    }
 
                 }
             }
 
+
+            // of all enemies within the zone, find the one with the shortest distance to the tower, then follow it
+            for (Enemy x : t.enemiesInACircle) {
+                t.distFromTower.add(x.distFromTower);
+
+                if (Collections.min(t.distFromTower) == x.distFromTower) {
+                    t.enemyToFollow = t.enemiesInACircle.indexOf(x);
+                }
+
+                // rotate towards it
+                t.rotateTower(t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
+
+                gameState.mFire = true;
+                t.updateLaser(t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
+
+            }
+
         }
 
+
     }
+
 
     //Prints all the enemies with a time delay
     void handleTime(final int enemyNumber,  int delay) {

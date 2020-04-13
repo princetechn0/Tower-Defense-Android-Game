@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -53,7 +54,11 @@ class Tower1 {
 
     //Testing Lasers
     TowerLaser towerLaser;
-//    ArrayList<TowerLaser> towerLaserTestArrayList = new ArrayList<>();
+
+    ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
+    ArrayList<Integer> distFromTower = new ArrayList<>();
+    int enemyToFollow = 0;
+    Boolean enemyInCircle;
 
 
 
@@ -135,60 +140,76 @@ class Tower1 {
         touchRect = new Rect(x-40,y-40,x+80, y+80);
 
         // Testing lasers
-        resetLaser();
-    }
-
-    // Reset laser to tower location ready for next shot
-    void resetLaser() {
-        towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y);
+        resetLaserToTowerPos();
     }
 
 
     //Testing diff function
     double valX;
     double valY;
-
     void update(Point enemyLocation, float delta) {
         double theta = Math.atan2(enemyLocation.y - towerLocation().y, enemyLocation.x - towerLocation().x);
-
          valX = (delta * 2) * Math.cos(theta);
          valY = (delta * 2) * Math.sin(theta);
+    }
 
-//        towerLaser.move(valX, valY);
+    // Reset laser to tower location ready for next shot
+    void resetLaserToTowerPos() {
+        towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y);
     }
 
 
     Boolean hasFired = false;
-    void updateLaser(Point enemyLocation, GameState gs) {
+    void updateLaser(Point enemyLocation) {
 
-        // if laser in circle
-        if(pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
+        // if hasnt been shot yet
+        if(!hasFired) {
+            resetLaserToTowerPos();
+            // get enemy location
+            update(enemyLocation, 20);
 
-            // if hasnt been shot yet
-            if(!hasFired) {
-
-                // get enemy location
-                update(enemyLocation, 25);
-
-                //fire
-                hasFired = true;
-            }
             //fire
-            shootLaser();
+            hasFired = true;
+        }
+        shootLaser();
 
-        } else {
-
-            resetLaser();
+        if(!pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
             hasFired = false;
-            gs.mFire = false;
 
+            hideLasers();
 
         }
 
+
+
+//        // if laser in circle
+//        if(pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
+//
+//            // if hasnt been shot yet
+//            if(!hasFired) {
+//                // get enemy location
+//                update(enemyLocation, 30);
+//
+//                //fire
+//                hasFired = true;
+//            }
+//
+//            //fire
+//            shootLaser();
+//
+//        } else {
+//
+//            resetLaserToTowerPos();
+//            hasFired = false;
+//        }
+
+    }
+
+    void hideLasers() {
+        towerLaser.resetLaserOffscreen();
     }
 
     void shootLaser() {
-//            isFiring = true;
         towerLaser.move(valX, valY);
     }
 

@@ -97,7 +97,7 @@ public class TowerLaser {
         return dead;
     }
 
-        void resetLaser() {
+        void resetLaserOffscreen() {
             segmentLocations.add(new TPoint(-500, -500));
         }
 
