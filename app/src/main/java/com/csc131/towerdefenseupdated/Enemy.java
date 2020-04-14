@@ -5,9 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,11 @@ class Enemy {
 
     //Testing
     public int distFromTower;
+
+
+    // Detecting Collisions
+    Rect boundingRect;
+
 
 
     Enemy(Context context, String kind) {
@@ -77,6 +84,9 @@ class Enemy {
         matrix.preRotate(180);
         createBitmap(3, matrix);
 
+        boundingRect = new Rect();
+
+
     }
 
     // Get the enemy ready for a new game
@@ -89,6 +99,10 @@ class Enemy {
 
         // Start with a single alien on the left side of the screen, entering the path
         segmentLocations.add(new TPoint(-100,470));
+
+        // For detecting collision
+                boundingRect = new Rect(segmentLocations.get(0).point.x - 20 ,segmentLocations.get(0).point.y - 20,
+                segmentLocations.get(0).point.x + 60, segmentLocations.get(0).point.y + 60);
 
     }
 
@@ -120,6 +134,8 @@ class Enemy {
                 break;
         }
 
+        updateBoundingRect(p);
+
     }
 
 
@@ -146,7 +162,16 @@ class Enemy {
             }
 
         }
+
+        paint.setColor(Color.argb(50,255,255,255));
+        canvas.drawRect(boundingRect, paint);
+        paint.setColor(Color.argb(255,255,255,255));
     }
+
+    void updateBoundingRect(TPoint p) {
+        boundingRect.set(p.point.x - 20, p.point.y - 20, p.point.x + 60, p.point.y + 60);
+    }
+
 
 
     //Causes Alien to Follow the Path
