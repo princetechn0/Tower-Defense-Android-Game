@@ -9,6 +9,7 @@ import android.view.SurfaceView;
 import android.os.Handler;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ListIterator;
 
 
 class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
@@ -223,6 +224,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                 }
             }
+
 
             // of all enemies within the zone, find the one with the shortest distance to the tower, then follow it
             for (Enemy x : t.enemiesInACircle) {

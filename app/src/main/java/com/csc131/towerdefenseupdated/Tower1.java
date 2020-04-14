@@ -253,6 +253,8 @@ class Tower1 {
 
             reset(x,y);
 
+
+            // Testing
             enemiesInACircle.clear();
 
             // Disables Editing Mode after Tower is moved Initially
