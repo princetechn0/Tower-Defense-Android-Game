@@ -190,6 +190,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
 
+
     // Update all the game objects
     public void update() {
 
@@ -197,41 +198,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         handleTime(0, 3000);
 
         for (Tower1 t : tower1ArrayList) {
-
             for (Enemy e : enemyArrayList) {
-                // Handling Enemy Death
-                if (e.detectDeath()) {
-                    //Death Audio
-                    audioEngine.playEnemyDeadAudio();
-
-                    // Emits a particle system effect when the alien reaches the Space Station
-                    explosionEffectSystem.emitParticles(new PointF(1600, 500));
-
-                    //If last enemy dies, change state
-                    if (enemyArrayList.get(enemyArrayList.size() - 1).detectDeath()) {
-                        // Increment Game Round Number and increase Currency
-                        gameState.increaseRoundNumber();
-                        gameState.increaseCurrency();
-
-                        // Pause the game ready to start again
-                        gameState.mDead = true;
-                        gameState.mEndofRound = true;
-                        gameState.mFire = false;
-
-
-                        toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
-                                "\n Money Made: $" + gameState.currencyDifference);
-
-                    }
-
-                    //Resets the enemy to the original position off screen, ready for next wave
-                    e.reset();
-
-                    gameState.mStationHealth += e.alienDamageAmount;
-                }
-
-                System.out.println("new enemy");
-
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
                     t.enemyInCircle = true;
 
@@ -239,13 +206,13 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     if (!t.enemiesInACircle.contains(e)) {
                         e.distFromTower = (int) Math.hypot(e.enemyLocation().x - t.towerLocation().x, e.enemyLocation().y - t.towerLocation().y);
                         t.enemiesInACircle.add(e);
-                        System.out.println("enemy added" + t.enemiesInACircle.indexOf(e));
+//                        System.out.println("enemy added" + t.enemiesInACircle.indexOf(e));
                     }
 
                 } else {
 
                     if (t.enemiesInACircle.size() != 0) {
-                        System.out.println("enemy removed" + t.enemiesInACircle.indexOf(e));
+//                        System.out.println("enemy removed" + t.enemiesInACircle.indexOf(e));
                         t.enemiesInACircle.remove(e);
                     }
                     else {
@@ -257,11 +224,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 }
             }
 
-
             // of all enemies within the zone, find the one with the shortest distance to the tower, then follow it
             for (Enemy x : t.enemiesInACircle) {
                 t.distFromTower.add(x.distFromTower);
 
+                // Finds enemy with Shortest Distance to tower and sets it to be attacked
                 if (Collections.min(t.distFromTower) == x.distFromTower) {
                     t.enemyToFollow = t.enemiesInACircle.indexOf(x);
                 }
@@ -272,12 +239,38 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 gameState.mFire = true;
                 t.updateLaser(t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
 
+                // Check if enemy and laser bounding rects intersect, then remove it offscreen
+                if(x.detectDeath(gameState, t.towerLaser.boundingRect)) {
+                    //Death Audio
+                    audioEngine.playEnemyDeadAudio();
+                    // Emits a particle system effect when the alien reaches the Space Station
+                    explosionEffectSystem.emitParticles(new PointF(x.enemyLocation().x, x.enemyLocation().y));
+
+                    //Resets the enemy to the original position off screen, ready for next wave
+                    x.reset();
+
+                    enemyArrayList.remove(x);
+                    t.enemiesInACircle.remove(x);
+
+
+                }
             }
-
-
 
         }
 
+        if(enemyArrayList.isEmpty()) {
+            // Increment Game Round Number and increase Currency
+            gameState.increaseRoundNumber();
+            gameState.increaseCurrency();
+
+            // Pause the game ready to start again
+            gameState.mDead = true;
+            gameState.mEndofRound = true;
+            gameState.mFire = false;
+
+            toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
+                    "\n Money Made: $" + gameState.currencyDifference);
+        }
 
     }
 

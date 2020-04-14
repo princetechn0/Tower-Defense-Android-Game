@@ -144,7 +144,7 @@ class Tower1 {
     }
 
 
-    //Testing diff function
+    // Method that calculates position of enemy first time, then causes the laser to move towards that position
     double valX;
     double valY;
     void update(Point enemyLocation, float delta) {
@@ -174,18 +174,19 @@ class Tower1 {
         }
     }
 
-    void resetLaserToTowerPos() {
-        towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y);
-    }
-
-    void hideLasers() {
-        towerLaser.resetLaserOffscreen();
-    }
 
     void shootLaser() {
         towerLaser.move(valX, valY);
     }
 
+    void resetLaserToTowerPos() {
+        towerLaser.reset(segmentLocations.get(0).point.x, segmentLocations.get(0).point.y);
+    }
+
+    // Sets Lasers to (-500, -500) offscreen
+    void hideLasers() {
+        towerLaser.resetLaserOffscreen();
+    }
 
     void drawRadius(Canvas canvas, Paint paint) {
         paint.setColor(Color.argb(50,255,255,255));
@@ -251,6 +252,8 @@ class Tower1 {
         if(gameState.mEditing == true) {
 
             reset(x,y);
+
+            enemiesInACircle.clear();
 
             // Disables Editing Mode after Tower is moved Initially
             gameState.mEditing = false;

@@ -41,6 +41,8 @@ class Enemy {
 
 
 
+
+
     Enemy(Context context, String kind) {
 
         // Initialize our ArrayList
@@ -87,6 +89,7 @@ class Enemy {
         boundingRect = new Rect();
 
 
+
     }
 
     // Get the enemy ready for a new game
@@ -105,6 +108,7 @@ class Enemy {
                 segmentLocations.get(0).point.x + 60, segmentLocations.get(0).point.y + 60);
 
     }
+
 
 
     void move() {
@@ -229,14 +233,26 @@ class Enemy {
     }
 
 
-    boolean detectDeath() {
+    boolean detectDeath(GameState gameState, Rect laserBoundingRect) {
         // Has the snake died?
         boolean dead = false;
 
         // Reaches the Location of The Space Station
-        if (segmentLocations.get(0).point.equals(1580,470)) {
+//        if (segmentLocations.get(0).point.equals(1580,470)) {
+//            dead = true;
+//            gameState.mStationHealth += this.alienDamageAmount;
+//
+//        }
+        if (boundingRect.contains(1580,470)) {
+            dead = true;
+            gameState.mStationHealth += this.alienDamageAmount;
+
+        }
+
+        if(boundingRect.intersect(laserBoundingRect)) {
             dead = true;
         }
+
 
         return dead;
     }
