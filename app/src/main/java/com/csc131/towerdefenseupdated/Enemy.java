@@ -230,14 +230,14 @@ class Enemy {
 
         if (spaceStationBoundingRect.contains(boundingRect)) {
             //Death Audio
-            audioEngine.playEnemyDeadAudio();
+            audioEngine.playStationCollisionAudio();
             // Emits a particle system effect when the alien reaches the Space Station
             explosionEffectSystem.emitParticles(new PointF(this.enemyLocation().x, this.enemyLocation().y));
 
             dead = true;
             this.reset();
-            gameState.mStationHealth += this.alienDamageAmount;
 
+            gameState.mStationHealth += this.alienDamageAmount;
         }
 
         return dead;
@@ -245,8 +245,9 @@ class Enemy {
 
 
     boolean detectDeath(SoundEngine audioEngine, ExplosionEffectSystem explosionEffectSystem, Rect laserBoundingRect) {
-        // Has the snake died?
+        // Has the enemy died?
         boolean dead = false;
+
         if(boundingRect.intersect(laserBoundingRect)) {
             //Death Audio
             audioEngine.playEnemyDeadAudio();
@@ -255,6 +256,7 @@ class Enemy {
 
             dead = true;
             this.reset();
+
         }
         return dead;
     }
