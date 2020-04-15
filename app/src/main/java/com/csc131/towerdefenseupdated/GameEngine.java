@@ -23,7 +23,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     // Game Objects
     SpaceStation spaceStation;
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
+
+    // Needed to avoid ConcurrentModificationException...
     ArrayList<Enemy> untouchedEnemies = new ArrayList<>();
+    ArrayList<Enemy> untouchedEnemies2 = new ArrayList<>();
+
 
 
     // Enemy Spawn
@@ -229,6 +233,11 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
             // of all enemies within the zone, find the one with the shortest distance to the tower, then follow it
             for (Enemy x : t.enemiesInACircle) {
+
+                //testing
+                untouchedEnemies2.add(x);
+
+
                 t.distFromTower.add(x.distFromTower);
 
                 // Finds enemy with Shortest Distance to tower and sets it to be attacked
@@ -242,10 +251,21 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 gameState.mFire = true;
                 t.updateLaser(audioEngine, t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
 
+//                // Check if enemy and laser bounding rects intersect, then remove it offscreen
+//                if(x.detectDeath(audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
+//                    t.enemiesInACircle.remove(x);
+//                    enemyArrayList.remove(x);
+//                }
+
+
+
+            }
+
+            for(Enemy y: untouchedEnemies2) {
                 // Check if enemy and laser bounding rects intersect, then remove it offscreen
-                if(x.detectDeath(audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
-                    t.enemiesInACircle.remove(x);
-                    enemyArrayList.remove(x);
+                if(y.detectDeath(audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
+                    t.enemiesInACircle.remove(y);
+                    enemyArrayList.remove(y);
                 }
             }
 
@@ -265,6 +285,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
             gameState.mFire = false;
 
             untouchedEnemies.clear();
+            untouchedEnemies2.clear();
         }
 
     }
