@@ -189,12 +189,18 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
 
+    ArrayList<Enemy> untouched = new ArrayList<>();
+
 
     // Update all the game objects
     public void update() {
 
         //Prints all the enemies with a time delay, starting with the First and a three second delay
         handleTime(0, 3000);
+
+        for(Enemy z: enemyArrayList) {
+            untouched.add(z);
+        }
 
         for (Tower1 t : tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
@@ -241,24 +247,29 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         }
 
-//        for(Enemy z: enemyArrayList) {
-//            if(z.detectHittingSpaceStation(gameState, audioEngine, explosionEffectSystem, spaceStation.boundingRect)){
-//                enemyArrayList.remove(z);
-//            }
-//        }
+        for(Enemy q: untouched) {
+            if(q.detectHittingSpaceStation(gameState, audioEngine, explosionEffectSystem, spaceStation.boundingRect)){
+                enemyArrayList.remove(q);
+            }
+        }
+
 
         if(enemyArrayList.isEmpty()) {
+            untouched.clear();
+
+            gameState.increaseCurrency();
+
+            toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
+                    "\n Money Made: $" + gameState.currencyDifference);
+
             // Increment Game Round Number and increase Currency
             gameState.increaseRoundNumber();
-            gameState.increaseCurrency();
 
             // Pause the game ready to start again
             gameState.mDead = true;
             gameState.mEndofRound = true;
             gameState.mFire = false;
 
-            toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
-                    "\n Money Made: $" + gameState.currencyDifference);
         }
 
     }
