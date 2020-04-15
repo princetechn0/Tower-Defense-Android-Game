@@ -162,13 +162,13 @@ class Enemy {
 
         }
 
-        paint.setColor(Color.argb(50, 255, 255, 255));
-        canvas.drawRect(boundingRect, paint);
-        paint.setColor(Color.argb(255, 255, 255, 255));
+//        paint.setColor(Color.argb(50, 255, 255, 255));
+//        canvas.drawRect(boundingRect, paint);
+//        paint.setColor(Color.argb(255, 255, 255, 255));
     }
 
     void updateBoundingRect(TPoint p) {
-        boundingRect.set(p.point.x - 20, p.point.y - 20, p.point.x + 60, p.point.y + 60);
+        boundingRect.set(p.point.x, p.point.y, p.point.x + 60, p.point.y + 60);
     }
 
 

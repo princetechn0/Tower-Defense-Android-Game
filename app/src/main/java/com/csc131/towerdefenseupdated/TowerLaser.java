@@ -66,8 +66,8 @@ public class TowerLaser {
 
 
             // For detecting collision
-            boundingRect = new Rect(segmentLocations.get(0).point.x - 20 ,segmentLocations.get(0).point.y - 20,
-                    segmentLocations.get(0).point.x + 60, segmentLocations.get(0).point.y + 60);
+            boundingRect = new Rect(segmentLocations.get(0).point.x - 10 ,segmentLocations.get(0).point.y - 10,
+                    segmentLocations.get(0).point.x + 10, segmentLocations.get(0).point.y + 10);
         }
 
 
@@ -79,9 +79,11 @@ public class TowerLaser {
                         segmentLocations.get(0).point.x,
                         segmentLocations.get(0).point.y, paint);
 
-                paint.setColor(Color.argb(50,255,255,255));
-                canvas.drawRect(boundingRect, paint);
-                paint.setColor(Color.argb(255,255,255,255));
+
+
+//                paint.setColor(Color.argb(50,255,255,255));
+//                canvas.drawRect(boundingRect, paint);
+//                paint.setColor(Color.argb(255,255,255,255));
 
             }
 
@@ -122,7 +124,7 @@ public class TowerLaser {
         }
 
     void updateBoundingRect(TPoint p) {
-        boundingRect.set(p.point.x - 20, p.point.y - 20, p.point.x + 60, p.point.y + 60);
+        boundingRect.set(p.point.x, p.point.y, p.point.x + 40, p.point.y + 40);
     }
 
 

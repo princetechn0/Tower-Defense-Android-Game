@@ -41,11 +41,6 @@ final class GameState {
     // Which Tower is Active
     public int activeTower;
 
-    // How many Enemies exist
-    private int mNumEnemies;
-    // How much health does the Enemy have
-    public int mEnemyHealth;
-
     // How many Enemies Exist of Type
     public int num_enemy1 = 0;
     public int num_enemy2 = 0;
@@ -79,13 +74,11 @@ final class GameState {
     void resetVariables(){
         mRound = 1;
 
-        mCurrency = 650;
+        mCurrency = 1000;
 
         mStationHealth = 35;
 
         mNumTowers = 0;
-
-        mNumEnemies = 0;
 
         num_enemy1 = 0;
         num_enemy2 = 0;
