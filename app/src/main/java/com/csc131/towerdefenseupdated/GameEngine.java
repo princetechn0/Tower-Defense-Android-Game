@@ -2,14 +2,11 @@ package com.csc131.towerdefenseupdated;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.os.Handler;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ListIterator;
 
 
 class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
@@ -212,6 +209,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         for (Tower1 t : tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
+
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
                     // If the enemy has not been added to the arraylist yet, add it and save its location
                     if (!t.enemiesInACircle.contains(e)) {
@@ -224,6 +222,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                     if (t.enemiesInACircle.size() != 0) {
                         t.enemiesInACircle.remove(e);
                     } else {
+                        t.enemiesInACircle.clear();
                         t.resetDirection();
                         t.hideLasers();
                         t.enemyToFollow = 0;
@@ -250,21 +249,14 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 gameState.mFire = true;
                 t.updateLaser(audioEngine, t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
 
-//                // Check if enemy and laser bounding rects intersect, then remove it offscreen
-//                if(x.detectDeath(audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
-//                    t.enemiesInACircle.remove(x);
-//                    enemyArrayList.remove(x);
-//                }
-
-
-
             }
 
             for(Enemy y: untouchedEnemies2) {
                 // Check if enemy and laser bounding rects intersect, then remove it offscreen
-                if(y.detectDeath(audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
+                if(y.detectDeath(gameState, audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
                     t.enemiesInACircle.remove(y);
                     enemyArrayList.remove(y);
+                    t.hideLasers();
                 }
             }
 

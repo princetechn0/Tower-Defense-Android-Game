@@ -61,9 +61,7 @@ public class TowerLaser {
             // Delete the old contents of the ArrayList
             segmentLocations.clear();
 
-//            segmentLocations.add(new TPoint(x-xOff, y-yOff));
             segmentLocations.add(new TPoint(x-50, y-10));
-
 
             // For detecting collision
             boundingRect = new Rect(segmentLocations.get(0).point.x - 10 ,segmentLocations.get(0).point.y - 10,
@@ -89,12 +87,6 @@ public class TowerLaser {
 
         }
 
-    boolean detectDeath() {
-        // Has the laser hit an enemy or exited the radius?
-        boolean dead = false;
-
-        return dead;
-    }
 
         void resetLaserOffscreen() {
             segmentLocations.clear();

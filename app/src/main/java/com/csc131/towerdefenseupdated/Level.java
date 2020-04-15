@@ -60,9 +60,6 @@ public class Level {
         }
     }
 
-    int getTotal() {
-        return total;
-    }
 
     public void newEnemy(Context context, String kind) {
         enemyArrayList.add(new Enemy(context, kind));

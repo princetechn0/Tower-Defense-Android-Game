@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Handler;
+
 import java.util.ArrayList;
 
 
@@ -57,6 +59,13 @@ class Tower1 {
     int enemyToFollow = 0;
 
 
+
+    // testing
+    android.os.Handler handler = new Handler();
+    Boolean isActive;
+
+
+
     Tower1(Context context, String kind) {
 
         // Initialize our ArrayList
@@ -67,7 +76,7 @@ class Tower1 {
         switch (kind) {
             case "tower2":
                 rDrawable = R.drawable.machinegun;
-                coolDownRate = 2;
+                coolDownRate = 14;
                 cost = 400;
                 radius = 400;
                 name = "Machine Gun";
@@ -76,7 +85,7 @@ class Tower1 {
                 break;
             case "tower3":
                 rDrawable = R.drawable.raygun;
-                coolDownRate = 3;
+                coolDownRate = 17;
                 cost = 850;
                 radius = 500;
                 name = "Ray Gun";
@@ -86,7 +95,7 @@ class Tower1 {
             case "tower1":
             default:
                 rDrawable = R.drawable.turret;
-                coolDownRate = 1;
+                coolDownRate = 10;
                 cost = 250;
                 radius = 250;
                 name = "Turret";
@@ -150,9 +159,13 @@ class Tower1 {
 
     Boolean hasFired = false;
     void updateLaser(SoundEngine audioEngine, Point enemyLocation) {
-        // if hasnt been shot yet
+        // if hasn't fired  yet
         if(!hasFired) {
+            // Reset timer
+            handlerReset();
+
             resetLaserToTowerPos();
+
             // get enemy location
             update(enemyLocation, 20);
 
@@ -160,15 +173,16 @@ class Tower1 {
             hasFired = true;
 
             audioEngine.playTower1Audio();
+
         }
 
         shootLaser();
 
         if(!pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {
-            hasFired = false;
+            // For firing shot at a specific rate
+            handleTime(100 * coolDownRate);
 
             hideLasers();
-
         }
     }
 
@@ -441,6 +455,25 @@ class Tower1 {
         matrix.preRotate(-115);
         createBitmap(9, matrix);
     }
+
+    //Prints all the enemies with a time delay
+    void handleTime( int delay) {
+        isActive = true;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(isActive){
+                    hasFired = false;
+                }
+            }
+        }, delay);
+
+    }
+    void handlerReset() {
+        isActive = false;
+        handler.removeCallbacksAndMessages(null);
+    }
+
 
 }
 

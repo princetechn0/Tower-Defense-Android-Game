@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -244,7 +243,7 @@ class Enemy {
     }
 
 
-    boolean detectDeath(SoundEngine audioEngine, ExplosionEffectSystem explosionEffectSystem, Rect laserBoundingRect) {
+    boolean detectDeath(GameState gameState, SoundEngine audioEngine, ExplosionEffectSystem explosionEffectSystem, Rect laserBoundingRect) {
         // Has the enemy died?
         boolean dead = false;
 
@@ -256,6 +255,10 @@ class Enemy {
 
             dead = true;
             this.reset();
+
+            // Pay player for killing enemy
+            gameState.mCurrency += 10;
+
 
         }
         return dead;
