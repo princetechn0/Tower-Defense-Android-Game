@@ -92,17 +92,6 @@ final class GameState {
         num_enemy3 = 0;
     }
 
-    int getNumTowers(){
-        return mNumTowers;
-    }
-
-    void incrementNumTowers() {
-        mNumTowers++;
-    }
-
-    int getNumEnemies(){
-        return mNumEnemies;
-    }
 
     void increaseRoundNumber(){
         mRound++;

@@ -237,7 +237,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 //testing
                 untouchedEnemies2.add(x);
 
-
                 t.distFromTower.add(x.distFromTower);
 
                 // Finds enemy with Shortest Distance to tower and sets it to be attacked
