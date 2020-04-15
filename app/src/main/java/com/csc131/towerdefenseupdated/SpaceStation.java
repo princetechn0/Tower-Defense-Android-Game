@@ -32,7 +32,7 @@ public class SpaceStation {
         location.point.x = 1430;
         location.point.y = 250;
 
-        boundingRect.set(1550, 400, 1650, 580);
+        boundingRect.set(1520, 400, 1680, 580);
     }
 
 
@@ -43,9 +43,9 @@ public class SpaceStation {
         canvas.drawBitmap(mBitmapSpaceStation,
                 location.point.x , location.point.y  , paint);
 
-        paint.setColor(Color.argb(50,255,255,255));
-        canvas.drawRect(boundingRect, paint);
-        paint.setColor(Color.argb(255,255,255,255));
+//        paint.setColor(Color.argb(50,255,255,255));
+//        canvas.drawRect(boundingRect, paint);
+//        paint.setColor(Color.argb(255,255,255,255));
     }
 
 

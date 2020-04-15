@@ -23,6 +23,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     // Game Objects
     SpaceStation spaceStation;
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
+    ArrayList<Enemy> untouchedEnemies = new ArrayList<>();
 
 
     // Enemy Spawn
@@ -189,17 +190,20 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     }
 
 
-    ArrayList<Enemy> untouched = new ArrayList<>();
-
-
     // Update all the game objects
     public void update() {
 
         //Prints all the enemies with a time delay, starting with the First and a three second delay
         handleTime(0, 3000);
 
-        for(Enemy z: enemyArrayList) {
-            untouched.add(z);
+        for(Enemy a: enemyArrayList) {
+            untouchedEnemies.add(a);
+        }
+
+        for(Enemy b: untouchedEnemies) {
+            if(b.detectHittingSpaceStation(gameState, audioEngine, explosionEffectSystem, spaceStation.boundingRect)){
+                enemyArrayList.remove(b);
+            }
         }
 
         for (Tower1 t : tower1ArrayList) {
@@ -247,29 +251,20 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
         }
 
-        for(Enemy q: untouched) {
-            if(q.detectHittingSpaceStation(gameState, audioEngine, explosionEffectSystem, spaceStation.boundingRect)){
-                enemyArrayList.remove(q);
-            }
-        }
-
-
         if(enemyArrayList.isEmpty()) {
-            untouched.clear();
-
             gameState.increaseCurrency();
 
             toast.onScreenMessages("Round " + gameState.mRound + " Complete!" +
                     "\n Money Made: $" + gameState.currencyDifference);
 
-            // Increment Game Round Number and increase Currency
             gameState.increaseRoundNumber();
 
-            // Pause the game ready to start again
+            // Pause the game; ready to start again
             gameState.mDead = true;
             gameState.mEndofRound = true;
             gameState.mFire = false;
 
+            untouchedEnemies.clear();
         }
 
     }

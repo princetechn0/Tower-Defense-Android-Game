@@ -79,9 +79,9 @@ final class GameState {
     void resetVariables(){
         mRound = 1;
 
-        mCurrency = 1000;
+        mCurrency = 650;
 
-        mStationHealth = 40;
+        mStationHealth = 35;
 
         mNumTowers = 0;
 
@@ -111,7 +111,7 @@ final class GameState {
     void increaseCurrency() {
         currencyDifference = mCurrency;
 
-        mCurrency += random.nextInt(200 + 50);
+        mCurrency += random.nextInt(200 + 100);
 
         // For End of Round Stats
         currencyDifference = mCurrency - currencyDifference;
