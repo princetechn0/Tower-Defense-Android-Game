@@ -24,8 +24,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
     SpaceStation spaceStation;
     ArrayList<Enemy> enemyArrayList = new ArrayList<>();
 
-    //Testing
-//    ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
 
     // Enemy Spawn
      Handler handler = new Handler();
@@ -201,19 +199,16 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         for (Tower1 t : tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
-                    t.enemyInCircle = true;
 
                     // If the enemy has not been added to the arraylist yet, add it and save its location
                     if (!t.enemiesInACircle.contains(e)) {
                         e.distFromTower = (int) Math.hypot(e.enemyLocation().x - t.towerLocation().x, e.enemyLocation().y - t.towerLocation().y);
                         t.enemiesInACircle.add(e);
-//                        System.out.println("enemy added" + t.enemiesInACircle.indexOf(e));
                     }
 
                 } else {
 
                     if (t.enemiesInACircle.size() != 0) {
-//                        System.out.println("enemy removed" + t.enemiesInACircle.indexOf(e));
                         t.enemiesInACircle.remove(e);
                     }
                     else {
@@ -221,10 +216,9 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                         t.hideLasers();
                         t.enemyToFollow = 0;
                     }
-
                 }
-            }
 
+            }
 
             // of all enemies within the zone, find the one with the shortest distance to the tower, then follow it
             for (Enemy x : t.enemiesInACircle) {
@@ -242,23 +236,19 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 t.updateLaser(t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
 
                 // Check if enemy and laser bounding rects intersect, then remove it offscreen
-                if(x.detectDeath(gameState, t.towerLaser.boundingRect)) {
-                    //Death Audio
-                    audioEngine.playEnemyDeadAudio();
-                    // Emits a particle system effect when the alien reaches the Space Station
-                    explosionEffectSystem.emitParticles(new PointF(x.enemyLocation().x, x.enemyLocation().y));
-
-                    //Resets the enemy to the original position off screen, ready for next wave
-                    x.reset();
-
-                    enemyArrayList.remove(x);
+                if(x.detectDeath(audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
                     t.enemiesInACircle.remove(x);
-
-
+                    enemyArrayList.remove(x);
                 }
             }
 
         }
+
+//        for(Enemy z: enemyArrayList) {
+//            if(z.detectHittingSpaceStation(gameState, audioEngine, explosionEffectSystem, spaceStation.boundingRect)){
+//                enemyArrayList.remove(z);
+//            }
+//        }
 
         if(enemyArrayList.isEmpty()) {
             // Increment Game Round Number and increase Currency

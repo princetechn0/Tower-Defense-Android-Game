@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class SpaceStation {
     private TPoint location = new TPoint();
@@ -12,9 +14,15 @@ public class SpaceStation {
     // An image to represent the spacestation
     private Bitmap mBitmapSpaceStation;
 
+    // Bounding Rect
+    Rect boundingRect;
+
     /// Set up the SpaceStation in the constructor
     public SpaceStation(Context context, int x){
         this.mBitmapSpaceStation = BitmapFactory.decodeResource(context.getResources(), x);
+
+        boundingRect = new Rect();
+
     }
 
 
@@ -23,6 +31,8 @@ public class SpaceStation {
         // Place SpaceStation at this location
         location.point.x = 1430;
         location.point.y = 250;
+
+        boundingRect.set(1550, 400, 1650, 580);
     }
 
 
@@ -32,6 +42,10 @@ public class SpaceStation {
         mBitmapSpaceStation = Bitmap.createScaledBitmap(mBitmapSpaceStation, 350, 350, true);
         canvas.drawBitmap(mBitmapSpaceStation,
                 location.point.x , location.point.y  , paint);
+
+        paint.setColor(Color.argb(50,255,255,255));
+        canvas.drawRect(boundingRect, paint);
+        paint.setColor(Color.argb(255,255,255,255));
     }
 
 

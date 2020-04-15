@@ -9,9 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Handler;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -58,8 +55,6 @@ class Tower1 {
     ArrayList<Enemy> enemiesInACircle = new ArrayList<>();
     ArrayList<Integer> distFromTower = new ArrayList<>();
     int enemyToFollow = 0;
-    Boolean enemyInCircle;
-
 
 
     Tower1(Context context, String kind) {

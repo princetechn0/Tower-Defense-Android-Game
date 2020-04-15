@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 
 import java.util.ArrayList;
@@ -40,9 +41,6 @@ class Enemy {
     Rect boundingRect;
 
 
-
-
-
     Enemy(Context context, String kind) {
 
         // Initialize our ArrayList
@@ -65,7 +63,7 @@ class Enemy {
                 break;
         }
 
-        for(int i = 0; i < mBitMaps.length; i++){
+        for (int i = 0; i < mBitMaps.length; i++) {
             mBitMaps[i] = BitmapFactory
                     .decodeResource(context.getResources(),
                             rDrawable);
@@ -73,8 +71,8 @@ class Enemy {
 
         // Modify the bitmaps to face the head
         // in the correct direction
-        mBitMaps[0]  = Bitmap
-                .createScaledBitmap(mBitMaps[0] ,
+        mBitMaps[0] = Bitmap
+                .createScaledBitmap(mBitMaps[0],
                         60, 60, false);
 
         // A matrix for scaling
@@ -89,7 +87,6 @@ class Enemy {
         boundingRect = new Rect();
 
 
-
     }
 
     // Get the enemy ready for a new game
@@ -101,14 +98,13 @@ class Enemy {
         segmentLocations.clear();
 
         // Start with a single alien on the left side of the screen, entering the path
-        segmentLocations.add(new TPoint(-100,470));
+        segmentLocations.add(new TPoint(-100, 470));
 
         // For detecting collision
-                boundingRect = new Rect(segmentLocations.get(0).point.x - 20 ,segmentLocations.get(0).point.y - 20,
+        boundingRect = new Rect(segmentLocations.get(0).point.x - 20, segmentLocations.get(0).point.y - 20,
                 segmentLocations.get(0).point.x + 60, segmentLocations.get(0).point.y + 60);
 
     }
-
 
 
     void move() {
@@ -122,26 +118,25 @@ class Enemy {
         // Move it appropriately
         switch (heading) {
             case UP:
-                p.point.y-=20;
+                p.point.y -= 20;
                 break;
 
             case RIGHT:
-                p.point.x+=20;
+                p.point.x += 20;
                 break;
 
             case DOWN:
-                p.point.y+=20;
+                p.point.y += 20;
                 break;
 
             case LEFT:
-                p.point.x-=20;
+                p.point.x -= 20;
                 break;
         }
 
         updateBoundingRect(p);
 
     }
-
 
 
     void draw(Canvas canvas, Paint paint) {
@@ -152,24 +147,24 @@ class Enemy {
             // Draw the head
             switch (heading) {
                 case RIGHT:
-                    drawBitmap(0 ,canvas, paint);
+                    drawBitmap(0, canvas, paint);
                     break;
                 case LEFT:
-                    drawBitmap(1 ,canvas, paint);
+                    drawBitmap(1, canvas, paint);
                     break;
                 case UP:
-                    drawBitmap(2 ,canvas, paint);
+                    drawBitmap(2, canvas, paint);
                     break;
                 case DOWN:
-                    drawBitmap(3 ,canvas, paint);
+                    drawBitmap(3, canvas, paint);
                     break;
             }
 
         }
 
-        paint.setColor(Color.argb(50,255,255,255));
+        paint.setColor(Color.argb(50, 255, 255, 255));
         canvas.drawRect(boundingRect, paint);
-        paint.setColor(Color.argb(255,255,255,255));
+        paint.setColor(Color.argb(255, 255, 255, 255));
     }
 
     void updateBoundingRect(TPoint p) {
@@ -177,35 +172,34 @@ class Enemy {
     }
 
 
-
     //Causes Alien to Follow the Path
     void hitsTheCorner() {
 
-       if((segmentLocations.get(0).point.equals(360,470))) {
+        if ((segmentLocations.get(0).point.equals(360, 470))) {
             rightDirections(Heading.LEFT);
-       }else if(((segmentLocations.get(0).point.equals(360, 190)))){
-           rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(780,190)))){
-           rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(780,630)))){
-           rightDirections(Heading.DOWN);
-       }else if(((segmentLocations.get(0).point.equals(400,630)))){
-           rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(400,850)))){
-           rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(1180,850)))){
-           rightDirections(Heading.LEFT);
-       } else if(((segmentLocations.get(0).point.equals(1180,670)))){
-           rightDirections(Heading.DOWN);
-       } else if(((segmentLocations.get(0).point.equals(960,670)))){
-           rightDirections(Heading.LEFT);
-       } else if(((segmentLocations.get(0).point.equals(960,290)))){
-           rightDirections(Heading.UP);
-       } else if(((segmentLocations.get(0).point.equals(1220,290)))){
-           rightDirections(Heading.RIGHT);
-       } else if(((segmentLocations.get(0).point.equals(1220,470)))){
-           rightDirections(Heading.UP);
-       }
+        } else if (((segmentLocations.get(0).point.equals(360, 190)))) {
+            rightDirections(Heading.UP);
+        } else if (((segmentLocations.get(0).point.equals(780, 190)))) {
+            rightDirections(Heading.RIGHT);
+        } else if (((segmentLocations.get(0).point.equals(780, 630)))) {
+            rightDirections(Heading.DOWN);
+        } else if (((segmentLocations.get(0).point.equals(400, 630)))) {
+            rightDirections(Heading.RIGHT);
+        } else if (((segmentLocations.get(0).point.equals(400, 850)))) {
+            rightDirections(Heading.UP);
+        } else if (((segmentLocations.get(0).point.equals(1180, 850)))) {
+            rightDirections(Heading.LEFT);
+        } else if (((segmentLocations.get(0).point.equals(1180, 670)))) {
+            rightDirections(Heading.DOWN);
+        } else if (((segmentLocations.get(0).point.equals(960, 670)))) {
+            rightDirections(Heading.LEFT);
+        } else if (((segmentLocations.get(0).point.equals(960, 290)))) {
+            rightDirections(Heading.UP);
+        } else if (((segmentLocations.get(0).point.equals(1220, 290)))) {
+            rightDirections(Heading.RIGHT);
+        } else if (((segmentLocations.get(0).point.equals(1220, 470)))) {
+            rightDirections(Heading.UP);
+        }
 
     }
 
@@ -215,15 +209,14 @@ class Enemy {
     }
 
 
-
     void createBitmap(int i, Matrix matrix) {
-        mBitMaps[i]  = Bitmap
-                .createBitmap(mBitMaps[0] ,
+        mBitMaps[i] = Bitmap
+                .createBitmap(mBitMaps[0],
                         0, 0, 60, 60, matrix, true);
     }
 
     void drawBitmap(int i, Canvas canvas, Paint paint) {
-        canvas.drawBitmap(mBitMaps[i] ,
+        canvas.drawBitmap(mBitMaps[i],
                 segmentLocations.get(0).point.x,
                 segmentLocations.get(0).point.y, paint);
     }
@@ -232,28 +225,37 @@ class Enemy {
         return segmentLocations.get(0).point;
     }
 
-
-    boolean detectDeath(GameState gameState, Rect laserBoundingRect) {
-        // Has the snake died?
+    boolean detectHittingSpaceStation(GameState gameState, SoundEngine audioEngine, ExplosionEffectSystem explosionEffectSystem, Rect spaceStationBoundingRect) {
         boolean dead = false;
 
-        // Reaches the Location of The Space Station
-//        if (segmentLocations.get(0).point.equals(1580,470)) {
-//            dead = true;
-//            gameState.mStationHealth += this.alienDamageAmount;
-//
-//        }
-        if (boundingRect.contains(1580,470)) {
+        if (spaceStationBoundingRect.contains(boundingRect)) {
+            //Death Audio
+            audioEngine.playEnemyDeadAudio();
+            // Emits a particle system effect when the alien reaches the Space Station
+            explosionEffectSystem.emitParticles(new PointF(this.enemyLocation().x, this.enemyLocation().y));
+
             dead = true;
+            this.reset();
             gameState.mStationHealth += this.alienDamageAmount;
 
         }
 
+        return dead;
+    }
+
+
+    boolean detectDeath(SoundEngine audioEngine, ExplosionEffectSystem explosionEffectSystem, Rect laserBoundingRect) {
+        // Has the snake died?
+        boolean dead = false;
         if(boundingRect.intersect(laserBoundingRect)) {
+            //Death Audio
+            audioEngine.playEnemyDeadAudio();
+            // Emits a particle system effect when the alien reaches the Space Station
+            explosionEffectSystem.emitParticles(new PointF(this.enemyLocation().x, this.enemyLocation().y));
+
             dead = true;
+            this.reset();
         }
-
-
         return dead;
     }
 
