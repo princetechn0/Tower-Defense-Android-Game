@@ -149,7 +149,7 @@ class Tower1 {
     }
 
     Boolean hasFired = false;
-    void updateLaser(Point enemyLocation) {
+    void updateLaser(SoundEngine audioEngine, Point enemyLocation) {
         // if hasnt been shot yet
         if(!hasFired) {
             resetLaserToTowerPos();
@@ -158,7 +158,10 @@ class Tower1 {
 
             //fire
             hasFired = true;
+
+            audioEngine.playTower1Audio();
         }
+
         shootLaser();
 
         if(!pointInCircle(towerLaser.laserLocation(), towerLocation(), radius)) {

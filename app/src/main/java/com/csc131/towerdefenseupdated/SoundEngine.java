@@ -15,6 +15,7 @@ class SoundEngine {
     private SoundPool mSP;
     private int mEnemyDeath_ID = -1;
     private int mTowerCollision_ID = -1;
+    private int mTower1 = -1;
 
 
     SoundEngine(Context context) {
@@ -42,6 +43,8 @@ class SoundEngine {
             mEnemyDeath_ID = mSP.load(descriptor, 0);
             descriptor = assetManager.openFd("stationcollision.mp3");
             mTowerCollision_ID = mSP.load(descriptor, 0);
+            descriptor = assetManager.openFd("tower1sound.mp3");
+            mTower1 = mSP.load(descriptor, 0);
 
 
         } catch (IOException e) {
@@ -53,8 +56,9 @@ class SoundEngine {
     public void playEnemyDeadAudio() {
         mSP.play(mEnemyDeath_ID, 1, 1, 0, 0, 1);
     }
-    public void playStationCollisionAudio() {
-        mSP.play(mTowerCollision_ID, 1, 1, 0, 0, 1);
+    public void playStationCollisionAudio() { mSP.play(mTowerCollision_ID, 1, 1, 0, 0, 1); }
+    public void playTower1Audio() {
+        mSP.play(mTower1, 1, 1, 0, 0, 1);
     }
 
 

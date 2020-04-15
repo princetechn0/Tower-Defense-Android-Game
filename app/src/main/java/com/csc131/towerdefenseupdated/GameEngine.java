@@ -240,7 +240,7 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
                 t.rotateTower(t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
 
                 gameState.mFire = true;
-                t.updateLaser(t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
+                t.updateLaser(audioEngine, t.enemiesInACircle.get(t.enemyToFollow).enemyLocation());
 
                 // Check if enemy and laser bounding rects intersect, then remove it offscreen
                 if(x.detectDeath(audioEngine, explosionEffectSystem, t.towerLaser.boundingRect)) {
