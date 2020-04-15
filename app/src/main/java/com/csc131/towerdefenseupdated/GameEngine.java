@@ -199,7 +199,6 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         for (Tower1 t : tower1ArrayList) {
             for (Enemy e : enemyArrayList) {
                 if (t.pointInCircle(e.enemyLocation(), t.towerLocation(), t.radius)) {
-
                     // If the enemy has not been added to the arraylist yet, add it and save its location
                     if (!t.enemiesInACircle.contains(e)) {
                         e.distFromTower = (int) Math.hypot(e.enemyLocation().x - t.towerLocation().x, e.enemyLocation().y - t.towerLocation().y);
@@ -210,14 +209,12 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                     if (t.enemiesInACircle.size() != 0) {
                         t.enemiesInACircle.remove(e);
-                    }
-                    else {
+                    } else {
                         t.resetDirection();
                         t.hideLasers();
                         t.enemyToFollow = 0;
                     }
                 }
-
             }
 
             // of all enemies within the zone, find the one with the shortest distance to the tower, then follow it
