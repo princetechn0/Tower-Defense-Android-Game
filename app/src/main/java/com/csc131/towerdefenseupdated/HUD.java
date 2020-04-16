@@ -227,18 +227,18 @@ class HUD {
 
     }
 
-    void gameOver(GameState gs, Canvas canvas, Paint paint) {
-        // Draw the HUD
-        paint.setColor(Color.argb(255, 255, 0, 0));
-        paint.setTextSize(mTextFormatting);
-
-        canvas.drawText("You Survived  " + gs.getRoundNumber() + " Rounds. Better luck next time" , mTextFormatting, mTextFormatting,paint);
-
-        paint.setColor(Color.argb(200,200,0,0));
-        canvas.drawRect(gameOver, paint);
-
-
-    }
+//    void gameOver(GameState gs, Canvas canvas, Paint paint) {
+//        // Draw the HUD
+//        paint.setColor(Color.argb(255, 255, 0, 0));
+//        paint.setTextSize(mTextFormatting);
+//
+//        canvas.drawText("You Survived  " + gs.getRoundNumber() + " Rounds. Better luck next time" , mTextFormatting, mTextFormatting,paint);
+//
+//        paint.setColor(Color.argb(200,200,0,0));
+//        canvas.drawRect(gameOver, paint);
+//
+//
+//    }
 
     void disableStartButton(Canvas c, Paint p) {
         p.setColor(Color.argb(200,200,0,0));
