@@ -32,8 +32,6 @@ final class GameState {
     // How much health does the SpaceStation have left
     public int mStationHealth;
 
-    // How many Towers exist
-    private int mNumTowers;
 
     // Which Tower user preparing to buy
     public int activeBuyer;
@@ -45,6 +43,10 @@ final class GameState {
     public int num_enemy1 = 0;
     public int num_enemy2 = 0;
     public int num_enemy3 = 0;
+
+    // Number of Enemies killed
+    public int num_enemies_killed = 0;
+
 
 
     //Random
@@ -79,13 +81,13 @@ final class GameState {
 
         mCurrency = 1000;
 
-        mStationHealth = 1;
-
-        mNumTowers = 0;
+        mStationHealth = 35;
 
         num_enemy1 = 0;
         num_enemy2 = 0;
         num_enemy3 = 0;
+
+        num_enemies_killed = 0;
     }
 
 

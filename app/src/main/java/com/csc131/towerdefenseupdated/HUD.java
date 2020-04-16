@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
@@ -105,10 +104,15 @@ class HUD {
             canvas.drawText("Towers: ", mTextFormatting + 1375 , mTextFormatting + 10, paint);
 
             drawControls(context, canvas, paint);
+
         } else {
 
+            // Game Over Prompts
+            paint.setTextSize(mTextFormatting);
             paint.setColor(Color.RED);
-            canvas.drawText("Game Over: ", mTextFormatting, mTextFormatting, paint);
+            canvas.drawText("Game Over... We'll Get Em Next Time ", mTextFormatting, mTextFormatting, paint);
+            canvas.drawText("You Killed " + gs.num_enemies_killed +" Enemies", mTextFormatting, mTextFormatting * 2, paint);
+
 
             canvas.drawRect(controls.get(4), paint);
             drawRectText("Restart", canvas, controls.get(4));
