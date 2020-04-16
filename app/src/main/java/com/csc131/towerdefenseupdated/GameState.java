@@ -19,9 +19,7 @@ final class GameState {
     public volatile boolean mTowerClicked = false;
     public volatile boolean mBuying = false;
     public volatile boolean mFire = false;
-
-
-
+    public volatile boolean mGameOver = false;
 
     // The Round Number
     public int mRound;
@@ -60,6 +58,7 @@ final class GameState {
         mTowerClicked = false;
         mBuying = false;
         mFire = false;
+        mGameOver = false;
 
     }
 
@@ -71,6 +70,7 @@ final class GameState {
         mTowerClicked = false;
         mBuying = false;
         mFire = false;
+        mGameOver = false;
     }
 
 

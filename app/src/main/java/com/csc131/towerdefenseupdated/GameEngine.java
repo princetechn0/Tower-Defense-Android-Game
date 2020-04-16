@@ -283,6 +283,9 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
         }
 
 
+        if(gameState.mStationHealth == 0) {
+            gameState.mGameOver = true;
+        }
 
     }
 

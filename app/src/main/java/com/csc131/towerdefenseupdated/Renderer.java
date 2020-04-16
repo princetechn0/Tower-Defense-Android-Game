@@ -79,6 +79,7 @@ class Renderer {
                 hud.drawExtensiveControls(mCanvas, mPaint, gs, tower1ArrayList);
             }
 
+
             // Draw a particle system explosion here
             if(explosionEffectSystem.mIsRunning) {
                 explosionEffectSystem.draw(mCanvas, mPaint);

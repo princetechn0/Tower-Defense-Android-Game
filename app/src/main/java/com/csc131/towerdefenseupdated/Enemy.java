@@ -161,6 +161,7 @@ class Enemy {
 
         }
 
+//        Debugging
 //        paint.setColor(Color.argb(50, 255, 255, 255));
 //        canvas.drawRect(boundingRect, paint);
 //        paint.setColor(Color.argb(255, 255, 255, 255));

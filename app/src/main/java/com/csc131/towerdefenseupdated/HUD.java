@@ -28,10 +28,6 @@ class HUD {
 
 
 
-    // Game Over
-    Rect gameOver = new Rect(1000, 80, 1250, 150);
-
-
     HUD(TPoint size) {
         mScreenHeight = size.point.y;
         mScreenWidth = size.point.x;
@@ -97,17 +93,28 @@ class HUD {
 
     void draw(Context context, Canvas canvas, Paint paint, GameState gs) {
 
-        // Draw the HUD
-        paint.setColor(Color.argb(255, 255, 255, 255));
-        paint.setTextSize(mTextFormatting);
+        if(!gs.mGameOver){
+            // Draw the HUD
+            paint.setColor(Color.argb(255, 255, 255, 255));
+            paint.setTextSize(mTextFormatting);
 
-        canvas.drawText("Round: " + gs.getRoundNumber(), mTextFormatting, mTextFormatting,paint);
-        canvas.drawText("Money: " + gs.getCurrency(), mTextFormatting,mTextFormatting * 2,paint);
-        canvas.drawText("Lives: " + gs.getmStationHealth(), mTextFormatting,mTextFormatting * 3,paint);
+            canvas.drawText("Round: " + gs.getRoundNumber(), mTextFormatting, mTextFormatting,paint);
+            canvas.drawText("Money: " + gs.getCurrency(), mTextFormatting,mTextFormatting * 2,paint);
+            canvas.drawText("Lives: " + gs.getmStationHealth(), mTextFormatting,mTextFormatting * 3,paint);
 
-        canvas.drawText("Towers: ", mTextFormatting + 1375 , mTextFormatting + 10, paint);
+            canvas.drawText("Towers: ", mTextFormatting + 1375 , mTextFormatting + 10, paint);
 
-        drawControls(context, canvas, paint);
+            drawControls(context, canvas, paint);
+        } else {
+
+            paint.setColor(Color.RED);
+            canvas.drawText("Game Over: ", mTextFormatting, mTextFormatting, paint);
+
+            canvas.drawRect(controls.get(4), paint);
+            drawRectText("Restart", canvas, controls.get(4));
+
+
+        }
 
     }
 
@@ -227,18 +234,18 @@ class HUD {
 
     }
 
-//    void gameOver(GameState gs, Canvas canvas, Paint paint) {
+    void gameOver(GameState gs, Canvas canvas, Paint paint) {
+        // Draw New Game Button
+        canvas.drawRect(controls.get(3), paint);
+//
 //        // Draw the HUD
 //        paint.setColor(Color.argb(255, 255, 0, 0));
 //        paint.setTextSize(mTextFormatting);
 //
 //        canvas.drawText("You Survived  " + gs.getRoundNumber() + " Rounds. Better luck next time" , mTextFormatting, mTextFormatting,paint);
-//
-//        paint.setColor(Color.argb(200,200,0,0));
-//        canvas.drawRect(gameOver, paint);
-//
-//
-//    }
+
+
+    }
 
     void disableStartButton(Canvas c, Paint p) {
         p.setColor(Color.argb(200,200,0,0));

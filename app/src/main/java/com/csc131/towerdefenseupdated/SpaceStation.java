@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -43,6 +42,8 @@ public class SpaceStation {
         canvas.drawBitmap(mBitmapSpaceStation,
                 location.point.x , location.point.y  , paint);
 
+
+//        Debugging
 //        paint.setColor(Color.argb(50,255,255,255));
 //        canvas.drawRect(boundingRect, paint);
 //        paint.setColor(Color.argb(255,255,255,255));
