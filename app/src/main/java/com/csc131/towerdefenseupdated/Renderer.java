@@ -63,10 +63,6 @@ class Renderer {
             }
 
 
-            if(gs.mDead) {
-                // Draw a background graphic here
-            }
-
             if(gs.mEditing) {
                 // Warns User of Where Not to Place Tower
                 hud.drawWarningZone(mCanvas, mPaint);
@@ -88,7 +84,8 @@ class Renderer {
                 explosionEffectSystem.draw(mCanvas, mPaint);
             }
 
-            // Now we draw the HUD on top of everything else
+
+                // Now we draw the HUD on top of everything else
             hud.draw(context, mCanvas, mPaint, gs);
 
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);

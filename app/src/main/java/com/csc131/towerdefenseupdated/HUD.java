@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
@@ -24,6 +25,11 @@ class HUD {
     public ArrayList<Rect> offLimitAreas;
 
     public ArrayList<Rect> extensiveControls;
+
+
+
+    // Game Over
+    Rect gameOver = new Rect(1000, 80, 1250, 150);
 
 
     HUD(TPoint size) {
@@ -86,7 +92,6 @@ class HUD {
         extensiveControls = new ArrayList<>();
         extensiveControls.add(towerInfo); extensiveControls.add(sell);
         extensiveControls.add(buy);
-
     }
 
 
@@ -219,6 +224,19 @@ class HUD {
         paint.setTextSize(mTextFormatting/2 + 10);
         canvas.drawText("Type: " + tower1ArrayList.get(gs.activeTower).name, mTextFormatting + 500 , mTextFormatting + 50, paint);
         canvas.drawText("Speed: " + tower1ArrayList.get(gs.activeTower).speedDesc, mTextFormatting + 950 , mTextFormatting + 50, paint);
+
+    }
+
+    void gameOver(GameState gs, Canvas canvas, Paint paint) {
+        // Draw the HUD
+        paint.setColor(Color.argb(255, 255, 0, 0));
+        paint.setTextSize(mTextFormatting);
+
+        canvas.drawText("You Survived  " + gs.getRoundNumber() + " Rounds. Better luck next time" , mTextFormatting, mTextFormatting,paint);
+
+        paint.setColor(Color.argb(200,200,0,0));
+        canvas.drawRect(gameOver, paint);
+
 
     }
 

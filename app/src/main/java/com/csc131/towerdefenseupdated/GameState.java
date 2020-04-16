@@ -21,6 +21,8 @@ final class GameState {
     public volatile boolean mFire = false;
 
 
+
+
     // The Round Number
     public int mRound;
 
@@ -71,12 +73,13 @@ final class GameState {
         mFire = false;
     }
 
+
     void resetVariables(){
         mRound = 1;
 
         mCurrency = 1000;
 
-        mStationHealth = 35;
+        mStationHealth = 1;
 
         mNumTowers = 0;
 
