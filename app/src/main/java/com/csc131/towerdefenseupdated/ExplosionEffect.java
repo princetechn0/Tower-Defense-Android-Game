@@ -2,7 +2,6 @@ package com.csc131.towerdefenseupdated;
 
 import android.graphics.PointF;
 
-import java.util.ArrayList;
 
 class ExplosionEffect {
     PointF mVelocity;

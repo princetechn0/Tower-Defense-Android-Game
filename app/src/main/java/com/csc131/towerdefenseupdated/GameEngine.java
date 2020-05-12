@@ -224,7 +224,9 @@ class GameEngine extends SurfaceView implements Runnable, HUDBroadcaster {
 
                     if (t.enemiesInACircle.size() != 0) {
                         t.enemiesInACircle.remove(e);
+
                     } else {
+
                         t.enemiesInACircle.clear();
                         t.resetDirection();
                         t.hideLasers();
