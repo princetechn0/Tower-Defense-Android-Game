@@ -86,6 +86,7 @@ class Renderer {
             }
 
 
+
                 // Now we draw the HUD on top of everything else
             hud.draw(context, mCanvas, mPaint, gs);
 

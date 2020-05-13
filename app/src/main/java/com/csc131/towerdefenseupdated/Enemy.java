@@ -238,6 +238,10 @@ class Enemy {
             this.reset();
 
             gameState.mStationHealth += this.alienDamageAmount;
+
+            if(gameState.mStationHealth == 0) {
+                audioEngine.playGameOverAudio();
+            }
         }
 
         return dead;

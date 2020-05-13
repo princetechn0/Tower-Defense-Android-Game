@@ -21,7 +21,6 @@ public class TowerLaser {
         // Bounding Rect
         Rect boundingRect;
 
-        int firingSpeed;
 
         TowerLaser(Context context, String kind) {
 
@@ -39,7 +38,6 @@ public class TowerLaser {
                 case "tower1":
                 default:
                     rDrawable = R.drawable.laserblack;
-                    firingSpeed = 5;
                     break;
             }
 
@@ -77,7 +75,7 @@ public class TowerLaser {
                         segmentLocations.get(0).point.y, paint);
 
 
-
+//                Debugging
 //                paint.setColor(Color.argb(50,255,255,255));
 //                canvas.drawRect(boundingRect, paint);
 //                paint.setColor(Color.argb(255,255,255,255));
