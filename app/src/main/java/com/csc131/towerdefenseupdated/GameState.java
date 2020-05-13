@@ -81,7 +81,7 @@ final class GameState {
 
         mCurrency = 1000;
 
-        mStationHealth = 1;
+        mStationHealth = 35;
 
         num_enemy1 = 0;
         num_enemy2 = 0;
