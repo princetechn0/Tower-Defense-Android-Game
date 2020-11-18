@@ -39,5 +39,4 @@ Eventually, the Station runs out of health, and here we see the “Game Over” 
 ![image](https://user-images.githubusercontent.com/13923942/99601652-adb36780-29b4-11eb-97e7-0d241f5bd45f.png)
 
 
-#Thank you
-
+That's the gist of my game! I had a great time building it and learned a lot about myself and programming.
